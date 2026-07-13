@@ -221,6 +221,24 @@ abstract class AppLocalizations {
   /// **'Sign Up'**
   String get sign_up;
 
+  /// No description provided for @signIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign In'**
+  String get signIn;
+
+  /// No description provided for @welcome_back_Please_sign_in_to_access_your_collection.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome back. Please sign in to access your collection.'**
+  String get welcome_back_Please_sign_in_to_access_your_collection;
+
+  /// No description provided for @createAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Account'**
+  String get createAccount;
+
   /// No description provided for @welcome_.
   ///
   /// In en, this message translates to:

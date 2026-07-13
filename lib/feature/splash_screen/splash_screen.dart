@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:m_store_1/core/costants/assets_manager.dart';
 import 'package:m_store_1/core/costants/color_manager.dart';
+import 'package:m_store_1/core/routes/app_routes.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -27,22 +28,18 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   void initState() {
     super.initState();
-
     _logoController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 1800),
     );
-
     _textController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 900),
     );
-
     _dotsController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 900),
     )..repeat();
-
     _logoScale = Tween<double>(
       begin: 0.6,
       end: 1,
@@ -52,12 +49,10 @@ class _SplashScreenState extends State<SplashScreen>
         curve: Curves.elasticOut,
       ),
     );
-
     _logoOpacity = Tween<double>(
       begin: 0,
       end: 1,
     ).animate(_logoController);
-
     _logoSlide = TweenSequence<Offset>([
       TweenSequenceItem(
         tween: Tween(begin: Offset.zero, end: const Offset(.03, 0)),
@@ -83,12 +78,10 @@ class _SplashScreenState extends State<SplashScreen>
         curve: const Interval(.6, 1),
       ),
     );
-
     _textOpacity = Tween<double>(
       begin: 0,
       end: 1,
     ).animate(_textController);
-
     _textSlide = Tween<Offset>(
       begin: const Offset(0, .4),
       end: Offset.zero,
@@ -98,21 +91,16 @@ class _SplashScreenState extends State<SplashScreen>
         curve: Curves.easeOut,
       ),
     );
-
     _startAnimation();
   }
 
   Future<void> _startAnimation() async {
     _logoController.forward();
-
     await Future.delayed(const Duration(milliseconds: 700));
-
     _textController.forward();
-
     await Future.delayed(const Duration(seconds: 3));
-
     if (mounted) {
-      // Navigator.pushReplacementNamed(context, '/login');
+      Navigator.pushReplacementNamed(context, AppRoutes.login);
     }
   }
 
@@ -127,13 +115,11 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ColorManager.background,
       body: SafeArea(
         child: Center(
           child: Column(
             children: [
               const Spacer(),
-
               FadeTransition(
                 opacity: _logoOpacity,
                 child: SlideTransition(
@@ -160,13 +146,13 @@ class _SplashScreenState extends State<SplashScreen>
                   position: _textSlide,
                   child: ShaderMask(
                     shaderCallback: (bounds) {
-                      return const LinearGradient(
+                      return LinearGradient(
                         begin: Alignment.centerLeft,
                         end: Alignment.centerRight,
                         colors: [
-                          Colors.black,
-                          Color(0xffD4AF37),
-                          Colors.black,
+                          ColorManager.blackText,
+                          ColorManager.primaryColor,
+                          ColorManager.blackText,
                         ],
                       ).createShader(bounds);
                     },
@@ -175,16 +161,14 @@ class _SplashScreenState extends State<SplashScreen>
                       style: GoogleFonts.playfairDisplay(
                         fontSize: 36.sp,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                        color: ColorManager.white,
                         letterSpacing: 4,
                       ),
                     ),
                   ),
                 ),
               ),
-
               SizedBox(height: 35.h),
-
               AnimatedBuilder(
                 animation: _dotsController,
                 builder: (context, child) {
@@ -212,17 +196,15 @@ class _SplashScreenState extends State<SplashScreen>
   Widget _dot(int index) {
     double value = (_dotsController.value * 3) - index;
     value = value.clamp(0.0, 1.0);
-
     final size = 8 + (6 * value);
-
     return AnimatedContainer(
       duration: const Duration(milliseconds: 200),
       width: size.w,
       height: size.w,
       decoration: BoxDecoration(
         color: value > 0.5
-            ? const Color(0xffD4AF37)
-            : Colors.black26,
+            ? ColorManager.primaryColor
+            : ColorManager.blackText,
         shape: BoxShape.circle,
       ),
     );

@@ -72,6 +72,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sign_up => 'Sign Up';
 
   @override
+  String get signIn => 'Sign In';
+
+  @override
+  String get welcome_back_Please_sign_in_to_access_your_collection => 'Welcome back. Please sign in to access your collection.';
+
+  @override
+  String get createAccount => 'Create Account';
+
+  @override
   String get welcome_ => 'Welcome!';
 
   @override

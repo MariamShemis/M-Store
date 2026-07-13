@@ -72,6 +72,15 @@ class AppLocalizationsAr extends AppLocalizations {
   String get sign_up => 'إنشاء حساب';
 
   @override
+  String get signIn => 'تسجيل الدخول';
+
+  @override
+  String get welcome_back_Please_sign_in_to_access_your_collection => 'مرحبًا بعودتك، سجل الدخول للوصول إلى مجموعتك.';
+
+  @override
+  String get createAccount => 'إنشاء حساب';
+
+  @override
   String get welcome_ => 'مرحباً بك!';
 
   @override

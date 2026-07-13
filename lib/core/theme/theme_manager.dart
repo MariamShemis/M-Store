@@ -135,26 +135,35 @@ class ThemeManager {
     /// TEXT FORM FIELD DECORATION (الـ Inputs واخدة خلفية رمادية خفيفة جداً متناسقة)
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
-      fillColor: ColorManager.lightGreyEF,
-      contentPadding: REdgeInsets.symmetric(horizontal: 16, vertical: 14),
+      fillColor: ColorManager.white,
+      contentPadding: REdgeInsets.symmetric(
+        horizontal: 18,
+        vertical: 18,
+      ),
       border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10.r),
-        borderSide: BorderSide.none,
+        borderRadius: BorderRadius.circular(14.r),
+        borderSide: BorderSide(
+          color: ColorManager.lightGreyEF,
+          width: 1,
+        ),
       ),
       enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10.r),
-        borderSide: BorderSide.none,
+        borderRadius: BorderRadius.circular(14.r),
+        borderSide: BorderSide(
+          color: ColorManager.lightGreyEF,
+          width: 1,
+        ),
       ),
       focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10.r),
-        borderSide: BorderSide(color: ColorManager.primaryColor, width: 1.5.w),
+        borderRadius: BorderRadius.circular(14.r),
+        borderSide: BorderSide(
+          color: ColorManager.primaryColor,
+          width: 1.5,
+        ),
       ),
-      errorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10.r),
-        borderSide: const BorderSide(color: ColorManager.red),
+      hintStyle: GoogleFonts.inter(
+        color: ColorManager.secondary,
       ),
-      hintStyle: GoogleFonts.inter(color: ColorManager.secondary),
-      labelStyle: GoogleFonts.inter(color: ColorManager.secondary),
     ),
 
     /// CARD THEME
