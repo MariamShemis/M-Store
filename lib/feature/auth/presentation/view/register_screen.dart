@@ -118,7 +118,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                         SizedBox(height: 8.h),
                         Text(
-                          appLocalizations.join_MSTORE_and_simplify_the_way_you_organize_your_products_and_manage_your_inventory,
+                          appLocalizations
+                              .join_MSTORE_and_simplify_the_way_you_organize_your_products_and_manage_your_inventory,
                           style: GoogleFonts.inter(
                             fontSize: 15.sp,
                             color: ColorManager.secondary,
@@ -164,22 +165,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                         SizedBox(
                           width: double.infinity,
-                          height: 56.h,
+                          height: 46.h,
                           child: ElevatedButton(
                             onPressed: () {},
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xffD4AF37),
-                              foregroundColor: Colors.white,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(14.r),
-                              ),
-                            ),
                             child: Text(
                               appLocalizations.createAccount.toUpperCase(),
-                              style: GoogleFonts.inter(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16.sp,
-                              ),
                             ),
                           ),
                         ),

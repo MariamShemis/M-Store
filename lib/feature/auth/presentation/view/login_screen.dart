@@ -163,7 +163,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           const Spacer(),
                           TextButton(
                             onPressed: () {
-                              Navigator.pushNamed(context, AppRoutes.forgetPassword);
+                              Navigator.pushNamed(
+                                context,
+                                AppRoutes.forgetPassword,
+                              );
                             },
                             child: Text(
                               appLocalizations.forget_password_,
@@ -179,23 +182,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       SizedBox(height: 18.h),
                       SizedBox(
                         width: double.infinity,
-                        height: 56.h,
+                        height: 46.h,
                         child: ElevatedButton.icon(
                           onPressed: () {},
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xffD4AF37),
-                            foregroundColor: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(14.r),
-                            ),
-                          ),
-                          label: Text(
-                            appLocalizations.login.toUpperCase(),
-                            style: GoogleFonts.inter(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16.sp,
-                            ),
-                          ),
+                          label: Text(appLocalizations.login.toUpperCase()),
                         ),
                       ),
                       SizedBox(height: 24.h),
