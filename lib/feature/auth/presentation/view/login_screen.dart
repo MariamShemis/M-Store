@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:m_store_1/core/costants/assets_manager.dart';
 import 'package:m_store_1/core/costants/color_manager.dart';
+import 'package:m_store_1/core/routes/app_routes.dart';
 import 'package:m_store_1/core/utils/validators/app_validators.dart';
 import 'package:m_store_1/core/widget/custom_auth_text_form_field.dart';
 import 'package:m_store_1/feature/auth/presentation/widgets/custom_login_outline_border.dart';
@@ -28,22 +29,34 @@ class _LoginScreenState extends State<LoginScreen> {
     _passwordController.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     AppLocalizations appLocalizations = AppLocalizations.of(context)!;
     return Scaffold(
+      appBar: AppBar(
+        elevation: 5,
+        title: Text(
+          appLocalizations.login,
+          style: GoogleFonts.playfairDisplay(
+            fontSize: 24.sp,
+            fontWeight: FontWeight.bold,
+            color: ColorManager.blackText,
+          ),
+        ),
+      ),
       body: SafeArea(
         child: Padding(
-          padding: REdgeInsets.symmetric(horizontal: 16.w , vertical: 16),
+          padding: REdgeInsets.all(16),
           child: SingleChildScrollView(
             child: Column(
               children: [
                 Container(
-                  width: 110.w,
-                  height: 110.h,
+                  width: 80.w,
+                  height: 80.h,
                   decoration: BoxDecoration(
                     color: Colors.white,
-                    borderRadius: BorderRadius.circular(18.r),
+                    borderRadius: BorderRadius.circular(14.r),
                     boxShadow: [
                       BoxShadow(
                         color: Colors.black12,
@@ -61,12 +74,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 Text(
                   "M STORE",
                   style: GoogleFonts.playfairDisplay(
-                    fontSize: 34.sp,
+                    fontSize: 24.sp,
                     fontWeight: FontWeight.bold,
                     letterSpacing: 3,
                     color: ColorManager.blackText,
                   ),
                 ),
+
                 SizedBox(height: 25.h),
                 Container(
                   padding: EdgeInsets.all(22.r),
@@ -96,7 +110,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       SizedBox(height: 8.h),
 
                       Text(
-                        appLocalizations.welcome_back_Please_sign_in_to_access_your_collection,
+                        appLocalizations
+                            .welcome_back_Please_sign_in_to_access_your_collection,
                         style: GoogleFonts.inter(
                           color: ColorManager.secondary,
                           fontSize: 15.sp,
@@ -140,14 +155,16 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ),
                           ),
-                          SizedBox(width: 5.w,),
+                          SizedBox(width: 5.w),
                           Text(
                             appLocalizations.rememberMe,
                             style: GoogleFonts.inter(fontSize: 13.sp),
                           ),
                           const Spacer(),
                           TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.pushNamed(context, AppRoutes.forgetPassword);
+                            },
                             child: Text(
                               appLocalizations.forget_password_,
                               style: GoogleFonts.inter(
@@ -191,9 +208,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                           Padding(
-                            padding: REdgeInsets.symmetric(
-                              horizontal: 16.0,
-                            ),
+                            padding: REdgeInsets.symmetric(horizontal: 16.0),
                             child: Text(
                               appLocalizations.orContinueWith,
                               style: TextStyle(
@@ -231,10 +246,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           GestureDetector(
                             onTap: () {
-                              // Navigator.pushNamed(
-                              //   context,
-                              //   AppRoutes.register,
-                              // );
+                              Navigator.pushNamed(context, AppRoutes.register);
                             },
                             child: Text(
                               appLocalizations.register,

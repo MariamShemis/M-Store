@@ -150,5 +150,8 @@ class AppLocalizationsAr extends AppLocalizations {
   String get passwords_do_not_match => 'كلمتا المرور غير متطابقتين';
 
   @override
+  String get join_MSTORE_and_simplify_the_way_you_organize_your_products_and_manage_your_inventory => 'انضم إلى M STORE واجعل تنظيم منتجاتك وإدارة مخزونك أسهل.';
+
+  @override
   String get ok => 'موافق';
 }

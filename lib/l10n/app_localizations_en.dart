@@ -150,5 +150,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get passwords_do_not_match => 'Passwords do not match';
 
   @override
+  String get join_MSTORE_and_simplify_the_way_you_organize_your_products_and_manage_your_inventory => 'Join M STORE and simplify the way you organize your products and manage your inventory.';
+
+  @override
   String get ok => 'Ok';
 }

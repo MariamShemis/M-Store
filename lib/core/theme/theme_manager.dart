@@ -94,7 +94,7 @@ class ThemeManager {
 
     /// APPBAR
     appBarTheme: AppBarTheme(
-      backgroundColor: ColorManager.background,
+      backgroundColor: Colors.transparent,
       elevation: 0,
       centerTitle: true,
       titleTextStyle: GoogleFonts.inter(
@@ -136,34 +136,20 @@ class ThemeManager {
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
       fillColor: ColorManager.white,
-      contentPadding: REdgeInsets.symmetric(
-        horizontal: 18,
-        vertical: 18,
-      ),
+      contentPadding: REdgeInsets.symmetric(horizontal: 18, vertical: 18),
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(14.r),
-        borderSide: BorderSide(
-          color: ColorManager.lightGreyEF,
-          width: 1,
-        ),
+        borderSide: BorderSide(color: ColorManager.lightGreyEF, width: 1),
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(14.r),
-        borderSide: BorderSide(
-          color: ColorManager.lightGreyEF,
-          width: 1,
-        ),
+        borderSide: BorderSide(color: ColorManager.lightGreyEF, width: 1),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(14.r),
-        borderSide: BorderSide(
-          color: ColorManager.primaryColor,
-          width: 1.5,
-        ),
+        borderSide: BorderSide(color: ColorManager.primaryColor, width: 1.5),
       ),
-      hintStyle: GoogleFonts.inter(
-        color: ColorManager.secondary,
-      ),
+      hintStyle: GoogleFonts.inter(color: ColorManager.secondary),
     ),
 
     /// CARD THEME

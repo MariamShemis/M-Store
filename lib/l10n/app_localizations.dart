@@ -377,6 +377,12 @@ abstract class AppLocalizations {
   /// **'Passwords do not match'**
   String get passwords_do_not_match;
 
+  /// No description provided for @join_MSTORE_and_simplify_the_way_you_organize_your_products_and_manage_your_inventory.
+  ///
+  /// In en, this message translates to:
+  /// **'Join M STORE and simplify the way you organize your products and manage your inventory.'**
+  String get join_MSTORE_and_simplify_the_way_you_organize_your_products_and_manage_your_inventory;
+
   /// No description provided for @ok.
   ///
   /// In en, this message translates to:

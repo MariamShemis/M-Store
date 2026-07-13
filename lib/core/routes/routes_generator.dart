@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:m_store_1/core/routes/app_routes.dart';
+import 'package:m_store_1/feature/auth/presentation/view/forget_password.dart';
 import 'package:m_store_1/feature/auth/presentation/view/login_screen.dart';
+import 'package:m_store_1/feature/auth/presentation/view/register_screen.dart';
 import 'package:m_store_1/feature/splash_screen/splash_screen.dart';
 
 abstract class RoutesGenerator {
@@ -13,6 +15,14 @@ abstract class RoutesGenerator {
         case AppRoutes.login:
         {
           return CupertinoPageRoute(builder: (context) => LoginScreen());
+        }
+        case AppRoutes.register:
+        {
+          return CupertinoPageRoute(builder: (context) => RegisterScreen());
+        }
+        case AppRoutes.forgetPassword:
+        {
+          return CupertinoPageRoute(builder: (context) => ForgetPassword());
         }
 
     }

@@ -39,7 +39,7 @@ class _CustomAuthTextFormFieldState
         Text(
           widget.labelText.toUpperCase(),
           style: TextStyle(
-            fontSize: 15.sp,
+            fontSize: 14.sp,
             fontWeight: FontWeight.w700,
             letterSpacing: 1,
             color: const Color(0xff5A5A5A),
