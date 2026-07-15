@@ -105,7 +105,7 @@ class ProfileTab extends StatelessWidget {
               SizedBox(height: 20.h),
               SizedBox(
                 width: double.infinity,
-                height: 52.h,
+                height: 50.h,
                 child: TextButton(
                   onPressed: () {
                     _showDialogLogOut(context);
