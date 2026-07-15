@@ -11,7 +11,8 @@ class IconAssets {
 
 class LottieAssets {
   static const String base = 'assets/lottie/';
-  static const String addToCart = '${base}add_to_cart.json';
+  static const String addToCart = '${base}add_to_cart1.json';
+  static const String addToCart1 = '${base}add_to_cart.json';
 }
 
 class SvgAssets {

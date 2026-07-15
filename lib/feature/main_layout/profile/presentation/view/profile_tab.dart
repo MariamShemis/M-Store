@@ -36,28 +36,7 @@ class ProfileTab extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 20.h),
-              GridView.count(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                crossAxisCount: 2,
-                crossAxisSpacing: 14.w,
-                mainAxisSpacing: 14.h,
-                mainAxisExtent: height * 0.16,
-                children: [
-                  ProfileStatisticCard(
-                    title: appLocalizations.inStock,
-                    value: "156",
-                    icon: Icons.check_circle_outline,
-                  ),
-                  ProfileStatisticCard(
-                    title: appLocalizations.revenue,
-                    value: "\$4.2k",
-                    icon: Icons.attach_money,
-                  ),
-                ],
-              ),
-              SizedBox(height: 20.h),
+              SizedBox(height: 40.h),
               Text(
                 appLocalizations.general_settings.toUpperCase(),
                 style: GoogleFonts.inter(
@@ -102,7 +81,7 @@ class ProfileTab extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(height: 20.h),
+              SizedBox(height: 40.h),
               SizedBox(
                 width: double.infinity,
                 height: 50.h,

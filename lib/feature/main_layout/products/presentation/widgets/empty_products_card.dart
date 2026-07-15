@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 import 'package:m_store_1/core/costants/assets_manager.dart';
 import 'package:m_store_1/l10n/app_localizations.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class EmptyProductsCard extends StatelessWidget {
   const EmptyProductsCard({super.key});
@@ -17,17 +17,18 @@ class EmptyProductsCard extends StatelessWidget {
         children: [
           Lottie.asset(
             LottieAssets.addToCart,
-            width: 100,
-            height: 100,
+            fit: BoxFit.fill,
+            width: 200,
+            height: 200,
           ),
-          SizedBox(height: 20.h),
           Text(
             appLocalizations.your_Inventory_is_Empty,
             style: textTheme.titleMedium,
           ),
           SizedBox(height: 10.h),
           Text(
-            appLocalizations.start_building_your_inventory_by_adding_your_first_product,
+            appLocalizations
+                .start_building_your_inventory_by_adding_your_first_product,
             textAlign: TextAlign.center,
             style: textTheme.bodySmall,
           ),
