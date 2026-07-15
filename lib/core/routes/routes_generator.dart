@@ -3,6 +3,7 @@ import 'package:m_store_1/core/routes/app_routes.dart';
 import 'package:m_store_1/feature/auth/presentation/view/forget_password.dart';
 import 'package:m_store_1/feature/auth/presentation/view/login_screen.dart';
 import 'package:m_store_1/feature/auth/presentation/view/register_screen.dart';
+import 'package:m_store_1/feature/main_layout/main_layout.dart';
 import 'package:m_store_1/feature/splash_screen/splash_screen.dart';
 
 abstract class RoutesGenerator {
@@ -12,19 +13,22 @@ abstract class RoutesGenerator {
         {
           return CupertinoPageRoute(builder: (context) => SplashScreen());
         }
-        case AppRoutes.login:
+      case AppRoutes.login:
         {
           return CupertinoPageRoute(builder: (context) => LoginScreen());
         }
-        case AppRoutes.register:
+      case AppRoutes.register:
         {
           return CupertinoPageRoute(builder: (context) => RegisterScreen());
         }
-        case AppRoutes.forgetPassword:
+      case AppRoutes.forgetPassword:
         {
           return CupertinoPageRoute(builder: (context) => ForgetPassword());
         }
-
+      case AppRoutes.mainLayout:
+        {
+          return CupertinoPageRoute(builder: (context) => MainLayout());
+        }
     }
 
     return null;

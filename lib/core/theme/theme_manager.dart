@@ -168,10 +168,11 @@ class ThemeManager {
       type: BottomNavigationBarType.fixed,
       backgroundColor: ColorManager.white,
       selectedItemColor: ColorManager.primaryColor,
-      unselectedItemColor: ColorManager.secondary,
+      unselectedItemColor: ColorManager.brownDark,
       showSelectedLabels: true,
       showUnselectedLabels: true,
       elevation: 5,
     ),
   );
+
 }

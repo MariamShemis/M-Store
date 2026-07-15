@@ -184,7 +184,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         width: double.infinity,
                         height: 46.h,
                         child: ElevatedButton.icon(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pushReplacementNamed(context, AppRoutes.mainLayout);
+                          },
                           label: Text(appLocalizations.login.toUpperCase()),
                         ),
                       ),
