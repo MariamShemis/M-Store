@@ -76,9 +76,9 @@ class ThemeManager {
         fontSize: 14.sp,
       ),
       titleLarge: GoogleFonts.inter(
-        color: ColorManager.mediumGold,
-        fontWeight: FontWeight.bold,
-        fontSize: 24.sp,
+        color: ColorManager.blackText,
+        fontWeight: FontWeight.w700,
+        fontSize: 26.sp,
       ),
       titleMedium: GoogleFonts.inter(
         color: ColorManager.blackText,
@@ -160,6 +160,19 @@ class ThemeManager {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12.r),
         side: BorderSide(color: ColorManager.lightGreyEF, width: 1.w),
+      ),
+    ),
+
+    floatingActionButtonTheme: FloatingActionButtonThemeData(
+      backgroundColor: ColorManager.primaryColor,
+      foregroundColor: ColorManager.white,
+      // shape: RoundedRectangleBorder(
+      //   borderRadius: BorderRadius.circular(60),
+      //   side: BorderSide(color: ColorsManager.white , width: 4.w),
+      // ),
+      //Todo: circle shape
+      shape: StadiumBorder(
+        side: BorderSide(color: ColorManager.white, width: 4.w),
       ),
     ),
 

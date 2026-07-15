@@ -57,10 +57,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
       ),
       body: SafeArea(
         child: Padding(
-          padding: REdgeInsets.all(16),
+          padding: REdgeInsets.symmetric(horizontal: 16),
           child: SingleChildScrollView(
             child: Column(
               children: [
+                SizedBox(height: 10.h),
                 Container(
                   width: 80.w,
                   height: 80.h,

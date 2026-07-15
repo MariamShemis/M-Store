@@ -199,4 +199,22 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get sell => 'Sell';
+
+  @override
+  String get productInventory => 'Product Inventory';
+
+  @override
+  String get manage_and_organize_your_store_products => 'Manage and organize your store products.';
+
+  @override
+  String get your_Inventory_is_Empty => 'Your Inventory is Empty';
+
+  @override
+  String get start_building_your_inventory_by_adding_your_first_product => 'Start building your inventory by adding your first product.';
+
+  @override
+  String get inStock => 'In Stock';
+
+  @override
+  String get pricing => 'pricing';
 }

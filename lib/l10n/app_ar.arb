@@ -62,5 +62,11 @@
   "topCategories": "أبرز الفئات",
   "seeAll": "عرض الكل",
   "buy": "شراء",
-  "sell": "بيع"
+  "sell": "بيع",
+  "productInventory": "مخزون المنتجات",
+  "manage_and_organize_your_store_products": "إدارة وتنظيم منتجات متجرك.",
+  "your_Inventory_is_Empty": "مخزونك فارغ",
+  "start_building_your_inventory_by_adding_your_first_product": "ابدأ في بناء مخزونك بإضافة منتجك الأول.",
+  "inStock": "متوفر في المخزن",
+  "pricing": "التسعير"
 }

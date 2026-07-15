@@ -62,5 +62,11 @@
   "topCategories": "Top Categories",
   "seeAll": "See All",
   "buy": "Buy",
-  "sell": "Sell"
+  "sell": "Sell",
+  "productInventory": "Product Inventory",
+  "manage_and_organize_your_store_products": "Manage and organize your store products.",
+  "your_Inventory_is_Empty": "Your Inventory is Empty",
+  "start_building_your_inventory_by_adding_your_first_product": "Start building your inventory by adding your first product.",
+  "inStock": "In Stock",
+  "pricing": "pricing"
 }

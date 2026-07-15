@@ -478,6 +478,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Sell'**
   String get sell;
+
+  /// No description provided for @productInventory.
+  ///
+  /// In en, this message translates to:
+  /// **'Product Inventory'**
+  String get productInventory;
+
+  /// No description provided for @manage_and_organize_your_store_products.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage and organize your store products.'**
+  String get manage_and_organize_your_store_products;
+
+  /// No description provided for @your_Inventory_is_Empty.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Inventory is Empty'**
+  String get your_Inventory_is_Empty;
+
+  /// No description provided for @start_building_your_inventory_by_adding_your_first_product.
+  ///
+  /// In en, this message translates to:
+  /// **'Start building your inventory by adding your first product.'**
+  String get start_building_your_inventory_by_adding_your_first_product;
+
+  /// No description provided for @inStock.
+  ///
+  /// In en, this message translates to:
+  /// **'In Stock'**
+  String get inStock;
+
+  /// No description provided for @pricing.
+  ///
+  /// In en, this message translates to:
+  /// **'pricing'**
+  String get pricing;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

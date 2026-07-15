@@ -47,10 +47,11 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
       body: SafeArea(
         child: Padding(
-          padding: REdgeInsets.all(16),
+          padding: REdgeInsets.symmetric(horizontal: 16),
           child: SingleChildScrollView(
             child: Column(
               children: [
+                SizedBox(height: 10.h),
                 Container(
                   width: 80.w,
                   height: 80.h,
@@ -251,23 +252,6 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ],
                       ),
-
-                      // SizedBox(
-                      //   width: double.infinity,
-                      //   height: 56.h,
-                      //   child: OutlinedButton(
-                      //     onPressed: () {},
-                      //     style: OutlinedButton.styleFrom(
-                      //       backgroundColor: ColorManager.blackText,
-                      //       foregroundColor: Colors.white,
-                      //       side: BorderSide.none,
-                      //       shape: RoundedRectangleBorder(
-                      //         borderRadius: BorderRadius.circular(14.r),
-                      //       ),
-                      //     ),
-                      //     child: const Text("REGISTER"),
-                      //   ),
-                      // ),
                     ],
                   ),
                 ),

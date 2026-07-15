@@ -199,4 +199,22 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get sell => 'بيع';
+
+  @override
+  String get productInventory => 'مخزون المنتجات';
+
+  @override
+  String get manage_and_organize_your_store_products => 'إدارة وتنظيم منتجات متجرك.';
+
+  @override
+  String get your_Inventory_is_Empty => 'مخزونك فارغ';
+
+  @override
+  String get start_building_your_inventory_by_adding_your_first_product => 'ابدأ في بناء مخزونك بإضافة منتجك الأول.';
+
+  @override
+  String get inStock => 'متوفر في المخزن';
+
+  @override
+  String get pricing => 'التسعير';
 }

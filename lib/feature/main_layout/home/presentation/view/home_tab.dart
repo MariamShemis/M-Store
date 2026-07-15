@@ -21,7 +21,11 @@ class HomeTab extends StatelessWidget {
               children: [
                 HomeHeader(
                   name: 'Julianne Moretti',
-                  image: CircleAvatar(radius: 26.r, child: Icon(Icons.person)),
+                  image: CircleAvatar(
+                    radius: 26.r,
+                    backgroundColor: ColorManager.primaryColor,
+                    child: Icon(Icons.person , color: ColorManager.white,),
+                  ),
                   onPressedNotification: () {},
                 ),
                 SizedBox(height: 3.h),

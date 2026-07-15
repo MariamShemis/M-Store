@@ -10,7 +10,8 @@ class IconAssets {
 }
 
 class LottieAssets {
-  static const String base = 'assets/lotties/';
+  static const String base = 'assets/lottie/';
+  static const String addToCart = '${base}add_to_cart.json';
 }
 
 class SvgAssets {
