@@ -154,4 +154,49 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get ok => 'Ok';
+
+  @override
+  String get home => 'Home';
+
+  @override
+  String get products => 'Products';
+
+  @override
+  String get sales => 'Sales';
+
+  @override
+  String get profile => 'Profile';
+
+  @override
+  String get available => 'Available';
+
+  @override
+  String get sold => 'Sold';
+
+  @override
+  String get capital => 'Capital';
+
+  @override
+  String get profit => 'Profit';
+
+  @override
+  String get revenue => 'Revenue';
+
+  @override
+  String get last => 'Last';
+
+  @override
+  String get days => 'Days';
+
+  @override
+  String get topCategories => 'Top Categories';
+
+  @override
+  String get seeAll => 'See All';
+
+  @override
+  String get buy => 'Buy';
+
+  @override
+  String get sell => 'Sell';
 }

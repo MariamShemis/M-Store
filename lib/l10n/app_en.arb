@@ -51,5 +51,16 @@
   "home": "Home",
   "products": "Products",
   "sales": "Sales",
-  "profile": "Profile"
+  "profile": "Profile",
+  "available": "Available",
+  "sold": "Sold",
+  "capital": "Capital",
+  "profit": "Profit",
+  "revenue": "Revenue",
+  "last": "Last",
+  "days": "Days",
+  "topCategories": "Top Categories",
+  "seeAll": "See All",
+  "buy": "Buy",
+  "sell": "Sell"
 }

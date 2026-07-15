@@ -154,4 +154,49 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get ok => 'موافق';
+
+  @override
+  String get home => 'الرئيسية';
+
+  @override
+  String get products => 'المنتجات';
+
+  @override
+  String get sales => 'المبيعات';
+
+  @override
+  String get profile => 'الملف الشخصي';
+
+  @override
+  String get available => 'المتاح';
+
+  @override
+  String get sold => 'المباع';
+
+  @override
+  String get capital => 'رأس المال';
+
+  @override
+  String get profit => 'الربح';
+
+  @override
+  String get revenue => 'الإيرادات';
+
+  @override
+  String get last => 'آخر';
+
+  @override
+  String get days => 'أيام';
+
+  @override
+  String get topCategories => 'أبرز الفئات';
+
+  @override
+  String get seeAll => 'عرض الكل';
+
+  @override
+  String get buy => 'شراء';
+
+  @override
+  String get sell => 'بيع';
 }

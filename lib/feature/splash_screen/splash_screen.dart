@@ -126,12 +126,26 @@ class _SplashScreenState extends State<SplashScreen>
                   position: _logoSlide,
                   child: ScaleTransition(
                     scale: _logoScale,
-                    child: SizedBox(
+                    child: Container(
                       width: 230.w,
                       height: 230.h,
-                      child: Image.asset(
-                        ImageAssets.logoApp,
-                        fit: BoxFit.contain,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(16.r),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black12,
+                            blurRadius: 12,
+                            offset: const Offset(0, 4),
+                          ),
+                        ],
+                      ),
+                      child: Padding(
+                        padding: REdgeInsets.all(3),
+                        child: Image.asset(
+                          ImageAssets.logoApp,
+                          fit: BoxFit.contain,
+                        ),
                       ),
                     ),
                   ),

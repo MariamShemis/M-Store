@@ -47,5 +47,20 @@
   "password_must_contain_at_least_characters": "يجب أن تحتوي كلمة المرور على 8 أحرف على الأقل",
   "passwords_do_not_match": "كلمتا المرور غير متطابقتين",
   "join_MSTORE_and_simplify_the_way_you_organize_your_products_and_manage_your_inventory": "انضم إلى M STORE واجعل تنظيم منتجاتك وإدارة مخزونك أسهل.",
-  "ok": "موافق"
+  "ok": "موافق",
+  "home": "الرئيسية",
+  "products": "المنتجات",
+  "sales": "المبيعات",
+  "profile": "الملف الشخصي",
+  "available": "المتاح",
+  "sold": "المباع",
+  "capital": "رأس المال",
+  "profit": "الربح",
+  "revenue": "الإيرادات",
+  "last": "آخر",
+  "days": "أيام",
+  "topCategories": "أبرز الفئات",
+  "seeAll": "عرض الكل",
+  "buy": "شراء",
+  "sell": "بيع"
 }
