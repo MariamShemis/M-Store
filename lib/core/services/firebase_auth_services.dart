@@ -1,0 +1,109 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:m_store_1/feature/auth/data/model/login_request.dart';
+import 'package:m_store_1/feature/auth/data/model/register_request.dart';
+import 'package:m_store_1/feature/auth/data/model/user_model.dart';
+
+class FirebaseAuthServices {
+  FirebaseAuthServices._();
+
+  static final FirebaseAuth _auth = FirebaseAuth.instance;
+  static final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  /// Register
+  static Future<UserCredential> register(RegisterRequest request) async {
+    UserCredential credential = await _auth.createUserWithEmailAndPassword(
+      email: request.email,
+      password: request.password,
+    );
+
+    UserModel user = UserModel(
+      id: credential.user!.uid,
+      name: request.name,
+      email: request.email,
+      phone: request.phone,
+      createdAt: DateTime.now(),
+    );
+
+    await addUserToFirestore(user);
+
+    return credential;
+  }
+
+  /// Login
+  static Future<UserCredential> login(LoginRequest request) async {
+    return await _auth.signInWithEmailAndPassword(
+      email: request.email,
+      password: request.password,
+    );
+  }
+
+  /// Logout
+  static Future<void> logout() async {
+    await _auth.signOut();
+  }
+
+  /// Reset Password
+  static Future<void> resetPassword(String email) async {
+    await _auth.sendPasswordResetEmail(email: email);
+  }
+
+  /// Current Firebase User
+  static User? currentFirebaseUser() {
+    return _auth.currentUser;
+  }
+
+  /// Current UID
+  static String? currentUserId() {
+    return _auth.currentUser?.uid;
+  }
+
+  /// Users Collection
+  static CollectionReference<UserModel> getUsersCollection() {
+    return _firestore
+        .collection(UserModel.collectionName)
+        .withConverter<UserModel>(
+          fromFirestore: (snapshot, _) => UserModel.fromJson(snapshot.data()!),
+          toFirestore: (user, _) => user.toJson(),
+        );
+  }
+
+  /// Add User
+  static Future<void> addUserToFirestore(UserModel user) async {
+    await getUsersCollection().doc(user.id).set(user);
+  }
+
+  /// Get User
+  static Future<UserModel?> getUser(String uid) async {
+    final doc = await getUsersCollection().doc(uid).get();
+
+    return doc.data();
+  }
+
+  /// Get Current User
+  static Future<UserModel> getCurrentUser() async {
+    User? firebaseUser = _auth.currentUser;
+
+    if (firebaseUser == null) {
+      throw Exception("No user logged in");
+    }
+
+    UserModel? user = await getUser(firebaseUser.uid);
+
+    if (user == null) {
+      throw Exception("User not found");
+    }
+
+    return user;
+  }
+
+  /// Update User
+  static Future<void> updateUser(UserModel user) async {
+    await getUsersCollection().doc(user.id).update(user.toJson());
+  }
+
+  /// Delete User
+  static Future<void> deleteUser(String uid) async {
+    await getUsersCollection().doc(uid).delete();
+  }
+}
