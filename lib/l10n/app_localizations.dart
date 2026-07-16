@@ -509,11 +509,209 @@ abstract class AppLocalizations {
   /// **'In Stock'**
   String get inStock;
 
+  /// No description provided for @buyerInformation.
+  ///
+  /// In en, this message translates to:
+  /// **'Buyer Information'**
+  String get buyerInformation;
+
+  /// No description provided for @buyer.
+  ///
+  /// In en, this message translates to:
+  /// **'Buyer'**
+  String get buyer;
+
+  /// No description provided for @buyerName.
+  ///
+  /// In en, this message translates to:
+  /// **'Buyer Name'**
+  String get buyerName;
+
+  /// No description provided for @enter_buyer_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter buyer name'**
+  String get enter_buyer_name;
+
+  /// No description provided for @address.
+  ///
+  /// In en, this message translates to:
+  /// **'Address'**
+  String get address;
+
+  /// No description provided for @enter_buyer_address.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter buyer address'**
+  String get enter_buyer_address;
+
+  /// No description provided for @enter_buyer_phone_number.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter buyer phone number'**
+  String get enter_buyer_phone_number;
+
+  /// No description provided for @coreIdentity.
+  ///
+  /// In en, this message translates to:
+  /// **'Core Identity'**
+  String get coreIdentity;
+
+  /// No description provided for @productNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Product Number'**
+  String get productNumber;
+
+  /// No description provided for @enter_product_number.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter product number'**
+  String get enter_product_number;
+
+  /// No description provided for @category.
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get category;
+
+  /// No description provided for @enter_category.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter category'**
+  String get enter_category;
+
+  /// No description provided for @productName.
+  ///
+  /// In en, this message translates to:
+  /// **'Product Name'**
+  String get productName;
+
+  /// No description provided for @enter_product_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter product name'**
+  String get enter_product_name;
+
+  /// No description provided for @description.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get description;
+
+  /// No description provided for @enter_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter description'**
+  String get enter_description;
+
+  /// No description provided for @physicalAttributes.
+  ///
+  /// In en, this message translates to:
+  /// **'Physical Attributes'**
+  String get physicalAttributes;
+
+  /// No description provided for @material.
+  ///
+  /// In en, this message translates to:
+  /// **'Material'**
+  String get material;
+
+  /// No description provided for @enter_material.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter material'**
+  String get enter_material;
+
+  /// No description provided for @primaryColor.
+  ///
+  /// In en, this message translates to:
+  /// **'Primary Color'**
+  String get primaryColor;
+
+  /// No description provided for @enter_color.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter color'**
+  String get enter_color;
+
+  /// No description provided for @size.
+  ///
+  /// In en, this message translates to:
+  /// **'Size'**
+  String get size;
+
+  /// No description provided for @dimensions.
+  ///
+  /// In en, this message translates to:
+  /// **'Dimensions'**
+  String get dimensions;
+
+  /// No description provided for @enter_size.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter size'**
+  String get enter_size;
+
+  /// No description provided for @initialQuantity.
+  ///
+  /// In en, this message translates to:
+  /// **'Initial Quantity'**
+  String get initialQuantity;
+
+  /// No description provided for @enter_quantity.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter quantity'**
+  String get enter_quantity;
+
+  /// No description provided for @purchasePrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase Price'**
+  String get purchasePrice;
+
+  /// No description provided for @sellingPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Selling Price'**
+  String get sellingPrice;
+
+  /// No description provided for @productImagery.
+  ///
+  /// In en, this message translates to:
+  /// **'Product Imagery'**
+  String get productImagery;
+
+  /// No description provided for @upload_Main_Image.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload Main Image'**
+  String get upload_Main_Image;
+
   /// No description provided for @pricing.
   ///
   /// In en, this message translates to:
   /// **'pricing'**
   String get pricing;
+
+  /// No description provided for @addProduct.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Product'**
+  String get addProduct;
+
+  /// No description provided for @search_by_ID_or_Name.
+  ///
+  /// In en, this message translates to:
+  /// **'Search by ID or Name'**
+  String get search_by_ID_or_Name;
+
+  /// No description provided for @iD.
+  ///
+  /// In en, this message translates to:
+  /// **'ID'**
+  String get iD;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

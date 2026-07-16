@@ -216,5 +216,104 @@ class AppLocalizationsEn extends AppLocalizations {
   String get inStock => 'In Stock';
 
   @override
+  String get buyerInformation => 'Buyer Information';
+
+  @override
+  String get buyer => 'Buyer';
+
+  @override
+  String get buyerName => 'Buyer Name';
+
+  @override
+  String get enter_buyer_name => 'Enter buyer name';
+
+  @override
+  String get address => 'Address';
+
+  @override
+  String get enter_buyer_address => 'Enter buyer address';
+
+  @override
+  String get enter_buyer_phone_number => 'Enter buyer phone number';
+
+  @override
+  String get coreIdentity => 'Core Identity';
+
+  @override
+  String get productNumber => 'Product Number';
+
+  @override
+  String get enter_product_number => 'Enter product number';
+
+  @override
+  String get category => 'Category';
+
+  @override
+  String get enter_category => 'Enter category';
+
+  @override
+  String get productName => 'Product Name';
+
+  @override
+  String get enter_product_name => 'Enter product name';
+
+  @override
+  String get description => 'Description';
+
+  @override
+  String get enter_description => 'Enter description';
+
+  @override
+  String get physicalAttributes => 'Physical Attributes';
+
+  @override
+  String get material => 'Material';
+
+  @override
+  String get enter_material => 'Enter material';
+
+  @override
+  String get primaryColor => 'Primary Color';
+
+  @override
+  String get enter_color => 'Enter color';
+
+  @override
+  String get size => 'Size';
+
+  @override
+  String get dimensions => 'Dimensions';
+
+  @override
+  String get enter_size => 'Enter size';
+
+  @override
+  String get initialQuantity => 'Initial Quantity';
+
+  @override
+  String get enter_quantity => 'Enter quantity';
+
+  @override
+  String get purchasePrice => 'Purchase Price';
+
+  @override
+  String get sellingPrice => 'Selling Price';
+
+  @override
+  String get productImagery => 'Product Imagery';
+
+  @override
+  String get upload_Main_Image => 'Upload Main Image';
+
+  @override
   String get pricing => 'pricing';
+
+  @override
+  String get addProduct => 'Add Product';
+
+  @override
+  String get search_by_ID_or_Name => 'Search by ID or Name';
+
+  @override
+  String get iD => 'ID';
 }

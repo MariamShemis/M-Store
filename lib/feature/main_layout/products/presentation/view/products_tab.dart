@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:m_store_1/core/costants/color_manager.dart';
+import 'package:m_store_1/core/routes/app_routes.dart';
 import 'package:m_store_1/feature/main_layout/products/presentation/widgets/empty_products_card.dart';
 import 'package:m_store_1/l10n/app_localizations.dart';
 
@@ -13,7 +14,9 @@ class ProductsTab extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.pushNamed(context, AppRoutes.addProduct);
+        },
         child: Icon(Icons.add),
       ),
       body: SafeArea(

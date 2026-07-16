@@ -216,5 +216,104 @@ class AppLocalizationsAr extends AppLocalizations {
   String get inStock => 'متوفر في المخزن';
 
   @override
+  String get buyerInformation => 'معلومات المشتري';
+
+  @override
+  String get buyer => 'المشتري';
+
+  @override
+  String get buyerName => 'اسم المشتري';
+
+  @override
+  String get enter_buyer_name => 'أدخل اسم المشتري';
+
+  @override
+  String get address => 'العنوان';
+
+  @override
+  String get enter_buyer_address => 'أدخل عنوان المشتري';
+
+  @override
+  String get enter_buyer_phone_number => 'أدخل رقم هاتف المشتري';
+
+  @override
+  String get coreIdentity => 'البيانات الأساسية';
+
+  @override
+  String get productNumber => 'رقم المنتج';
+
+  @override
+  String get enter_product_number => 'أدخل رقم المنتج';
+
+  @override
+  String get category => 'الفئة';
+
+  @override
+  String get enter_category => 'أدخل الفئة';
+
+  @override
+  String get productName => 'اسم المنتج';
+
+  @override
+  String get enter_product_name => 'أدخل اسم المنتج';
+
+  @override
+  String get description => 'الوصف';
+
+  @override
+  String get enter_description => 'أدخل الوصف';
+
+  @override
+  String get physicalAttributes => 'المواصفات الفيزيائية';
+
+  @override
+  String get material => 'المادة الخام';
+
+  @override
+  String get enter_material => 'أدخل المادة الخام';
+
+  @override
+  String get primaryColor => 'اللون الأساسي';
+
+  @override
+  String get enter_color => 'أدخل اللون';
+
+  @override
+  String get size => 'المقاس';
+
+  @override
+  String get dimensions => 'الأبعاد';
+
+  @override
+  String get enter_size => 'أدخل المقاس';
+
+  @override
+  String get initialQuantity => 'الكمية الأولية';
+
+  @override
+  String get enter_quantity => 'أدخل الكمية';
+
+  @override
+  String get purchasePrice => 'سعر الشراء';
+
+  @override
+  String get sellingPrice => 'سعر البيع';
+
+  @override
+  String get productImagery => 'صور المنتج';
+
+  @override
+  String get upload_Main_Image => 'رفع الصورة الرئيسية';
+
+  @override
   String get pricing => 'التسعير';
+
+  @override
+  String get addProduct => 'إضافة منتج';
+
+  @override
+  String get search_by_ID_or_Name => 'البحث بالرقم التعريفي أو الاسم';
+
+  @override
+  String get iD => 'الرقم التعريفي';
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:m_store_1/core/routes/app_routes.dart';
+import 'package:m_store_1/feature/add_product/presentation/view/add_product.dart';
 import 'package:m_store_1/feature/auth/presentation/view/forget_password.dart';
 import 'package:m_store_1/feature/auth/presentation/view/login_screen.dart';
 import 'package:m_store_1/feature/auth/presentation/view/register_screen.dart';
@@ -29,8 +30,11 @@ abstract class RoutesGenerator {
         {
           return CupertinoPageRoute(builder: (context) => MainLayout());
         }
+      case AppRoutes.addProduct:
+        {
+          return CupertinoPageRoute(builder: (context) => AddProduct());
+        }
     }
-
     return null;
   }
 }
