@@ -1,9 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:m_store_1/core/costants/assets_manager.dart';
 import 'package:m_store_1/core/costants/color_manager.dart';
 import 'package:m_store_1/core/routes/app_routes.dart';
+import 'package:m_store_1/core/services/session_service.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -91,16 +93,30 @@ class _SplashScreenState extends State<SplashScreen>
         curve: Curves.easeOut,
       ),
     );
-    _startAnimation();
+    _navigate();
   }
 
-  Future<void> _startAnimation() async {
+  Future<void> _navigate() async {
     _logoController.forward();
+
     await Future.delayed(const Duration(milliseconds: 700));
+
     _textController.forward();
+
     await Future.delayed(const Duration(seconds: 3));
-    if (mounted) {
-      Navigator.pushReplacementNamed(context, AppRoutes.login);
+
+    if (!mounted) return;
+
+    if (FirebaseAuth.instance.currentUser != null) {
+      Navigator.pushReplacementNamed(
+        context,
+        AppRoutes.mainLayout,
+      );
+    } else {
+      Navigator.pushReplacementNamed(
+        context,
+        AppRoutes.login,
+      );
     }
   }
 

@@ -7,6 +7,7 @@ import 'package:m_store_1/core/costants/color_manager.dart';
 import 'package:m_store_1/core/utils/ui_utils.dart';
 import 'package:m_store_1/core/utils/validators/app_validators.dart';
 import 'package:m_store_1/core/widget/custom_auth_text_form_field.dart';
+import 'package:m_store_1/core/widget/logo_app.dart';
 import 'package:m_store_1/feature/auth/data/cubit/auth_cubit.dart';
 import 'package:m_store_1/feature/auth/data/cubit/auth_state.dart';
 import 'package:m_store_1/feature/auth/data/model/register_request.dart';
@@ -85,35 +86,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   child: Column(
                     children: [
                       SizedBox(height: 10.h),
-                      Container(
-                        width: 80.w,
-                        height: 80.h,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(14.r),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black12,
-                              blurRadius: 12,
-                              offset: const Offset(0, 4),
-                            ),
-                          ],
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.all(2.r),
-                          child: Image.asset(ImageAssets.logoApp),
-                        ),
-                      ),
-                      SizedBox(height: 10.h),
-                      Text(
-                        "M STORE",
-                        style: GoogleFonts.playfairDisplay(
-                          fontSize: 24.sp,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: 3,
-                          color: ColorManager.blackText,
-                        ),
-                      ),
+                      LogoApp(),
                       SizedBox(height: 25.h),
                       Container(
                         padding: EdgeInsets.all(22.r),

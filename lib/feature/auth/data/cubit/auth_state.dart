@@ -4,19 +4,20 @@ abstract class AuthState {}
 
 class AuthInitialState extends AuthState {}
 
-/// Register
 
 class RegisterLoadingState extends AuthState {}
 
-class RegisterSuccessState extends AuthState {}
+class RegisterSuccessState extends AuthState {
+  final UserModel user;
+
+  RegisterSuccessState(this.user);
+}
 
 class RegisterErrorState extends AuthState {
   final String message;
 
   RegisterErrorState(this.message);
 }
-
-/// Login
 
 class LoginLoadingState extends AuthState {}
 
@@ -32,8 +33,6 @@ class LoginErrorState extends AuthState {
   LoginErrorState(this.message);
 }
 
-/// Reset Password
-
 class ResetPasswordLoadingState extends AuthState {}
 
 class ResetPasswordSuccessState extends AuthState {}
@@ -43,8 +42,6 @@ class ResetPasswordErrorState extends AuthState {
 
   ResetPasswordErrorState(this.message);
 }
-
-/// Logout
 
 class LogoutLoadingState extends AuthState {}
 

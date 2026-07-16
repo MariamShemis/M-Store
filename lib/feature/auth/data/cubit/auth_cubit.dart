@@ -14,10 +14,6 @@ class AuthCubit extends Cubit<AuthState> {
 
   UserModel? currentUser;
 
-  ///==========================
-  /// Register
-  ///==========================
-
   Future<void> register(RegisterRequest request) async {
     emit(RegisterLoadingState());
 
@@ -26,17 +22,13 @@ class AuthCubit extends Cubit<AuthState> {
 
       currentUser = await FirebaseAuthServices.getCurrentUser();
 
-      emit(RegisterSuccessState());
+      emit(RegisterSuccessState(currentUser!));
     } on FirebaseAuthException catch (e) {
-      emit(RegisterErrorState(e.message ?? "Register Failed"));
+      emit(RegisterErrorState(_firebaseErrorMessage(e)));
     } catch (e) {
       emit(RegisterErrorState(e.toString()));
     }
   }
-
-  ///==========================
-  /// Login
-  ///==========================
 
   Future<void> login(LoginRequest request) async {
     emit(LoginLoadingState());
@@ -48,25 +40,17 @@ class AuthCubit extends Cubit<AuthState> {
 
       emit(LoginSuccessState(currentUser!));
     } on FirebaseAuthException catch (e) {
-      emit(LoginErrorState(e.message ?? "Login Failed"));
+      emit(LoginErrorState(_firebaseErrorMessage(e)));
     } catch (e) {
       emit(LoginErrorState(e.toString()));
     }
   }
-
-  ///==========================
-  /// Current User
-  ///==========================
 
   Future<void> getCurrentUser() async {
     try {
       currentUser = await FirebaseAuthServices.getCurrentUser();
     } catch (_) {}
   }
-
-  ///==========================
-  /// Reset Password
-  ///==========================
 
   Future<void> resetPassword(String email) async {
     emit(ResetPasswordLoadingState());
@@ -76,15 +60,11 @@ class AuthCubit extends Cubit<AuthState> {
 
       emit(ResetPasswordSuccessState());
     } on FirebaseAuthException catch (e) {
-      emit(ResetPasswordErrorState(e.message ?? "Failed"));
+      emit(ResetPasswordErrorState(_firebaseErrorMessage(e)));
     } catch (e) {
       emit(ResetPasswordErrorState(e.toString()));
     }
   }
-
-  ///==========================
-  /// Logout
-  ///==========================
 
   Future<void> logout() async {
     emit(LogoutLoadingState());
@@ -96,7 +76,7 @@ class AuthCubit extends Cubit<AuthState> {
 
       emit(LogoutSuccessState());
     } on FirebaseAuthException catch (e) {
-      emit(LogoutErrorState(e.message ?? "Logout Failed"));
+      emit(LogoutErrorState(_firebaseErrorMessage(e)));
     } catch (e) {
       emit(LogoutErrorState(e.toString()));
     }
