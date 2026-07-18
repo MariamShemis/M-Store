@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:m_store_1/core/costants/color_manager.dart';
+import 'package:m_store_1/core/utils/validators/product_validators.dart';
 import 'package:m_store_1/feature/add_product/presentation/widgets/custom_product_text_form_field.dart';
 import 'package:m_store_1/l10n/app_localizations.dart';
 
@@ -74,18 +75,24 @@ class CoreInformationSection extends StatelessWidget {
             labelText: appLocalizations.productNumber,
             hintText: appLocalizations.enter_product_number,
             controller: productNumberController,
+            validator: (value) =>
+                ProductValidators.validateProductNumber(value, context),
           ),
           SizedBox(height: 20.h),
           CustomProductTextFormField(
             labelText: appLocalizations.productName,
             hintText: appLocalizations.enter_product_name,
             controller: productNameController,
+            validator: (value) =>
+                ProductValidators.validateProductName(value, context),
           ),
           SizedBox(height: 20.h),
           CustomProductTextFormField(
             labelText: appLocalizations.category,
             hintText: appLocalizations.enter_category,
             controller: categoryController,
+              validator: (value) =>
+                  ProductValidators.validateCategory(value, context),
           ),
           SizedBox(height: 20.h),
           CustomProductTextFormField(
@@ -93,6 +100,8 @@ class CoreInformationSection extends StatelessWidget {
             maxLines: 3,
             hintText: appLocalizations.enter_description,
             controller: descriptionController,
+            validator: (value) =>
+                ProductValidators.validateDescription(value, context),
           ),
         ],
       ),

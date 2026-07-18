@@ -11,12 +11,22 @@ class ProductModel {
   String material;
   String color;
   String dimensions;
+
   double purchasePrice;
   double sellingPrice;
+  double get profit => sellingPrice - purchasePrice;
+
   int quantity;
   int soldQuantity;
   int availableQuantity;
+
+  bool isSold;
+
+  List<Map<String, dynamic>> buyers;
+
+  String mainImage;
   List<String> images;
+
   DateTime createdAt;
 
   ProductModel({
@@ -33,13 +43,17 @@ class ProductModel {
     required this.quantity,
     required this.soldQuantity,
     required this.availableQuantity,
+    required this.isSold,
+    required this.buyers,
     required this.images,
+    required this.mainImage,
     required this.createdAt,
   });
 
   factory ProductModel.fromJson(Map<String, dynamic> json) {
     return ProductModel(
       id: json["id"] ?? "",
+      mainImage: json["mainImage"] ?? "",
       productNumber: json["productNumber"] ?? "",
       productName: json["productName"] ?? "",
       description: json["description"] ?? "",
@@ -54,12 +68,15 @@ class ProductModel {
       availableQuantity: json["availableQuantity"] ?? 0,
       images: List<String>.from(json["images"] ?? []),
       createdAt: (json["createdAt"] as Timestamp).toDate(),
+      isSold: json["isSold"] ?? false,
+      buyers: List<Map<String, dynamic>>.from(json["buyers"] ?? []),
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
       "id": id,
+      "mainImage": mainImage,
       "productNumber": productNumber,
       "productName": productName,
       "description": description,
@@ -74,6 +91,15 @@ class ProductModel {
       "availableQuantity": availableQuantity,
       "images": images,
       "createdAt": Timestamp.fromDate(createdAt),
+      "profit": profit,
+      "isSold": isSold,
+      "buyers": buyers,
+      "profit": profit,
     };
   }
+}
+enum ProductFilter {
+  all,
+  available,
+  sold,
 }

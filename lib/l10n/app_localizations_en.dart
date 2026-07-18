@@ -312,8 +312,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get addProduct => 'Add Product';
 
   @override
-  String get search_by_ID_or_Name => 'Search by ID or Name';
+  String get search_by_ID_Name_or_Category => 'Search by ID, Name, or Category';
 
   @override
   String get iD => 'ID';
+
+  @override
+  String get enter_valid_number => 'Enter valid number';
+
+  @override
+  String get qTY => 'QTY';
 }

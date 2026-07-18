@@ -101,6 +101,8 @@
   "upload_Main_Image": "Upload Main Image",
   "pricing": "pricing",
   "addProduct": "Add Product",
-  "search_by_ID_or_Name": "Search by ID or Name",
-  "iD": "ID"
+  "search_by_ID_Name_or_Category": "Search by ID, Name, or Category",
+  "iD": "ID",
+  "enter_valid_number": "Enter valid number",
+  "qTY": "QTY"
 }

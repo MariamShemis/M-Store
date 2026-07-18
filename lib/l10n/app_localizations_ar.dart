@@ -312,8 +312,14 @@ class AppLocalizationsAr extends AppLocalizations {
   String get addProduct => 'إضافة منتج';
 
   @override
-  String get search_by_ID_or_Name => 'البحث بالرقم التعريفي أو الاسم';
+  String get search_by_ID_Name_or_Category => 'ابحث عن طريق المعرف، الاسم، أو القسم';
 
   @override
-  String get iD => 'الرقم التعريفي';
+  String get iD => 'المعرف';
+
+  @override
+  String get enter_valid_number => 'أدخل رقماً صحيحاً';
+
+  @override
+  String get qTY => 'الكمية';
 }

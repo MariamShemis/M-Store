@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -76,13 +78,13 @@ class ProductImagesUploader extends StatelessWidget {
           borderRadius: BorderRadius.circular(20.r),
         ),
         child: mainImagePath != null
-            ? Center(
-                child: Text(
-                  "Main Image Selected ✅",
-                  style: GoogleFonts.inter(
-                    color: ColorManager.darkBronze,
-                    fontWeight: FontWeight.bold,
-                  ),
+            ? ClipRRect(
+                borderRadius: BorderRadius.circular(20.r),
+                child: Image.file(
+                  File(mainImagePath!),
+                  width: double.infinity,
+                  height: double.infinity,
+                  fit: BoxFit.cover,
                 ),
               )
             : Column(
@@ -125,40 +127,56 @@ class ProductImagesUploader extends StatelessWidget {
     return Row(
       children: List.generate(
         3,
-        (index) => Expanded(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 6.w),
-            child: GestureDetector(
-              onTap: () => onPickAdditionalImage(index),
-              child: DottedBorder(
-                color: ColorManager.lightGrey.withOpacity(0.5),
-                strokeWidth: 1.5,
-                dashPattern: const [6, 4],
-                borderType: BorderType.RRect,
-                radius: Radius.circular(16.r),
-                child: Container(
-                  height: 85.h,
-                  decoration: BoxDecoration(
-                    color: ColorManager.background,
-                    borderRadius: BorderRadius.circular(16.r),
-                  ),
-                  child: Center(
-                    child: additionalImages.length > index
-                        ? const Icon(
-                            Icons.check_circle_rounded,
-                            color: Colors.green,
-                          )
-                        : Icon(
-                            Icons.add,
-                            size: 28.sp,
-                            color: ColorManager.greyDark,
-                          ),
+            (index) {
+          final bool hasImage = index < additionalImages.length;
+
+          return Expanded(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 6.w),
+              child: GestureDetector(
+                onTap: () => onPickAdditionalImage(index),
+                child: DottedBorder(
+                  color: ColorManager.lightGrey.withOpacity(0.5),
+                  strokeWidth: 1.5,
+                  dashPattern: const [6, 4],
+                  borderType: BorderType.RRect,
+                  radius: Radius.circular(16.r),
+                  child: Container(
+                    height: 85.h,
+                    decoration: BoxDecoration(
+                      color: ColorManager.background,
+                      borderRadius: BorderRadius.circular(16.r),
+                    ),
+                    child: Center(
+                      child: hasImage
+                          ? ClipRRect(
+                        borderRadius: BorderRadius.circular(16.r),
+                        child: Image.file(
+                          File(additionalImages[index]),
+                          width: double.infinity,
+                          height: double.infinity,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) {
+                            return Icon(
+                              Icons.broken_image_outlined,
+                              size: 28.sp,
+                              color: ColorManager.red,
+                            );
+                          },
+                        ),
+                      )
+                          : Icon(
+                        Icons.add,
+                        size: 28.sp,
+                        color: ColorManager.greyDark,
+                      ),
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-        ),
+          );
+        },
       ),
     );
   }

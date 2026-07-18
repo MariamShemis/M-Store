@@ -172,14 +172,24 @@ class ProductsFirebaseServices {
     required String uid,
     required String productId,
     required int quantity,
+    required Map<String, dynamic> buyer,
   }) async {
-    final product = await getProduct(uid: uid, productId: productId);
+    final product = await getProduct(
+      uid: uid,
+      productId: productId,
+    );
 
     if (product == null) return;
 
+    final soldQuantity = product.soldQuantity + quantity;
+
+    final availableQuantity = product.availableQuantity - quantity;
+
     await getProductsCollection(uid).doc(productId).update({
-      "soldQuantity": product.soldQuantity + quantity,
-      "availableQuantity": product.availableQuantity - quantity,
+      "soldQuantity": soldQuantity,
+      "availableQuantity": availableQuantity,
+      "isSold": availableQuantity == 0,
+      "buyers": FieldValue.arrayUnion([buyer]),
     });
   }
 

@@ -18,8 +18,8 @@ class EmptyProductsCard extends StatelessWidget {
           Lottie.asset(
             LottieAssets.addToCart,
             fit: BoxFit.fill,
-            width: 200,
-            height: 200,
+            width: 250,
+            height: 250,
           ),
           Text(
             appLocalizations.your_Inventory_is_Empty,

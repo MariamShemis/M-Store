@@ -101,6 +101,8 @@
   "upload_Main_Image": "رفع الصورة الرئيسية",
   "pricing": "التسعير",
   "addProduct": "إضافة منتج",
-  "search_by_ID_or_Name": "البحث بالرقم التعريفي أو الاسم",
-  "iD": "الرقم التعريفي"
+  "search_by_ID_Name_or_Category": "ابحث عن طريق المعرف، الاسم، أو القسم",
+  "iD": "المعرف",
+  "enter_valid_number": "أدخل رقماً صحيحاً",
+  "qTY": "الكمية"
 }

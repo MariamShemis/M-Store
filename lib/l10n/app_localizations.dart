@@ -701,17 +701,29 @@ abstract class AppLocalizations {
   /// **'Add Product'**
   String get addProduct;
 
-  /// No description provided for @search_by_ID_or_Name.
+  /// No description provided for @search_by_ID_Name_or_Category.
   ///
   /// In en, this message translates to:
-  /// **'Search by ID or Name'**
-  String get search_by_ID_or_Name;
+  /// **'Search by ID, Name, or Category'**
+  String get search_by_ID_Name_or_Category;
 
   /// No description provided for @iD.
   ///
   /// In en, this message translates to:
   /// **'ID'**
   String get iD;
+
+  /// No description provided for @enter_valid_number.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter valid number'**
+  String get enter_valid_number;
+
+  /// No description provided for @qTY.
+  ///
+  /// In en, this message translates to:
+  /// **'QTY'**
+  String get qTY;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
