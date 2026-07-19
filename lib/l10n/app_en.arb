@@ -5,7 +5,7 @@
   "next": "Next",
   "email": "Email",
   "phoneNumber": "Phone Number",
-  "enterYourPhone": "Enter Your Phone",
+  "enterYourPhoneNumber": "Enter Your Phone Number",
   "password": "Password",
   "enterYourEmail": "Enter your email",
   "name": "Name",
@@ -126,5 +126,13 @@
   "editProduct": "Edit Product",
   "updateProduct": "Update Product",
   "selectPrimaryColor": "Select Primary Color",
-  "qTY": "QTY"
+  "profileUpdatedSuccessfully": "Profile Updated Successfully",
+  "take_A_Photo": "Take A Photo",
+  "chooseFromGallery": "Choose From Gallery",
+  "birthday": "Birthday",
+  "gender": "Gender",
+  "selectGender": "Select Gender",
+  "qTY": "QTY",
+  "enter_your_password": "Enter your password",
+  "confirm": "Confirm"
 }

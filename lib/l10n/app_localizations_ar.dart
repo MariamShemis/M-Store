@@ -27,7 +27,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get phoneNumber => 'رقم الهاتف';
 
   @override
-  String get enterYourPhone => 'أدخل رقم الهاتف';
+  String get enterYourPhoneNumber => 'أدخل رقمك الهاتف';
 
   @override
   String get password => 'كلمة المرور';
@@ -384,5 +384,29 @@ class AppLocalizationsAr extends AppLocalizations {
   String get selectPrimaryColor => 'اختر اللون الرئيسي';
 
   @override
-  String get qTY => 'الكمية';
+  String get profileUpdatedSuccessfully => 'Profile Updated Successfully';
+
+  @override
+  String get take_A_Photo => 'Take A Photo';
+
+  @override
+  String get chooseFromGallery => 'Choose From Gallery';
+
+  @override
+  String get birthday => 'Birthday';
+
+  @override
+  String get gender => 'Gender';
+
+  @override
+  String get selectGender => 'Select Gender';
+
+  @override
+  String get qTY => 'QTY';
+
+  @override
+  String get enter_your_password => 'أدخل كلمة المرور الخاصة بك';
+
+  @override
+  String get confirm => 'تأكيد';
 }

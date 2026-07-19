@@ -71,10 +71,17 @@ class _ProductsTabState extends State<ProductsTab> {
                     if (!snapshot.hasData) {
                       return const Center(child: CircularProgressIndicator());
                     }
-                    final products = snapshot.data!.docs;
-                    var filteredProducts = products.where((doc) {
-                      final product = doc.data();
 
+                    final products = snapshot.data!.docs.toList();
+
+                    products.sort((a, b) {
+                      final first = int.tryParse(a.data().productNumber) ?? 0;
+                      final second = int.tryParse(b.data().productNumber) ?? 0;
+
+                      return first.compareTo(second);
+                    });
+                    final filteredProducts = products.where((doc) {
+                      final product = doc.data();
                       final matchesSearch =
                           product.productName.toLowerCase().contains(_search) ||
                               product.productNumber.toLowerCase().contains(_search) ||

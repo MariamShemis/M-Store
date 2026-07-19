@@ -74,6 +74,7 @@ class CoreInformationSection extends StatelessWidget {
           CustomProductTextFormField(
             labelText: appLocalizations.productNumber,
             hintText: appLocalizations.enter_product_number,
+            keyboardType: TextInputType.number,
             controller: productNumberController,
             validator: (value) =>
                 ProductValidators.validateProductNumber(value, context),
@@ -81,6 +82,7 @@ class CoreInformationSection extends StatelessWidget {
           SizedBox(height: 20.h),
           CustomProductTextFormField(
             labelText: appLocalizations.productName,
+            keyboardType: TextInputType.name,
             hintText: appLocalizations.enter_product_name,
             controller: productNameController,
             validator: (value) =>
@@ -90,6 +92,7 @@ class CoreInformationSection extends StatelessWidget {
           CustomProductTextFormField(
             labelText: appLocalizations.category,
             hintText: appLocalizations.enter_category,
+            keyboardType: TextInputType.text,
             controller: categoryController,
               validator: (value) =>
                   ProductValidators.validateCategory(value, context),
@@ -98,6 +101,7 @@ class CoreInformationSection extends StatelessWidget {
           CustomProductTextFormField(
             labelText: appLocalizations.description,
             maxLines: 3,
+            keyboardType: TextInputType.text,
             hintText: appLocalizations.enter_description,
             controller: descriptionController,
             validator: (value) =>

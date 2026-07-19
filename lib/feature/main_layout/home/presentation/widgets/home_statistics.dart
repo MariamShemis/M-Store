@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:m_store_1/core/costants/color_manager.dart';
+import 'package:m_store_1/feature/main_layout/home/data/model/dashboard_model.dart';
 import 'package:m_store_1/l10n/app_localizations.dart';
 
 class HomeStatistics extends StatelessWidget {
-  const HomeStatistics({super.key});
+  const HomeStatistics({
+    super.key,
+    required this.dashboard,
+  });
+
+  final DashboardModel dashboard;
 
   @override
   Widget build(BuildContext context) {
@@ -20,32 +26,31 @@ class HomeStatistics extends StatelessWidget {
       children: [
         _StatisticCard(
           title: appLocalizations.products.toUpperCase(),
-          value: "1,248",
+          value: dashboard.totalProducts.toString(),
           icon: Icons.inventory_2_outlined,
         ),
+
         _StatisticCard(
           title: appLocalizations.available.toUpperCase(),
-          value: "842",
+          value: dashboard.availableProducts.toString(),
           icon: Icons.check_circle_outline,
         ),
+
         _StatisticCard(
           title: appLocalizations.sold.toUpperCase(),
-          value: "406",
+          value: dashboard.soldProducts.toString(),
           icon: Icons.shopping_bag_outlined,
         ),
-        _StatisticCard(
-          title: appLocalizations.capital.toUpperCase(),
-          value: "\$24.5k",
-          icon: Icons.account_balance_outlined,
-        ),
+
         _StatisticCard(
           title: appLocalizations.sales.toUpperCase(),
-          value: "\$48.2k",
+          value: "${dashboard.totalSales.toStringAsFixed(2)} ${appLocalizations.lE}",
           icon: Icons.payments_outlined,
         ),
+
         _StatisticCard(
           title: appLocalizations.profit.toUpperCase(),
-          value: "\$23.7k",
+          value: "${dashboard.totalProfit.toStringAsFixed(2)} ${appLocalizations.lE}",
           icon: Icons.trending_up,
           isHighlighted: true,
         ),

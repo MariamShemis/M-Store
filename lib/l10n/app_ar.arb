@@ -5,7 +5,7 @@
   "next": "التالي",
   "email": "البريد الإلكتروني",
   "phoneNumber": "رقم الهاتف",
-  "enterYourPhone": "أدخل رقم الهاتف",
+  "enterYourPhoneNumber": "أدخل رقمك الهاتف",
   "password": "كلمة المرور",
   "enterYourEmail": "أدخل بريدك الإلكتروني",
   "name": "الاسم",
@@ -126,5 +126,13 @@
   "editProduct": "تعديل المنتج",
   "updateProduct": "تحديث المنتج",
   "selectPrimaryColor": "اختر اللون الرئيسي",
-  "qTY": "الكمية"
+  "profileUpdatedSuccessfully": "Profile Updated Successfully",
+  "take_A_Photo": "Take A Photo",
+  "chooseFromGallery": "Choose From Gallery",
+  "birthday": "Birthday",
+  "gender": "Gender",
+  "selectGender": "Select Gender",
+  "qTY": "QTY",
+  "enter_your_password": "أدخل كلمة المرور الخاصة بك",
+  "confirm": "تأكيد"
 }

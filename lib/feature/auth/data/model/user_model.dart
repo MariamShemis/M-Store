@@ -7,6 +7,11 @@ class UserModel {
   String name;
   String email;
   String phone;
+
+  String? image;
+  String? birthday;
+  String? gender;
+
   DateTime createdAt;
 
   UserModel({
@@ -14,6 +19,9 @@ class UserModel {
     required this.name,
     required this.email,
     required this.phone,
+    this.image,
+    this.birthday,
+    this.gender,
     required this.createdAt,
   });
 
@@ -23,6 +31,9 @@ class UserModel {
       name: json["name"] ?? "",
       email: json["email"] ?? "",
       phone: json["phone"] ?? "",
+      image: json["image"],
+      birthday: json["birthday"],
+      gender: json["gender"],
       createdAt: (json["createdAt"] as Timestamp).toDate(),
     );
   }
@@ -33,6 +44,9 @@ class UserModel {
       "name": name,
       "email": email,
       "phone": phone,
+      "image": image,
+      "birthday": birthday,
+      "gender": gender,
       "createdAt": Timestamp.fromDate(createdAt),
     };
   }
@@ -42,6 +56,9 @@ class UserModel {
     String? name,
     String? email,
     String? phone,
+    String? image,
+    String? birthday,
+    String? gender,
     DateTime? createdAt,
   }) {
     return UserModel(
@@ -49,6 +66,9 @@ class UserModel {
       name: name ?? this.name,
       email: email ?? this.email,
       phone: phone ?? this.phone,
+      image: image ?? this.image,
+      birthday: birthday ?? this.birthday,
+      gender: gender ?? this.gender,
       createdAt: createdAt ?? this.createdAt,
     );
   }

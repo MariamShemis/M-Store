@@ -87,6 +87,7 @@ class PhysicalAttributesSection extends StatelessWidget {
             controller: materialController,
             validator: (value) =>
                 ProductValidators.validateMaterial(value, context),
+            keyboardType: TextInputType.text,
           ),
           SizedBox(height: 20.h),
           GestureDetector(
@@ -111,6 +112,7 @@ class PhysicalAttributesSection extends StatelessWidget {
             controller: sizeController,
             validator: (value) =>
                 ProductValidators.validateSize(value, context),
+            keyboardType: TextInputType.visiblePassword,
           ),
           SizedBox(height: 20.h),
           CustomProductTextFormField(

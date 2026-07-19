@@ -51,14 +51,19 @@ class ProfileTab extends StatelessWidget {
                     phoneNumber: cubit.currentUser?.phone ?? "",
                     image: CircleAvatar(
                       radius: 40.r,
-                      backgroundColor: ColorManager.primaryColor.withOpacity(
-                        0.6,
-                      ),
-                      child: Icon(
+                      backgroundColor: ColorManager.primaryColor.withOpacity(.15),
+                      backgroundImage: cubit.currentUser?.image != null &&
+                          cubit.currentUser!.image!.isNotEmpty
+                          ? NetworkImage(cubit.currentUser!.image!)
+                          : null,
+                      child: cubit.currentUser?.image == null ||
+                          cubit.currentUser!.image!.isEmpty
+                          ? Icon(
                         Icons.person,
                         size: 35.sp,
-                        color: ColorManager.white,
-                      ),
+                        color: ColorManager.primaryColor,
+                      )
+                          : null,
                     ),
                   ),
                   SizedBox(height: 40.h),
@@ -89,7 +94,16 @@ class ProfileTab extends StatelessWidget {
                         ProfileMenuTile(
                           icon: Icons.person_outline_outlined,
                           title: appLocalizations.editProfile,
-                          onTap: () {},
+                          onTap: () async {
+                            final result = await Navigator.pushNamed(
+                              context,
+                              AppRoutes.editProfile,
+                            );
+
+                            if (result == true && context.mounted) {
+                              ProfileCubit.get(context).loadProfile();
+                            }
+                          },
                         ),
                         ProfileMenuTile(
                           icon: Icons.security_rounded,

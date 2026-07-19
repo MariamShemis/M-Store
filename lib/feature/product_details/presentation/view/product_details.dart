@@ -106,8 +106,8 @@ class ProductDetails extends StatelessWidget {
                               onSave: (name, phone, address, quantity) {
                                 if (quantity >
                                     currentProduct.availableQuantity) {
-                                  UiUtils.showToast(
-                                    appLocalizations.quantity_is_greater_than_available_quantity,
+                                  UiUtils.showError(
+                                    context , appLocalizations.quantity_is_greater_than_available_quantity,
                                   );
                                   return;
                                 }

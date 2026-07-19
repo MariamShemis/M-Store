@@ -131,11 +131,11 @@ abstract class AppLocalizations {
   /// **'Phone Number'**
   String get phoneNumber;
 
-  /// No description provided for @enterYourPhone.
+  /// No description provided for @enterYourPhoneNumber.
   ///
   /// In en, this message translates to:
-  /// **'Enter Your Phone'**
-  String get enterYourPhone;
+  /// **'Enter Your Phone Number'**
+  String get enterYourPhoneNumber;
 
   /// No description provided for @password.
   ///
@@ -845,11 +845,59 @@ abstract class AppLocalizations {
   /// **'Select Primary Color'**
   String get selectPrimaryColor;
 
+  /// No description provided for @profileUpdatedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile Updated Successfully'**
+  String get profileUpdatedSuccessfully;
+
+  /// No description provided for @take_A_Photo.
+  ///
+  /// In en, this message translates to:
+  /// **'Take A Photo'**
+  String get take_A_Photo;
+
+  /// No description provided for @chooseFromGallery.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose From Gallery'**
+  String get chooseFromGallery;
+
+  /// No description provided for @birthday.
+  ///
+  /// In en, this message translates to:
+  /// **'Birthday'**
+  String get birthday;
+
+  /// No description provided for @gender.
+  ///
+  /// In en, this message translates to:
+  /// **'Gender'**
+  String get gender;
+
+  /// No description provided for @selectGender.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Gender'**
+  String get selectGender;
+
   /// No description provided for @qTY.
   ///
   /// In en, this message translates to:
   /// **'QTY'**
   String get qTY;
+
+  /// No description provided for @enter_your_password.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your password'**
+  String get enter_your_password;
+
+  /// No description provided for @confirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm'**
+  String get confirm;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

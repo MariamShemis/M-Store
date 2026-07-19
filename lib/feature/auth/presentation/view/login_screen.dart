@@ -222,7 +222,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             SizedBox(height: 24.h),
                             CustomLoginOutlineBorder(
-                              onPressed: () {},
+                              onPressed: AuthCubit.get(context).loginWithGoogle,
                               isGoogleLogin: true,
                               isGoogle: false,
                             ),

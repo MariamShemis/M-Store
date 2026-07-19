@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:m_store_1/core/services/firebase_auth_services.dart';
+import 'package:m_store_1/core/services/google_sign_in_services.dart';
 import 'package:m_store_1/feature/auth/data/model/login_request.dart';
 import 'package:m_store_1/feature/auth/data/model/register_request.dart';
 import 'package:m_store_1/feature/auth/data/model/user_model.dart';
@@ -108,6 +109,39 @@ class AuthCubit extends Cubit<AuthState> {
 
       default:
         return 'Something went wrong. Please try again.';
+    }
+  }
+
+  Future<void> loginWithGoogle() async {
+    emit(LoginLoadingState());
+
+    try {
+      final credential = await GoogleSignInServices.signIn();
+
+      final firebaseUser = credential.user!;
+
+      UserModel? user = await FirebaseAuthServices.getUser(firebaseUser.uid);
+
+      if (user == null) {
+        user = UserModel(
+          id: firebaseUser.uid,
+          name: firebaseUser.displayName ?? "",
+          email: firebaseUser.email ?? "",
+          phone: firebaseUser.phoneNumber ?? "",
+          image: firebaseUser.photoURL,
+          createdAt: DateTime.now(),
+        );
+
+        await FirebaseAuthServices.addUserToFirestore(user);
+      }
+
+      currentUser = user;
+
+      emit(LoginSuccessState(user));
+    } on FirebaseAuthException catch (e) {
+      emit(LoginErrorState(_firebaseErrorMessage(e)));
+    } catch (e) {
+      emit(LoginErrorState(e.toString()));
     }
   }
 }

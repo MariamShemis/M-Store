@@ -2,15 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:m_store_1/core/costants/color_manager.dart';
+import 'package:m_store_1/feature/main_layout/home/data/model/category_statistics_model.dart';
 import 'package:m_store_1/l10n/app_localizations.dart';
 
-class CategoryStatistics extends StatelessWidget {
-  const CategoryStatistics({super.key});
+class CategoryStatistics extends StatefulWidget {
+  const CategoryStatistics({
+    super.key,
+    required this.categories,
+  });
+
+  final List<CategoryStatisticsModel> categories;
+
+  @override
+  State<CategoryStatistics> createState() => _CategoryStatisticsState();
+}
+
+class _CategoryStatisticsState extends State<CategoryStatistics> {
 
   @override
   Widget build(BuildContext context) {
     AppLocalizations appLocalizations = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
+
     return Container(
       padding: REdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -26,42 +39,28 @@ class CategoryStatistics extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Row(
-            children: [
-              Text(
-                appLocalizations.topCategories,
-                style: theme.textTheme.titleMedium,
-              ),
-              const Spacer(),
-              TextButton(
-                onPressed: () {},
-                child: Text(
-                  appLocalizations.seeAll,
-                  style: GoogleFonts.inter(
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w400,
-                    color: ColorManager.darkBronze,
-                  ),
-                ),
-              ),
-            ],
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              appLocalizations.topCategories,
+              style: theme.textTheme.titleMedium,
+            ),
           ),
           SizedBox(height: 20.h),
-          const _CategoryItem(
-            title: "Electronics",
-            products: 145,
-            progress: .92,
+          Column(
+            children: widget.categories
+                .map(
+                  (e) => Padding(
+                padding: EdgeInsets.only(bottom: 18.h),
+                child: _CategoryItem(
+                  title: e.category,
+                  products: e.productsCount,
+                  progress: e.percentage,
+                ),
+              ),
+            )
+                .toList(),
           ),
-          SizedBox(height: 18.h),
-          const _CategoryItem(title: "Fashion", products: 98, progress: .68),
-          SizedBox(height: 18.h),
-          const _CategoryItem(
-            title: "Accessories",
-            products: 55,
-            progress: .45,
-          ),
-          SizedBox(height: 18.h),
-          const _CategoryItem(title: "Perfumes", products: 22, progress: .20),
         ],
       ),
     );

@@ -132,11 +132,13 @@ class BuyerInformationSection extends StatelessWidget {
                     labelText: appLocalizations.buyerName,
                     hintText: appLocalizations.enter_buyer_name,
                     controller: buyer.nameController,
+                    keyboardType: TextInputType.name,
                   ),
                   SizedBox(height: 20.h),
                   CustomProductTextFormField(
                     labelText: appLocalizations.address,
                     hintText: appLocalizations.enter_buyer_address,
+                    keyboardType: TextInputType.streetAddress,
                     controller: buyer.addressController,
                   ),
                   SizedBox(height: 20.h),

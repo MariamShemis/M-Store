@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:m_store_1/feature/auth/data/model/login_request.dart';
 import 'package:m_store_1/feature/auth/data/model/register_request.dart';
 import 'package:m_store_1/feature/auth/data/model/user_model.dart';
@@ -105,5 +106,44 @@ class FirebaseAuthServices {
   /// Delete User
   static Future<void> deleteUser(String uid) async {
     await getUsersCollection().doc(uid).delete();
+  }
+
+  static Future<void> updateCurrentUserName(String name) async {
+    await _auth.currentUser?.updateDisplayName(name);
+  }
+
+  static Future<void> updateCurrentUserEmail(String email) async {
+    await _auth.currentUser?.verifyBeforeUpdateEmail(email);
+  }
+
+  static Future<void> reauthenticate(String password) async {
+    final user = FirebaseAuth.instance.currentUser!;
+
+    final provider = user.providerData.first.providerId;
+
+    if (provider == "password") {
+      final credential = EmailAuthProvider.credential(
+        email: user.email!,
+        password: password,
+      );
+
+      await user.reauthenticateWithCredential(credential);
+      return;
+    }
+
+    if (provider == "google.com") {
+      final googleUser = await GoogleSignIn().signIn();
+
+      if (googleUser == null) return;
+
+      final googleAuth = await googleUser.authentication;
+
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      await user.reauthenticateWithCredential(credential);
+    }
   }
 }
