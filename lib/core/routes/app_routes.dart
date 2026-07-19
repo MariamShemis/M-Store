@@ -5,5 +5,6 @@ abstract class AppRoutes {
   static const String forgetPassword = "/ForgetPassword";
   static const String mainLayout = "/mainLayout";
   static const String addProduct = "/addProduct";
+  static const String productDetails = "/productDetails";
 
 }

@@ -719,6 +719,132 @@ abstract class AppLocalizations {
   /// **'Enter valid number'**
   String get enter_valid_number;
 
+  /// No description provided for @productDeletedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Product Deleted Successfully'**
+  String get productDeletedSuccessfully;
+
+  /// No description provided for @productDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Product Details'**
+  String get productDetails;
+
+  /// No description provided for @quantity_is_greater_than_available_quantity.
+  ///
+  /// In en, this message translates to:
+  /// **'Quantity is greater than available quantity'**
+  String get quantity_is_greater_than_available_quantity;
+
+  /// No description provided for @deleteProduct.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Product'**
+  String get deleteProduct;
+
+  /// No description provided for @are_you_sure_you_want_to_delete_this_product_.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this product?'**
+  String get are_you_sure_you_want_to_delete_this_product_;
+
+  /// No description provided for @delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get delete;
+
+  /// No description provided for @quantity.
+  ///
+  /// In en, this message translates to:
+  /// **'Quantity'**
+  String get quantity;
+
+  /// No description provided for @sellProduct.
+  ///
+  /// In en, this message translates to:
+  /// **'Sell Product'**
+  String get sellProduct;
+
+  /// No description provided for @edit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get edit;
+
+  /// No description provided for @retailPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Retail Price'**
+  String get retailPrice;
+
+  /// No description provided for @color.
+  ///
+  /// In en, this message translates to:
+  /// **'Color'**
+  String get color;
+
+  /// No description provided for @units.
+  ///
+  /// In en, this message translates to:
+  /// **'Units'**
+  String get units;
+
+  /// No description provided for @modified.
+  ///
+  /// In en, this message translates to:
+  /// **'Modified'**
+  String get modified;
+
+  /// No description provided for @availableQuantity.
+  ///
+  /// In en, this message translates to:
+  /// **'Available Quantity'**
+  String get availableQuantity;
+
+  /// No description provided for @please_select_a_main_image.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a main image'**
+  String get please_select_a_main_image;
+
+  /// No description provided for @main_image_is_missing_from_cache_please_re_pick_it.
+  ///
+  /// In en, this message translates to:
+  /// **'Main image is missing from cache, please re-pick it'**
+  String get main_image_is_missing_from_cache_please_re_pick_it;
+
+  /// No description provided for @added.
+  ///
+  /// In en, this message translates to:
+  /// **'Added'**
+  String get added;
+
+  /// No description provided for @product_added_successfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Product added successfully'**
+  String get product_added_successfully;
+
+  /// No description provided for @editProduct.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Product'**
+  String get editProduct;
+
+  /// No description provided for @updateProduct.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Product'**
+  String get updateProduct;
+
+  /// No description provided for @selectPrimaryColor.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Primary Color'**
+  String get selectPrimaryColor;
+
   /// No description provided for @qTY.
   ///
   /// In en, this message translates to:

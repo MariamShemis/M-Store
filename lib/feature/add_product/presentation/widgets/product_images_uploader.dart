@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -23,7 +22,8 @@ class ProductImagesUploader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AppLocalizations appLocalizations = AppLocalizations.of(context)!;
+    final appLocalizations = AppLocalizations.of(context)!;
+
     return Container(
       padding: REdgeInsets.all(24),
       decoration: BoxDecoration(
@@ -32,14 +32,12 @@ class ProductImagesUploader extends StatelessWidget {
         boxShadow: [
           BoxShadow(
             color: ColorManager.black0.withOpacity(0.03),
-            spreadRadius: 0,
             blurRadius: 20,
             offset: const Offset(0, 4),
           ),
         ],
       ),
       child: Column(
-        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
@@ -50,12 +48,16 @@ class ProductImagesUploader extends StatelessWidget {
               color: ColorManager.blackText,
             ),
           ),
+
           SizedBox(height: 24.h),
+
           GestureDetector(
             onTap: onPickMainImage,
             child: _buildMainImageUploadArea(context),
           ),
+
           SizedBox(height: 16.h),
+
           _buildAdditionalImagesArea(),
         ],
       ),
@@ -63,62 +65,49 @@ class ProductImagesUploader extends StatelessWidget {
   }
 
   Widget _buildMainImageUploadArea(BuildContext context) {
-    AppLocalizations appLocalizations = AppLocalizations.of(context)!;
+    final appLocalizations = AppLocalizations.of(context)!;
+
     return DottedBorder(
-      color: ColorManager.lightGrey.withOpacity(0.5),
+      color: ColorManager.lightGrey.withOpacity(.5),
       strokeWidth: 1.5,
       dashPattern: const [8, 5],
       borderType: BorderType.RRect,
       radius: Radius.circular(20.r),
       child: Container(
         height: 280.h,
-        width: double.infinity,
         decoration: BoxDecoration(
           color: ColorManager.background,
           borderRadius: BorderRadius.circular(20.r),
         ),
         child: mainImagePath != null
             ? ClipRRect(
-                borderRadius: BorderRadius.circular(20.r),
-                child: Image.file(
-                  File(mainImagePath!),
-                  width: double.infinity,
-                  height: double.infinity,
-                  fit: BoxFit.cover,
-                ),
-              )
+          borderRadius: BorderRadius.circular(20.r),
+          child: _buildImage(mainImagePath!),
+        )
             : Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    padding: REdgeInsets.all(18),
-                    decoration: const BoxDecoration(
-                      color: ColorManager.white,
-                      shape: BoxShape.circle,
-                    ),
-                    child: Icon(
-                      Icons.add_photo_alternate_outlined,
-                      size: 32.sp,
-                      color: ColorManager.darkBronze,
-                    ),
-                  ),
-                  SizedBox(height: 18.h),
-                  Text(
-                    appLocalizations.upload_Main_Image,
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      fontWeight: FontWeight.w600,
-                      color: ColorManager.blackText,
-                    ),
-                  ),
-                  SizedBox(height: 6.h),
-                  Text(
-                    "PNG, JPG or WEBP",
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: ColorManager.secondary,
-                    ),
-                  ),
-                ],
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              width: double.infinity,
+              padding: REdgeInsets.all(18),
+              decoration: const BoxDecoration(
+                color: ColorManager.white,
+                shape: BoxShape.circle,
               ),
+              child: Icon(
+                Icons.add_photo_alternate_outlined,
+                size: 32.sp,
+                color: ColorManager.darkBronze,
+              ),
+            ),
+            SizedBox(height: 18.h),
+            Text(
+              appLocalizations.upload_Main_Image,
+            ),
+            SizedBox(height: 6.h),
+            const Text("PNG, JPG or WEBP"),
+          ],
+        ),
       ),
     );
   }
@@ -128,7 +117,7 @@ class ProductImagesUploader extends StatelessWidget {
       children: List.generate(
         3,
             (index) {
-          final bool hasImage = index < additionalImages.length;
+          final hasImage = index < additionalImages.length;
 
           return Expanded(
             child: Padding(
@@ -136,7 +125,7 @@ class ProductImagesUploader extends StatelessWidget {
               child: GestureDetector(
                 onTap: () => onPickAdditionalImage(index),
                 child: DottedBorder(
-                  color: ColorManager.lightGrey.withOpacity(0.5),
+                  color: ColorManager.lightGrey.withOpacity(.5),
                   strokeWidth: 1.5,
                   dashPattern: const [6, 4],
                   borderType: BorderType.RRect,
@@ -147,25 +136,13 @@ class ProductImagesUploader extends StatelessWidget {
                       color: ColorManager.background,
                       borderRadius: BorderRadius.circular(16.r),
                     ),
-                    child: Center(
-                      child: hasImage
-                          ? ClipRRect(
-                        borderRadius: BorderRadius.circular(16.r),
-                        child: Image.file(
-                          File(additionalImages[index]),
-                          width: double.infinity,
-                          height: double.infinity,
-                          fit: BoxFit.cover,
-                          errorBuilder: (context, error, stackTrace) {
-                            return Icon(
-                              Icons.broken_image_outlined,
-                              size: 28.sp,
-                              color: ColorManager.red,
-                            );
-                          },
-                        ),
-                      )
-                          : Icon(
+                    child: hasImage
+                        ? ClipRRect(
+                      borderRadius: BorderRadius.circular(16.r),
+                      child: _buildImage(additionalImages[index]),
+                    )
+                        : Center(
+                      child: Icon(
                         Icons.add,
                         size: 28.sp,
                         color: ColorManager.greyDark,
@@ -178,6 +155,26 @@ class ProductImagesUploader extends StatelessWidget {
           );
         },
       ),
+    );
+  }
+
+  Widget _buildImage(String path) {
+    if (path.startsWith("http")) {
+      return Image.network(
+        path,
+        width: double.infinity,
+        height: double.infinity,
+        fit: BoxFit.cover,
+        errorBuilder: (_, __, ___) => const Icon(Icons.broken_image),
+      );
+    }
+
+    return Image.file(
+      File(path),
+      width: double.infinity,
+      height: double.infinity,
+      fit: BoxFit.cover,
+      errorBuilder: (_, __, ___) => const Icon(Icons.broken_image),
     );
   }
 }

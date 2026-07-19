@@ -19,7 +19,11 @@ import 'package:m_store_1/feature/main_layout/products/data/model/product_model.
 import 'package:m_store_1/l10n/app_localizations.dart';
 
 class AddProduct extends StatefulWidget {
-  const AddProduct({super.key});
+  final ProductModel? product;
+
+  const AddProduct({super.key, this.product});
+
+  bool get isEdit => product != null;
 
   @override
   State<AddProduct> createState() => _AddProductState();
@@ -71,10 +75,95 @@ class _AddProductState extends State<AddProduct> {
     "white": Colors.white,
   };
 
+  String _getColorName(Color color) {
+    for (var entry in _colorNamesMap.entries) {
+      if (entry.value.value == color.value) {
+        final name = entry.key
+            .split(' ')
+            .map(
+              (word) => word.substring(0, 1).toUpperCase() + word.substring(1),
+            )
+            .join(' ');
+        final hex =
+            '#${color.value.toRadixString(16).substring(2, 8).toUpperCase()}';
+        return "$name | $hex";
+      }
+    }
+    final hex =
+        '#${color.value.toRadixString(16).substring(2, 8).toUpperCase()}';
+    return hex;
+  }
+
+  void _openColorPickerDialog() {
+    AppLocalizations appLocalizations = AppLocalizations.of(context)!;
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            appLocalizations.selectPrimaryColor,
+            style: GoogleFonts.playfairDisplay(fontWeight: FontWeight.bold),
+          ),
+          content: SingleChildScrollView(
+            child: MaterialPicker(
+              pickerColor: _selectedColor,
+              onColorChanged: (Color color) {
+                setState(() {
+                  _selectedColor = color;
+                  _primaryColorController.text = _getColorName(color);
+                });
+                Navigator.of(context).pop();
+              },
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   @override
   void initState() {
     super.initState();
-    _addNewBuyer();
+
+    if (widget.isEdit) {
+      final product = widget.product!;
+
+      _productNumberController.text = product.productNumber;
+      _categoryController.text = product.category;
+      _productNameController.text = product.productName;
+      _descriptionController.text = product.description;
+
+      _materialController.text = product.material;
+      _primaryColorController.text = product.color;
+
+      _sizeController.text = product.dimensions;
+      _quantityController.text = product.quantity.toString();
+
+      _purchasePriceController.text = product.purchasePrice.toString();
+
+      _sellingPriceController.text = product.sellingPrice.toString();
+
+      _mainImagePath = product.mainImage;
+
+      _additionalImages.addAll(product.images);
+
+      if (product.isSold && product.buyers.isNotEmpty) {
+        for (var buyer in product.buyers) {
+          _buyers.add(
+            BuyerData(
+              nameController: TextEditingController(text: buyer["name"]),
+              phoneController: TextEditingController(text: buyer["phone"]),
+              addressController: TextEditingController(text: buyer["address"]),
+              quantityController: TextEditingController(
+                text: buyer["quantity"].toString(),
+              ),
+            ),
+          );
+        }
+      }
+    } else {
+      _addNewBuyer();
+    }
   }
 
   void _addNewBuyer() {
@@ -84,6 +173,9 @@ class _AddProductState extends State<AddProduct> {
           nameController: TextEditingController(),
           addressController: TextEditingController(),
           phoneController: TextEditingController(),
+          quantityController: TextEditingController(
+            text: "1",
+          ),
         ),
       );
     });
@@ -105,11 +197,9 @@ class _AddProductState extends State<AddProduct> {
     if (image == null) return;
 
     setState(() {
-      // لو بنعدل على صورة موجودة أصلاً في هذا المكان
       if (index < _additionalImages.length) {
         _additionalImages[index] = image.path;
       } else {
-        // لو بنضيف صورة جديدة، بنعمل لها add مباشرة بالترتيب الطبيعي
         _additionalImages.add(image.path);
       }
     });
@@ -121,50 +211,51 @@ class _AddProductState extends State<AddProduct> {
         _buyers[index].nameController.dispose();
         _buyers[index].addressController.dispose();
         _buyers[index].phoneController.dispose();
+        _buyers[index].quantityController.dispose();
         _buyers.removeAt(index);
       });
     }
   }
 
-  String _getColorName(Color color) {
-    for (var entry in _colorNamesMap.entries) {
-      if (entry.value.value == color.value) {
-        return entry.key
-            .split(' ')
-            .map(
-              (word) => word.substring(0, 1).toUpperCase() + word.substring(1),
-            )
-            .join(' ');
-      }
-    }
-    return '#${color.value.toRadixString(16).substring(2, 8).toUpperCase()}';
-  }
-
-  void _openColorPickerDialog() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(
-            'Select Primary Color',
-            style: GoogleFonts.playfairDisplay(fontWeight: FontWeight.bold),
-          ),
-          content: SingleChildScrollView(
-            child: MaterialPicker(
-              pickerColor: _selectedColor,
-              onColorChanged: (Color color) {
-                setState(() {
-                  _selectedColor = color;
-                  _primaryColorController.text = _getColorName(color);
-                });
-                Navigator.of(context).pop();
-              },
-            ),
-          ),
-        );
-      },
-    );
-  }
+  // String _getColorName(Color color) {
+  //   for (var entry in _colorNamesMap.entries) {
+  //     if (entry.value.value == color.value) {
+  //       return entry.key
+  //           .split(' ')
+  //           .map(
+  //             (word) => word.substring(0, 1).toUpperCase() + word.substring(1),
+  //           )
+  //           .join(' ');
+  //     }
+  //   }
+  //   return '#${color.value.toRadixString(16).substring(2, 8).toUpperCase()}';
+  // }
+  //
+  // void _openColorPickerDialog() {
+  //   showDialog(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return AlertDialog(
+  //         title: Text(
+  //           'Select Primary Color',
+  //           style: GoogleFonts.playfairDisplay(fontWeight: FontWeight.bold),
+  //         ),
+  //         content: SingleChildScrollView(
+  //           child: MaterialPicker(
+  //             pickerColor: _selectedColor,
+  //             onColorChanged: (Color color) {
+  //               setState(() {
+  //                 _selectedColor = color;
+  //                 _primaryColorController.text = _getColorName(color);
+  //               });
+  //               Navigator.of(context).pop();
+  //             },
+  //           ),
+  //         ),
+  //       );
+  //     },
+  //   );
+  // }
 
   void _onColorTextChanged(String value) {
     final cleanValue = value.trim().toLowerCase();
@@ -188,19 +279,30 @@ class _AddProductState extends State<AddProduct> {
   }
 
   Future<void> _saveProduct() async {
+    AppLocalizations appLocalizations = AppLocalizations.of(context)!;
     FocusScope.of(context).unfocus();
 
     if (!_formKey.currentState!.validate()) {
       return;
     }
     if (_mainImagePath == null) {
-      UiUtils.showError(context, "Please select a main image");
+      UiUtils.showError(
+        context,
+        appLocalizations.please_select_a_main_image,
+      );
       return;
     }
-    final mainImageFile = File(_mainImagePath!);
-    if (!await mainImageFile.exists()) {
-      UiUtils.showError(context, "Main image is missing from cache, please re-pick it");
-      return;
+
+    if (!_mainImagePath!.startsWith("http")) {
+      final mainImageFile = File(_mainImagePath!);
+
+      if (!await mainImageFile.exists()) {
+        UiUtils.showError(
+          context,
+          appLocalizations.main_image_is_missing_from_cache_please_re_pick_it,
+        );
+        return;
+      }
     }
 
     final List<File> validAdditionalImages = [];
@@ -210,6 +312,14 @@ class _AddProductState extends State<AddProduct> {
         validAdditionalImages.add(file);
       }
     }
+    final oldImages = _additionalImages
+        .where((e) => e.startsWith("http"))
+        .toList();
+
+    final newImages = _additionalImages
+        .where((e) => !e.startsWith("http"))
+        .map(File.new)
+        .toList();
 
     final quantity = int.parse(_quantityController.text);
     final purchasePrice = double.parse(_purchasePriceController.text);
@@ -224,13 +334,18 @@ class _AddProductState extends State<AddProduct> {
         "name": buyer.nameController.text.trim(),
         "phone": buyer.phoneController.text.trim(),
         "address": buyer.addressController.text.trim(),
+        "quantity": int.tryParse(
+          buyer.quantityController.text.trim(),
+        ) ??
+            1,
       };
     }).toList();
 
-    final bool isSold = buyers.isNotEmpty;
-
+    final bool isSold = widget.isEdit
+        ? widget.product!.isSold
+        : false;
     final product = ProductModel(
-      id: "",
+      id: widget.product?.id ?? "",
       productNumber: _productNumberController.text.trim(),
       productName: _productNameController.text.trim(),
       description: _descriptionController.text.trim(),
@@ -241,20 +356,45 @@ class _AddProductState extends State<AddProduct> {
       purchasePrice: purchasePrice,
       sellingPrice: sellingPrice,
       quantity: quantity,
-      soldQuantity: isSold ? quantity : 0,
-      availableQuantity: isSold ? 0 : quantity,
-      isSold: isSold,
-      buyers: buyers,
-      mainImage: "",
+      soldQuantity: widget.isEdit ? widget.product!.soldQuantity : 0,
+
+      availableQuantity: widget.isEdit
+          ? widget.product!.availableQuantity
+          : quantity,
+
+      isSold: widget.isEdit ? widget.product!.isSold : false,
+      buyers: widget.isEdit
+          ? (widget.product!.isSold ? buyers : widget.product!.buyers)
+          : buyers,
+      mainImage: widget.isEdit
+          ? widget.product!.mainImage
+          : "",
       images: [],
-      createdAt: DateTime.now(),
+      createdAt: widget.isEdit
+          ? widget.product!.createdAt
+          : DateTime.now(),
+
+      updatedAt: widget.isEdit
+          ? widget.product!.updatedAt
+          : null,
     );
 
-    await AddProductCubit.get(context).addProduct(
-      product: product,
-      mainImage: mainImageFile,
-      images: validAdditionalImages,
-    );
+    if (widget.isEdit) {
+      await AddProductCubit.get(context).updateProduct(
+        product: product,
+        mainImage: _mainImagePath!.startsWith("http")
+            ? null
+            : File(_mainImagePath!),
+        images: newImages,
+        oldImages: oldImages,
+      );
+    } else {
+      await AddProductCubit.get(context).addProduct(
+        product: product,
+        mainImage: File(_mainImagePath!),
+        images: _additionalImages.map(File.new).toList(),
+      );
+    }
   }
 
   @override
@@ -275,6 +415,7 @@ class _AddProductState extends State<AddProduct> {
       buyer.nameController.dispose();
       buyer.addressController.dispose();
       buyer.phoneController.dispose();
+      buyer.quantityController.dispose();
     }
     super.dispose();
   }
@@ -290,7 +431,7 @@ class _AddProductState extends State<AddProduct> {
         }
         if (state is AddProductSuccessState) {
           UiUtils.hideLoading(context);
-          UiUtils.showToast("Product added successfully");
+          UiUtils.showToast(appLocalizations.product_added_successfully);
           Navigator.pop(context);
         }
         if (state is AddProductErrorState) {
@@ -306,7 +447,7 @@ class _AddProductState extends State<AddProduct> {
               icon: const Icon(Icons.arrow_back_ios_new_rounded),
             ),
             title: Text(
-              appLocalizations.addProduct,
+              widget.isEdit ? appLocalizations.editProduct : appLocalizations.addProduct,
               style: textTheme.titleMedium,
             ),
           ),
@@ -317,7 +458,9 @@ class _AddProductState extends State<AddProduct> {
               height: 54.h,
               child: ElevatedButton(
                 onPressed: _saveProduct,
-                child: Text(appLocalizations.save),
+                child: Text(
+                  widget.isEdit ? appLocalizations.updateProduct : appLocalizations.save,
+                ),
               ),
             ),
           ),
@@ -374,11 +517,12 @@ class _AddProductState extends State<AddProduct> {
                     onColorTap: _openColorPickerDialog,
                   ),
                   SizedBox(height: 24.h),
-                  BuyerInformationSection(
-                    buyers: _buyers,
-                    onAddBuyer: _addNewBuyer,
-                    onRemoveBuyer: _removeBuyer,
-                  ),
+                  if (!widget.isEdit || widget.product!.isSold)
+                    BuyerInformationSection(
+                      buyers: _buyers,
+                      onAddBuyer: _addNewBuyer,
+                      onRemoveBuyer: _removeBuyer,
+                    ),
                   SizedBox(height: 50.h),
                 ],
               ),

@@ -172,24 +172,22 @@ class ProductsFirebaseServices {
     required String uid,
     required String productId,
     required int quantity,
-    required Map<String, dynamic> buyer,
+    required List<Map<String, dynamic>> buyers,
   }) async {
+
     final product = await getProduct(
       uid: uid,
       productId: productId,
     );
-
     if (product == null) return;
-
     final soldQuantity = product.soldQuantity + quantity;
-
     final availableQuantity = product.availableQuantity - quantity;
 
     await getProductsCollection(uid).doc(productId).update({
       "soldQuantity": soldQuantity,
       "availableQuantity": availableQuantity,
       "isSold": availableQuantity == 0,
-      "buyers": FieldValue.arrayUnion([buyer]),
+      "buyers": FieldValue.arrayUnion(buyers),
     });
   }
 
@@ -307,5 +305,18 @@ class ProductsFirebaseServices {
       totalSales: sales,
       totalProfit: profit,
     );
+  }
+
+  static Stream<ProductModel> productStream(
+      String uid,
+      String productId,
+      ) {
+    return FirebaseFirestore.instance
+        .collection("users")
+        .doc(uid)
+        .collection("products")
+        .doc(productId)
+        .snapshots()
+        .map((doc) => ProductModel.fromJson(doc.data()!));
   }
 }

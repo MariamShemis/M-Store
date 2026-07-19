@@ -26,7 +26,6 @@ class AddProductCubit extends Cubit<AddProductState> {
       if (uid == null) {
         throw Exception("User not found");
       }
-
       final mainImageUrl =
       await CloudinaryServices.uploadImage(mainImage);
 
@@ -38,6 +37,43 @@ class AddProductCubit extends Cubit<AddProductState> {
 
       await ProductsFirebaseServices.addProduct(
         uid: uid,
+        product: product,
+      );
+
+      emit(AddProductSuccessState());
+    } catch (e) {
+      emit(AddProductErrorState(e.toString()));
+    }
+  }
+
+  Future<void> updateProduct({
+    required ProductModel product,
+    File? mainImage,
+    List<File>? images,
+    List<String>? oldImages,
+  }) async {
+    emit(AddProductLoadingState());
+
+    try {
+      if (mainImage != null) {
+        product.mainImage =
+        await CloudinaryServices.uploadImage(mainImage);
+      }
+      final uploadedImages = <String>[];
+      if (images != null && images.isNotEmpty) {
+        uploadedImages.addAll(
+          await CloudinaryServices.uploadImages(images),
+        );
+      }
+      product.updatedAt = DateTime.now();
+
+      product.images = [
+        ...?oldImages,
+        ...uploadedImages,
+      ];
+
+      await ProductsFirebaseServices.updateProduct(
+        uid: FirebaseAuthServices.currentUserId()!,
         product: product,
       );
 

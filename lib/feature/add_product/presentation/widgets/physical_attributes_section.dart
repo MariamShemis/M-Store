@@ -105,8 +105,8 @@ class PhysicalAttributesSection extends StatelessWidget {
 
           SizedBox(height: 20.h),
           CustomProductTextFormField(
-            labelText: "${appLocalizations.size} / ${appLocalizations
-                .dimensions}",
+            labelText:
+                "${appLocalizations.size} / ${appLocalizations.dimensions}",
             hintText: appLocalizations.enter_size,
             controller: sizeController,
             validator: (value) =>
@@ -130,7 +130,7 @@ class PhysicalAttributesSection extends StatelessWidget {
             prefixIcon: Padding(
               padding: REdgeInsets.only(left: 16, right: 8, top: 14),
               child: Text(
-                "\$",
+                appLocalizations.lE,
                 style: GoogleFonts.inter(
                   fontSize: 16.sp,
                   fontWeight: FontWeight.bold,
@@ -150,7 +150,7 @@ class PhysicalAttributesSection extends StatelessWidget {
             prefixIcon: Padding(
               padding: REdgeInsets.only(left: 16, right: 8, top: 14),
               child: Text(
-                "\$",
+                appLocalizations.lE,
                 style: GoogleFonts.inter(
                   fontSize: 16.sp,
                   fontWeight: FontWeight.bold,

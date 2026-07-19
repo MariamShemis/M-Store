@@ -11,7 +11,7 @@ class ProductModel {
   String material;
   String color;
   String dimensions;
-
+  DateTime? updatedAt;
   double purchasePrice;
   double sellingPrice;
   double get profit => sellingPrice - purchasePrice;
@@ -46,6 +46,7 @@ class ProductModel {
     required this.isSold,
     required this.buyers,
     required this.images,
+    this.updatedAt,
     required this.mainImage,
     required this.createdAt,
   });
@@ -69,6 +70,9 @@ class ProductModel {
       images: List<String>.from(json["images"] ?? []),
       createdAt: (json["createdAt"] as Timestamp).toDate(),
       isSold: json["isSold"] ?? false,
+      updatedAt: json["updatedAt"] != null
+          ? (json["updatedAt"] as Timestamp).toDate()
+          : null,
       buyers: List<Map<String, dynamic>>.from(json["buyers"] ?? []),
     );
   }
@@ -95,6 +99,9 @@ class ProductModel {
       "isSold": isSold,
       "buyers": buyers,
       "profit": profit,
+      "updatedAt": updatedAt != null
+          ? Timestamp.fromDate(updatedAt!)
+          : null,
     };
   }
 }

@@ -146,6 +146,13 @@ class BuyerInformationSection extends StatelessWidget {
                     controller: buyer.phoneController,
                     keyboardType: TextInputType.phone,
                   ),
+                  SizedBox(height: 20.h),
+                  CustomProductTextFormField(
+                    labelText: appLocalizations.quantity,
+                    hintText: appLocalizations.enter_quantity,
+                    controller: buyer.quantityController,
+                    keyboardType: TextInputType.number,
+                  ),
                 ],
               );
             },

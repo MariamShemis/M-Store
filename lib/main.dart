@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:m_store_1/feature/add_product/data/cubit/add_product_cubit.dart';
 import 'package:m_store_1/feature/auth/data/cubit/auth_cubit.dart';
 import 'package:m_store_1/feature/main_layout/profile/data/cubit/profile_cubit.dart';
+import 'package:m_store_1/feature/product_details/data/cubit/product_details_cubit.dart';
 import 'package:m_store_1/firebase_options.dart';
 import 'package:m_store_1/m_store.dart';
 
@@ -15,6 +16,7 @@ void main() async {
       providers: [
         BlocProvider(create: (_) => AuthCubit()),
         BlocProvider(create: (_) => AddProductCubit(),),
+        BlocProvider(create: (_) => ProductDetailsCubit(),),
         BlocProvider(create: (_) => ProfileCubit()..loadProfile()),
       ],
       child: MStore(),

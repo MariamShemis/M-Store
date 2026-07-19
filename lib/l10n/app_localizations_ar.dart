@@ -318,7 +318,70 @@ class AppLocalizationsAr extends AppLocalizations {
   String get iD => 'المعرف';
 
   @override
-  String get enter_valid_number => 'أدخل رقماً صحيحاً';
+  String get enter_valid_number => 'أدخل رقماً صالحاً';
+
+  @override
+  String get productDeletedSuccessfully => 'تم حذف المنتج بنجاح';
+
+  @override
+  String get productDetails => 'تفاصيل المنتج';
+
+  @override
+  String get quantity_is_greater_than_available_quantity => 'الكمية المطلوبة أكبر من الكمية المتاحة';
+
+  @override
+  String get deleteProduct => 'حذف المنتج';
+
+  @override
+  String get are_you_sure_you_want_to_delete_this_product_ => 'هل أنت متأكد أنك تريد حذف هذا المنتج؟';
+
+  @override
+  String get delete => 'حذف';
+
+  @override
+  String get quantity => 'الكمية';
+
+  @override
+  String get sellProduct => 'بيع المنتج';
+
+  @override
+  String get edit => 'تعديل';
+
+  @override
+  String get retailPrice => 'سعر التجزئة';
+
+  @override
+  String get color => 'اللون';
+
+  @override
+  String get units => 'الواحدات';
+
+  @override
+  String get modified => 'تم التعديل';
+
+  @override
+  String get availableQuantity => 'الكمية المتاحة';
+
+  @override
+  String get please_select_a_main_image => 'يرجى اختيار صورة رئيسية';
+
+  @override
+  String get main_image_is_missing_from_cache_please_re_pick_it => 'الصورة الرئيسية مفقودة من التخزين المؤقت، يرجى اختيارها مرة أخرى';
+
+  @override
+  String get added => 'تمت الإضافة';
+
+  @override
+  String get product_added_successfully => 'تم إضافة المنتج بنجاح';
+
+  @override
+  String get editProduct => 'تعديل المنتج';
+
+  @override
+  String get updateProduct => 'تحديث المنتج';
+
+  @override
+  String get selectPrimaryColor => 'اختر اللون الرئيسي';
 
   @override
   String get qTY => 'الكمية';

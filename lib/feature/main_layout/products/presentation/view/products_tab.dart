@@ -96,6 +96,11 @@ class _ProductsTabState extends State<ProductsTab> {
                         ],
                       );
                     }
+                    if (filteredProducts.isEmpty) {
+                      return const Center(
+                        child: Text("No products found"),
+                      );
+                    }
                     return Column(
                       children: [
                         SizedBox(height: 10.h),
@@ -164,8 +169,16 @@ class _ProductsTabState extends State<ProductsTab> {
                           child: ListView.builder(
                             itemCount: filteredProducts.length,
                             itemBuilder: (context, index) {
+                              final currentProduct = filteredProducts[index].data();
                               return ProductCard(
-                                product: filteredProducts[index].data(),
+                                product: currentProduct,
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                    context,
+                                    AppRoutes.productDetails,
+                                    arguments: currentProduct,
+                                  );
+                                },
                               );
                             },
                           ),

@@ -321,5 +321,68 @@ class AppLocalizationsEn extends AppLocalizations {
   String get enter_valid_number => 'Enter valid number';
 
   @override
+  String get productDeletedSuccessfully => 'Product Deleted Successfully';
+
+  @override
+  String get productDetails => 'Product Details';
+
+  @override
+  String get quantity_is_greater_than_available_quantity => 'Quantity is greater than available quantity';
+
+  @override
+  String get deleteProduct => 'Delete Product';
+
+  @override
+  String get are_you_sure_you_want_to_delete_this_product_ => 'Are you sure you want to delete this product?';
+
+  @override
+  String get delete => 'Delete';
+
+  @override
+  String get quantity => 'Quantity';
+
+  @override
+  String get sellProduct => 'Sell Product';
+
+  @override
+  String get edit => 'Edit';
+
+  @override
+  String get retailPrice => 'Retail Price';
+
+  @override
+  String get color => 'Color';
+
+  @override
+  String get units => 'Units';
+
+  @override
+  String get modified => 'Modified';
+
+  @override
+  String get availableQuantity => 'Available Quantity';
+
+  @override
+  String get please_select_a_main_image => 'Please select a main image';
+
+  @override
+  String get main_image_is_missing_from_cache_please_re_pick_it => 'Main image is missing from cache, please re-pick it';
+
+  @override
+  String get added => 'Added';
+
+  @override
+  String get product_added_successfully => 'Product added successfully';
+
+  @override
+  String get editProduct => 'Edit Product';
+
+  @override
+  String get updateProduct => 'Update Product';
+
+  @override
+  String get selectPrimaryColor => 'Select Primary Color';
+
+  @override
   String get qTY => 'QTY';
 }
