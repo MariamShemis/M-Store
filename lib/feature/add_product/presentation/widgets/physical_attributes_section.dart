@@ -70,12 +70,16 @@ class PhysicalAttributesSection extends StatelessWidget {
                 ),
               ),
               SizedBox(width: 12.w),
-              Text(
-                appLocalizations.physicalAttributes,
-                style: GoogleFonts.playfairDisplay(
-                  fontSize: 22.sp,
-                  fontWeight: FontWeight.w600,
-                  color: ColorManager.blackText,
+              Expanded(
+                child: Text(
+                  appLocalizations.physicalAttributes,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: GoogleFonts.playfairDisplay(
+                    fontSize: 22.sp,
+                    fontWeight: FontWeight.w600,
+                    color: ColorManager.blackText,
+                  ),
                 ),
               ),
             ],

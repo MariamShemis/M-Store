@@ -893,11 +893,149 @@ abstract class AppLocalizations {
   /// **'Enter your password'**
   String get enter_your_password;
 
+  /// No description provided for @product_not_found.
+  ///
+  /// In en, this message translates to:
+  /// **'Product not found'**
+  String get product_not_found;
+
   /// No description provided for @confirm.
   ///
   /// In en, this message translates to:
   /// **'Confirm'**
   String get confirm;
+
+  /// No description provided for @product_updated_successfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Product updated successfully'**
+  String get product_updated_successfully;
+
+  /// No description provided for @selectLanguage.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Language'**
+  String get selectLanguage;
+
+  /// No description provided for @choose_your_preferred_language_for_the_app_interface.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose your preferred language for the app interface'**
+  String get choose_your_preferred_language_for_the_app_interface;
+
+  /// No description provided for @soldProducts.
+  ///
+  /// In en, this message translates to:
+  /// **'Sold Products'**
+  String get soldProducts;
+
+  /// No description provided for @search_by_ID_Name_Buyers_or_Category.
+  ///
+  /// In en, this message translates to:
+  /// **'Search by ID, Name, Buyers, or Category'**
+  String get search_by_ID_Name_Buyers_or_Category;
+
+  /// No description provided for @noSoldProducts.
+  ///
+  /// In en, this message translates to:
+  /// **'No Sold Products'**
+  String get noSoldProducts;
+
+  /// No description provided for @no_matching_products_found.
+  ///
+  /// In en, this message translates to:
+  /// **'No matching products found'**
+  String get no_matching_products_found;
+
+  /// No description provided for @select_your_birthday.
+  ///
+  /// In en, this message translates to:
+  /// **'Select your birthday'**
+  String get select_your_birthday;
+
+  /// No description provided for @something_went_wrong_Please_try_again.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong. Please try again.'**
+  String get something_went_wrong_Please_try_again;
+
+  /// No description provided for @this_email_is_already_in_use.
+  ///
+  /// In en, this message translates to:
+  /// **'This email is already in use.'**
+  String get this_email_is_already_in_use;
+
+  /// No description provided for @please_enter_a_valid_email_address.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid email address.'**
+  String get please_enter_a_valid_email_address;
+
+  /// No description provided for @password_is_too_weak.
+  ///
+  /// In en, this message translates to:
+  /// **'Password is too weak.'**
+  String get password_is_too_weak;
+
+  /// No description provided for @no_account_found_with_this_email.
+  ///
+  /// In en, this message translates to:
+  /// **'No account found with this email.'**
+  String get no_account_found_with_this_email;
+
+  /// No description provided for @incorrect_email_or_password.
+  ///
+  /// In en, this message translates to:
+  /// **'Incorrect email or password.'**
+  String get incorrect_email_or_password;
+
+  /// No description provided for @please_check_your_internet_connection.
+  ///
+  /// In en, this message translates to:
+  /// **'Please check your internet connection.'**
+  String get please_check_your_internet_connection;
+
+  /// No description provided for @too_many_attempts_Please_try_again_later.
+  ///
+  /// In en, this message translates to:
+  /// **'Too many attempts. Please try again later.'**
+  String get too_many_attempts_Please_try_again_later;
+
+  /// No description provided for @google_sign_in_was_cancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Google sign in was cancelled.'**
+  String get google_sign_in_was_cancelled;
+
+  /// No description provided for @password_reset_email_sent_successfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Password reset email sent successfully.'**
+  String get password_reset_email_sent_successfully;
+
+  /// No description provided for @login_successfully.
+  ///
+  /// In en, this message translates to:
+  /// **'login successfully'**
+  String get login_successfully;
+
+  /// No description provided for @account_created_successfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Account created successfully.'**
+  String get account_created_successfully;
+
+  /// No description provided for @sold_QTY.
+  ///
+  /// In en, this message translates to:
+  /// **'Sold QTY'**
+  String get sold_QTY;
+
+  /// No description provided for @all.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get all;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

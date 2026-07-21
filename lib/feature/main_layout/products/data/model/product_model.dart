@@ -15,11 +15,9 @@ class ProductModel {
   double purchasePrice;
   double sellingPrice;
   double get profit => sellingPrice - purchasePrice;
-
   int quantity;
   int soldQuantity;
   int availableQuantity;
-
   bool isSold;
 
   List<Map<String, dynamic>> buyers;
@@ -98,7 +96,6 @@ class ProductModel {
       "profit": profit,
       "isSold": isSold,
       "buyers": buyers,
-      "profit": profit,
       "updatedAt": updatedAt != null
           ? Timestamp.fromDate(updatedAt!)
           : null,

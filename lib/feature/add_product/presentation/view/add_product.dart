@@ -135,7 +135,7 @@ class _AddProductState extends State<AddProduct> {
 
       _materialController.text = product.material;
       _primaryColorController.text = product.color;
-
+      _onColorTextChanged(product.color);
       _sizeController.text = product.dimensions;
       _quantityController.text = product.quantity.toString();
 
@@ -147,10 +147,12 @@ class _AddProductState extends State<AddProduct> {
 
       _additionalImages.addAll(product.images);
 
-      if (product.isSold && product.buyers.isNotEmpty) {
+      if (product.buyers.isNotEmpty) {
         for (var buyer in product.buyers) {
           _buyers.add(
             BuyerData(
+              id: buyer["id"],
+              purchaseDate: buyer["purchaseDate"]?.toDate(),
               nameController: TextEditingController(text: buyer["name"]),
               phoneController: TextEditingController(text: buyer["phone"]),
               addressController: TextEditingController(text: buyer["address"]),
@@ -170,12 +172,12 @@ class _AddProductState extends State<AddProduct> {
     setState(() {
       _buyers.add(
         BuyerData(
+          id: DateTime.now().millisecondsSinceEpoch.toString(),
+          purchaseDate: DateTime.now(),
           nameController: TextEditingController(),
-          addressController: TextEditingController(),
           phoneController: TextEditingController(),
-          quantityController: TextEditingController(
-            text: "1",
-          ),
+          addressController: TextEditingController(),
+          quantityController: TextEditingController(text: "1"),
         ),
       );
     });
@@ -217,46 +219,6 @@ class _AddProductState extends State<AddProduct> {
     }
   }
 
-  // String _getColorName(Color color) {
-  //   for (var entry in _colorNamesMap.entries) {
-  //     if (entry.value.value == color.value) {
-  //       return entry.key
-  //           .split(' ')
-  //           .map(
-  //             (word) => word.substring(0, 1).toUpperCase() + word.substring(1),
-  //           )
-  //           .join(' ');
-  //     }
-  //   }
-  //   return '#${color.value.toRadixString(16).substring(2, 8).toUpperCase()}';
-  // }
-  //
-  // void _openColorPickerDialog() {
-  //   showDialog(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return AlertDialog(
-  //         title: Text(
-  //           'Select Primary Color',
-  //           style: GoogleFonts.playfairDisplay(fontWeight: FontWeight.bold),
-  //         ),
-  //         content: SingleChildScrollView(
-  //           child: MaterialPicker(
-  //             pickerColor: _selectedColor,
-  //             onColorChanged: (Color color) {
-  //               setState(() {
-  //                 _selectedColor = color;
-  //                 _primaryColorController.text = _getColorName(color);
-  //               });
-  //               Navigator.of(context).pop();
-  //             },
-  //           ),
-  //         ),
-  //       );
-  //     },
-  //   );
-  // }
-
   void _onColorTextChanged(String value) {
     final cleanValue = value.trim().toLowerCase();
 
@@ -279,24 +241,21 @@ class _AddProductState extends State<AddProduct> {
   }
 
   Future<void> _saveProduct() async {
-    AppLocalizations appLocalizations = AppLocalizations.of(context)!;
+    final appLocalizations = AppLocalizations.of(context)!;
+
     FocusScope.of(context).unfocus();
 
-    if (!_formKey.currentState!.validate()) {
-      return;
-    }
+    if (!_formKey.currentState!.validate()) return;
+
     if (_mainImagePath == null) {
-      UiUtils.showError(
-        context,
-        appLocalizations.please_select_a_main_image,
-      );
+      UiUtils.showError(context, appLocalizations.please_select_a_main_image);
       return;
     }
 
     if (!_mainImagePath!.startsWith("http")) {
-      final mainImageFile = File(_mainImagePath!);
+      final file = File(_mainImagePath!);
 
-      if (!await mainImageFile.exists()) {
+      if (!await file.exists()) {
         UiUtils.showError(
           context,
           appLocalizations.main_image_is_missing_from_cache_please_re_pick_it,
@@ -305,45 +264,56 @@ class _AddProductState extends State<AddProduct> {
       }
     }
 
-    final List<File> validAdditionalImages = [];
-    for (String path in _additionalImages) {
-      final file = File(path);
-      if (await file.exists()) {
-        validAdditionalImages.add(file);
-      }
-    }
     final oldImages = _additionalImages
         .where((e) => e.startsWith("http"))
         .toList();
 
     final newImages = _additionalImages
         .where((e) => !e.startsWith("http"))
-        .map(File.new)
+        .map((e) => File(e))
         .toList();
 
     final quantity = int.parse(_quantityController.text);
+
     final purchasePrice = double.parse(_purchasePriceController.text);
+
     final sellingPrice = double.parse(_sellingPriceController.text);
 
-    final validBuyers = _buyers.where((buyer) {
-      return buyer.nameController.text.trim().isNotEmpty;
-    }).toList();
+    final buyers = _buyers
+        .where((buyer) => buyer.nameController.text.trim().isNotEmpty)
+        .map((buyer) {
+          return {
+            "id": buyer.id ?? DateTime.now().microsecondsSinceEpoch.toString(),
+            "name": buyer.nameController.text.trim(),
+            "phone": buyer.phoneController.text.trim(),
+            "address": buyer.addressController.text.trim(),
+            "quantity": int.tryParse(buyer.quantityController.text) ?? 1,
+            "purchaseDate": buyer.purchaseDate ?? DateTime.now(),
+          };
+        })
+        .toList();
 
-    final buyers = validBuyers.map((buyer) {
-      return {
-        "name": buyer.nameController.text.trim(),
-        "phone": buyer.phoneController.text.trim(),
-        "address": buyer.addressController.text.trim(),
-        "quantity": int.tryParse(
-          buyer.quantityController.text.trim(),
-        ) ??
-            1,
-      };
-    }).toList();
+    final soldQuantity = buyers.fold<int>(
+      0,
+          (sum, buyer) => sum + (buyer["quantity"] as int),
+    );
 
-    final bool isSold = widget.isEdit
-        ? widget.product!.isSold
-        : false;
+    final availableQuantity = quantity - soldQuantity;
+
+    final isSold = buyers.isNotEmpty;
+
+    if (soldQuantity > quantity) {
+      UiUtils.showError(
+        context,
+        appLocalizations.quantity_is_greater_than_available_quantity,
+      );
+      return;
+    }
+    print("buyers count = ${buyers.length}");
+    print("soldQuantity = $soldQuantity");
+    print("quantity = $quantity");
+    print("availableQuantity = $availableQuantity");
+
     final product = ProductModel(
       id: widget.product?.id ?? "",
       productNumber: _productNumberController.text.trim(),
@@ -353,30 +323,23 @@ class _AddProductState extends State<AddProduct> {
       material: _materialController.text.trim(),
       color: _primaryColorController.text.trim(),
       dimensions: _sizeController.text.trim(),
+
       purchasePrice: purchasePrice,
       sellingPrice: sellingPrice,
+
       quantity: quantity,
-      soldQuantity: widget.isEdit ? widget.product!.soldQuantity : 0,
+      soldQuantity: soldQuantity,
+      availableQuantity: availableQuantity,
 
-      availableQuantity: widget.isEdit
-          ? widget.product!.availableQuantity
-          : quantity,
+      isSold: isSold,
 
-      isSold: widget.isEdit ? widget.product!.isSold : false,
-      buyers: widget.isEdit
-          ? (widget.product!.isSold ? buyers : widget.product!.buyers)
-          : buyers,
-      mainImage: widget.isEdit
-          ? widget.product!.mainImage
-          : "",
+      buyers: buyers,
+
+      mainImage: widget.isEdit ? widget.product!.mainImage : "",
       images: [],
-      createdAt: widget.isEdit
-          ? widget.product!.createdAt
-          : DateTime.now(),
 
-      updatedAt: widget.isEdit
-          ? widget.product!.updatedAt
-          : null,
+      createdAt: widget.product?.createdAt ?? DateTime.now(),
+      updatedAt: DateTime.now(),
     );
 
     if (widget.isEdit) {
@@ -392,7 +355,7 @@ class _AddProductState extends State<AddProduct> {
       await AddProductCubit.get(context).addProduct(
         product: product,
         mainImage: File(_mainImagePath!),
-        images: _additionalImages.map(File.new).toList(),
+        images: newImages,
       );
     }
   }
@@ -431,7 +394,11 @@ class _AddProductState extends State<AddProduct> {
         }
         if (state is AddProductSuccessState) {
           UiUtils.hideLoading(context);
-          UiUtils.showToast(appLocalizations.product_added_successfully);
+          UiUtils.showToast(
+            widget.isEdit
+                ? appLocalizations.product_updated_successfully
+                : appLocalizations.product_added_successfully,
+          );
           Navigator.pop(context);
         }
         if (state is AddProductErrorState) {
@@ -447,24 +414,12 @@ class _AddProductState extends State<AddProduct> {
               icon: const Icon(Icons.arrow_back_ios_new_rounded),
             ),
             title: Text(
-              widget.isEdit ? appLocalizations.editProduct : appLocalizations.addProduct,
+              widget.isEdit
+                  ? appLocalizations.editProduct
+                  : appLocalizations.addProduct,
               style: textTheme.titleMedium,
             ),
           ),
-
-          bottomNavigationBar: SafeArea(
-            minimum: REdgeInsets.all(20),
-            child: SizedBox(
-              height: 54.h,
-              child: ElevatedButton(
-                onPressed: _saveProduct,
-                child: Text(
-                  widget.isEdit ? appLocalizations.updateProduct : appLocalizations.save,
-                ),
-              ),
-            ),
-          ),
-
           body: SingleChildScrollView(
             padding: REdgeInsets.all(20),
             child: Form(
@@ -517,12 +472,23 @@ class _AddProductState extends State<AddProduct> {
                     onColorTap: _openColorPickerDialog,
                   ),
                   SizedBox(height: 24.h),
-                  if (!widget.isEdit || widget.product!.isSold)
-                    BuyerInformationSection(
-                      buyers: _buyers,
-                      onAddBuyer: _addNewBuyer,
-                      onRemoveBuyer: _removeBuyer,
+                  BuyerInformationSection(
+                    buyers: _buyers,
+                    onAddBuyer: _addNewBuyer,
+                    onRemoveBuyer: _removeBuyer,
+                  ),
+                  SizedBox(height: 20.h),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: _saveProduct,
+                      child: Text(
+                        widget.isEdit
+                            ? appLocalizations.updateProduct
+                            : appLocalizations.save,
+                      ),
                     ),
+                  ),
                   SizedBox(height: 50.h),
                 ],
               ),

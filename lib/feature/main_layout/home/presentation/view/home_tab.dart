@@ -58,7 +58,7 @@ class _HomeTabState extends State<HomeTab> {
                           ? Icon(Icons.person, color: ColorManager.primaryColor)
                           : null,
                     ),
-                    onPressedNotification: () {},
+                    //onPressedNotification: () {},
                   ),
                   SizedBox(height: 3.h),
                   Divider(

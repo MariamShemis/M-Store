@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:m_store_1/core/costants/assets_manager.dart';
 import 'package:m_store_1/core/costants/color_manager.dart';
 import 'package:m_store_1/core/utils/ui_utils.dart';
 import 'package:m_store_1/core/utils/validators/app_validators.dart';
@@ -49,7 +48,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         }
         if (state is RegisterSuccessState) {
           UiUtils.hideLoading(context);
-          UiUtils.showToast("Account created successfully.");
+          UiUtils.showToast(appLocalizations.account_created_successfully);
           Navigator.pop(context);
         }
         if (state is RegisterErrorState) {
@@ -174,12 +173,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             SizedBox(height: 22.h),
                             SizedBox(
                               width: double.infinity,
-                              height: 46.h,
                               child: ElevatedButton(
                                 onPressed: _register,
                                 child: Text(
-                                  appLocalizations.createAccount
-                                      .toUpperCase(),
+                                  appLocalizations.createAccount.toUpperCase(),
                                 ),
                               ),
                             ),
@@ -195,7 +192,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   ),
                                 ),
                                 GestureDetector(
-                                  onTap: (){
+                                  onTap: () {
                                     Navigator.pop(context);
                                   },
                                   child: Text(
@@ -234,6 +231,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           phone: phoneController.text.trim(),
           password: passwordController.text.trim(),
         ),
+        context,
       );
     }
   }

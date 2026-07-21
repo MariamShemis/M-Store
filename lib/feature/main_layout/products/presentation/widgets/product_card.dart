@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -8,13 +9,15 @@ import 'package:m_store_1/l10n/app_localizations.dart';
 class ProductCard extends StatelessWidget {
   final ProductModel product;
   final VoidCallback onTap;
+
   const ProductCard({super.key, required this.product, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
     AppLocalizations appLocalizations = AppLocalizations.of(context)!;
-    final profit =
-        (product.sellingPrice - product.purchasePrice) * product.soldQuantity;
+    final profit = product.profit;
+    final profitText =
+        "${profit > 0 ? "+" : ""}${profit.toStringAsFixed(2)} ${appLocalizations.lE}";
     final available = product.availableQuantity > 0;
 
     return InkWell(
@@ -38,12 +41,23 @@ class ProductCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ClipRRect(
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(24.r)),
-                  child: Image.network(
-                    product.mainImage,
+                  borderRadius: BorderRadius.vertical(
+                    top: Radius.circular(24.r),
+                  ),
+                  child: CachedNetworkImage(
+                    imageUrl: product.mainImage,
+                    fadeInDuration: Duration.zero,
+                    fadeOutDuration: Duration.zero,
                     height: 220.h,
                     width: double.infinity,
-                    fit: BoxFit.fill,
+                    fit: BoxFit.cover,
+                    placeholder: (_, __) =>
+                        Container(height: 220.h, color: Colors.grey.shade100),
+                    errorWidget: (context, url, error) => Container(
+                      height: 220.h,
+                      color: Colors.grey.shade200,
+                      child: Icon(Icons.broken_image_outlined, size: 45.sp),
+                    ),
                   ),
                 ),
                 Padding(
@@ -52,49 +66,63 @@ class ProductCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "${appLocalizations.iD}: ${product.productNumber}",
-                            style: GoogleFonts.manrope(
-                              fontSize: 13.sp,
-                              fontWeight: FontWeight.w500,
-                              color: ColorManager.greyDark,
-                              letterSpacing: 0.5,
+                            product.productName,
+                            style: GoogleFonts.playfairDisplay(
+                              fontSize: 24.sp,
+                              fontWeight: FontWeight.bold,
+                              color: ColorManager.blackText,
                             ),
                           ),
-                          const Spacer(),
-                          Text(
-                            "${appLocalizations.qTY}: ${product.availableQuantity.toString().padLeft(2, '0')}",
-                            style: GoogleFonts.manrope(
-                              fontSize: 13.sp,
-                              fontWeight: FontWeight.w500,
-                              color: ColorManager.greyDark,
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 12.w,
+                              vertical: 7.h,
+                            ),
+                            decoration: BoxDecoration(
+                              color: ColorManager.lightGreyEF,
+                              borderRadius: BorderRadius.circular(30.r),
+                            ),
+                            child: Text(
+                              "${appLocalizations.iD}: ${product.productNumber}",
+                              style: GoogleFonts.manrope(
+                                fontWeight: FontWeight.w700,
+                                color: ColorManager.greyDark,
+                                fontSize: 14.sp
+                              ),
                             ),
                           ),
                         ],
                       ),
                       SizedBox(height: 8.h),
-                      Text(
-                        product.productName,
-                        style: GoogleFonts.playfairDisplay(
-                          fontSize: 24.sp,
-                          fontWeight: FontWeight.bold,
-                          color: ColorManager.blackText,
-                        ),
-                      ),
-                      if (product.description.isNotEmpty) ...[
-                        SizedBox(height: 8.h),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                        if (product.description.isNotEmpty) ...[
+                          Expanded(
+                            child: Text(
+                              product.description,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: GoogleFonts.manrope(
+                                color: ColorManager.brownDark,
+                                fontWeight: FontWeight.w400,
+                                fontSize: 16.sp,
+                              ),
+                            ),
+                          ),
+                        ],
                         Text(
-                          product.description,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
+                          "${appLocalizations.qTY}: ${product.availableQuantity.toString().padLeft(2, '0')}",
                           style: GoogleFonts.manrope(
-                            color: ColorManager.brownDark,
-                            fontWeight: FontWeight.w400,
-                            fontSize: 16.sp,
+                            fontSize: 13.sp,
+                            fontWeight: FontWeight.w500,
+                            color: ColorManager.greyDark,
                           ),
                         ),
-                      ],
+                      ],),
                       Divider(height: 32.h, color: ColorManager.lightGreyEF),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -147,9 +175,9 @@ class ProductCard extends StatelessWidget {
                               ),
                               SizedBox(height: 8.h),
                               Text(
-                                "+${profit.toStringAsFixed(2)} ${appLocalizations.lE}",
+                                profitText,
                                 style: GoogleFonts.manrope(
-                                  color: ColorManager.green,
+                                  color: profit >= 0 ? ColorManager.green : Colors.red,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 22.sp,
                                 ),
@@ -169,23 +197,20 @@ class ProductCard extends StatelessWidget {
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 6.h),
                 decoration: BoxDecoration(
-                  color: available
-                      ? ColorManager.green.withOpacity(0.1)
-                      : ColorManager.red.withOpacity(0.1),
+                  color: product.isSold
+                      ? ColorManager.mediumGold
+                      : ColorManager.green,
                   borderRadius: BorderRadius.circular(30.r),
-                  border: Border.all(
-                    color: available
-                        ? ColorManager.green.withOpacity(0.3)
-                        : ColorManager.red.withOpacity(0.3),
-                    width: 1,
-                  ),
                 ),
                 child: Text(
-                  available ? appLocalizations.available : appLocalizations.sold,
+                  product.isSold
+                      ? appLocalizations.sold.toUpperCase()
+                      : appLocalizations.available.toUpperCase(),
                   style: TextStyle(
-                    color: available ? ColorManager.green : ColorManager.red,
+                    color: ColorManager.white,
                     fontWeight: FontWeight.bold,
-                    fontSize: 13.sp,
+                    fontSize: 12.sp,
+                    letterSpacing: 0.5,
                   ),
                 ),
               ),

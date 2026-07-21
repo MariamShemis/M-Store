@@ -103,11 +103,6 @@ class _ProductsTabState extends State<ProductsTab> {
                         ],
                       );
                     }
-                    if (filteredProducts.isEmpty) {
-                      return const Center(
-                        child: Text("No products found"),
-                      );
-                    }
                     return Column(
                       children: [
                         SizedBox(height: 10.h),
@@ -132,11 +127,13 @@ class _ProductsTabState extends State<ProductsTab> {
                           ),
                         ),
                         SizedBox(height: 10.h),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: _filterChip(
-                                title: "All",
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              _filterChip(
+                                title: appLocalizations.all,
                                 selected: _filter == ProductFilter.all,
                                 onTap: () {
                                   setState(() {
@@ -144,10 +141,8 @@ class _ProductsTabState extends State<ProductsTab> {
                                   });
                                 },
                               ),
-                            ),
-                            SizedBox(width: 10.w),
-                            Expanded(
-                              child: _filterChip(
+                              SizedBox(width: 10.w),
+                              _filterChip(
                                 title: appLocalizations.available,
                                 selected: _filter == ProductFilter.available,
                                 onTap: () {
@@ -156,10 +151,8 @@ class _ProductsTabState extends State<ProductsTab> {
                                   });
                                 },
                               ),
-                            ),
-                            SizedBox(width: 10.w),
-                            Expanded(
-                              child: _filterChip(
+                              SizedBox(width: 10.w),
+                              _filterChip(
                                 title: appLocalizations.sold,
                                 selected: _filter == ProductFilter.sold,
                                 onTap: () {
@@ -168,12 +161,23 @@ class _ProductsTabState extends State<ProductsTab> {
                                   });
                                 },
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                         SizedBox(height: 5.h),
                         Expanded(
-                          child: ListView.builder(
+                          child: filteredProducts.isEmpty
+                              ? Center(
+                            child: Text(
+                              appLocalizations.product_not_found,
+                              style: GoogleFonts.manrope(
+                                fontSize: 18.sp,
+                                fontWeight: FontWeight.w600,
+                                color: ColorManager.greyDark,
+                              ),
+                            ),
+                          )
+                              :  ListView.builder(
                             itemCount: filteredProducts.length,
                             itemBuilder: (context, index) {
                               final currentProduct = filteredProducts[index].data();

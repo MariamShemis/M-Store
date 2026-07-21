@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:m_store_1/core/costants/color_manager.dart';
@@ -6,6 +7,7 @@ import 'package:m_store_1/l10n/app_localizations.dart';
 
 class ProductImagesPreview extends StatelessWidget {
   final ProductModel product;
+
   const ProductImagesPreview({super.key, required this.product});
 
   @override
@@ -17,11 +19,23 @@ class ProductImagesPreview extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(24.r),
-              child: Image.network(
-                product.mainImage,
-                height: 300.h,
-                width: double.infinity,
-                fit: BoxFit.cover,
+              child: Hero(
+                tag: product.mainImage,
+                child: CachedNetworkImage(
+                  imageUrl: product.mainImage,
+                  height: 300.h,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                  fadeInDuration: Duration.zero,
+                  fadeOutDuration: Duration.zero,
+                  placeholder: (_, __) =>
+                      Container(height: 300.h, color: Colors.grey.shade100),
+                  errorWidget: (_, __, ___) => Container(
+                    height: 300.h,
+                    color: Colors.grey.shade200,
+                    child: const Icon(Icons.broken_image_outlined),
+                  ),
+                ),
               ),
             ),
             Positioned(
@@ -30,11 +44,15 @@ class ProductImagesPreview extends StatelessWidget {
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 6.h),
                 decoration: BoxDecoration(
-                  color: product.isSold ? ColorManager.blackText : ColorManager.green,
+                  color: product.isSold
+                      ? ColorManager.mediumGold
+                      : ColorManager.green,
                   borderRadius: BorderRadius.circular(30.r),
                 ),
                 child: Text(
-                  product.isSold ? appLocalizations.sold.toUpperCase() : appLocalizations.available.toUpperCase(),
+                  product.isSold
+                      ? appLocalizations.sold.toUpperCase()
+                      : appLocalizations.available.toUpperCase(),
                   style: TextStyle(
                     color: ColorManager.white,
                     fontWeight: FontWeight.bold,
@@ -51,15 +69,23 @@ class ProductImagesPreview extends StatelessWidget {
           Row(
             children: List.generate(
               product.images.length,
-                  (index) => Expanded(
+              (index) => Expanded(
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 4.w),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(16.r),
-                    child: Image.network(
-                      product.images[index],
+                    child: CachedNetworkImage(
+                      imageUrl: product.images[index],
                       height: 100.h,
-                      fit: BoxFit.fill,
+                      fit: BoxFit.cover,
+                      fadeInDuration: Duration.zero,
+                      fadeOutDuration: Duration.zero,
+                      placeholder: (_, __) =>
+                          Container(color: Colors.grey.shade100),
+                      errorWidget: (_, __, ___) => Container(
+                        color: Colors.grey.shade200,
+                        child: const Icon(Icons.broken_image),
+                      ),
                     ),
                   ),
                 ),

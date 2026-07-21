@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:m_store_1/core/costants/assets_manager.dart';
 import 'package:m_store_1/core/costants/color_manager.dart';
 import 'package:m_store_1/core/routes/app_routes.dart';
 import 'package:m_store_1/core/utils/ui_utils.dart';
@@ -46,7 +45,9 @@ class _LoginScreenState extends State<LoginScreen> {
         }
         if (state is LoginSuccessState) {
           UiUtils.hideLoading(context);
-          UiUtils.showToast("Welcome ${state.user.name}, login successfully.");
+          UiUtils.showToast(
+            "${appLocalizations.welcome_} ${state.user.name}, ${appLocalizations.login_successfully}.",
+          );
           Navigator.pushReplacementNamed(context, AppRoutes.mainLayout);
         }
         if (state is LoginErrorState) {
@@ -136,52 +137,28 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ),
                             ),
                             SizedBox(height: 18.h),
-                            Row(
-                              children: [
-                                SizedBox(
-                                  width: 24,
-                                  height: 24,
-                                  child: Checkbox(
-                                    value: rememberMe,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        rememberMe = value ?? false;
-                                      });
-                                    },
-                                    activeColor: ColorManager.primaryColor,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(4),
-                                    ),
+                            Align(
+                              alignment: Alignment.centerRight,
+                              child: TextButton(
+                                onPressed: () {
+                                  Navigator.pushNamed(
+                                    context,
+                                    AppRoutes.forgetPassword,
+                                  );
+                                },
+                                child: Text(
+                                  appLocalizations.forget_password_,
+                                  style: GoogleFonts.inter(
+                                    fontSize: 14.sp,
+                                    color: ColorManager.primaryColor,
+                                    fontWeight: FontWeight.w600,
                                   ),
                                 ),
-                                SizedBox(width: 5.w),
-                                Text(
-                                  appLocalizations.rememberMe,
-                                  style: GoogleFonts.inter(fontSize: 13.sp),
-                                ),
-                                const Spacer(),
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.pushNamed(
-                                      context,
-                                      AppRoutes.forgetPassword,
-                                    );
-                                  },
-                                  child: Text(
-                                    appLocalizations.forget_password_,
-                                    style: GoogleFonts.inter(
-                                      fontSize: 14.sp,
-                                      color: ColorManager.primaryColor,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                ),
-                              ],
+                              ),
                             ),
                             SizedBox(height: 18.h),
                             SizedBox(
                               width: double.infinity,
-                              height: 46.h,
                               child: ElevatedButton.icon(
                                 onPressed: _login,
                                 label: Text(
@@ -222,7 +199,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             SizedBox(height: 24.h),
                             CustomLoginOutlineBorder(
-                              onPressed: AuthCubit.get(context).loginWithGoogle,
+                              onPressed: () =>
+                                  AuthCubit.get(context).loginWithGoogle,
                               isGoogleLogin: true,
                               isGoogle: false,
                             ),
@@ -278,6 +256,7 @@ class _LoginScreenState extends State<LoginScreen> {
           email: _emailController.text.trim(),
           password: _passwordController.text.trim(),
         ),
+        context,
       );
     }
   }

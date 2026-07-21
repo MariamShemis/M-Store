@@ -30,7 +30,11 @@ class BuyerInfoCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(Icons.shield_outlined, color: ColorManager.mediumGold, size: 20.sp),
+              Icon(
+                Icons.shield_outlined,
+                color: ColorManager.mediumGold,
+                size: 20.sp,
+              ),
               SizedBox(width: 8.w),
               Text(
                 "${appLocalizations.buyerInformation} #$buyerNumber",
@@ -43,11 +47,40 @@ class BuyerInfoCard extends StatelessWidget {
             ],
           ),
           Divider(height: 24.h, color: ColorManager.lightGreyEF),
-          _buildInfoItem(appLocalizations.name, buyerData['name'] ?? 'N/A'),
+          Row(
+            children: [
+              Expanded(
+                child: _buildInfoItem(
+                  appLocalizations.name,
+                  buyerData['name'] ?? 'N/A',
+                ),
+              ),
+              Expanded(
+                child: _buildInfoItem(
+                  appLocalizations.address,
+                  buyerData['address'] ?? 'N/A',
+                ),
+              ),
+            ],
+          ),
           SizedBox(height: 12.h),
-          _buildInfoItem(appLocalizations.phoneNumber, buyerData['phone'] ?? 'N/A'),
+          Row(
+            children: [
+              Expanded(
+                child: _buildInfoItem(
+                  appLocalizations.phoneNumber,
+                  buyerData['phone'] ?? 'N/A',
+                ),
+              ),
+              Expanded(
+                child: _buildInfoItem(
+                  appLocalizations.quantity,
+                  (buyerData['quantity'] ?? 0).toString(),
+                ),
+              ),
+            ],
+          ),
           SizedBox(height: 12.h),
-          _buildInfoItem(appLocalizations.address, buyerData['address'] ?? 'N/A'),
         ],
       ),
     );
@@ -59,12 +92,20 @@ class BuyerInfoCard extends StatelessWidget {
       children: [
         Text(
           label,
-          style: GoogleFonts.inter(fontSize: 11.sp, color: ColorManager.secondary, fontWeight: FontWeight.w500),
+          style: GoogleFonts.inter(
+            fontSize: 11.sp,
+            color: ColorManager.secondary,
+            fontWeight: FontWeight.w500,
+          ),
         ),
         SizedBox(height: 4.h),
         Text(
           value,
-          style: GoogleFonts.inter(fontSize: 14.sp, color: ColorManager.blackText, fontWeight: FontWeight.w600),
+          style: GoogleFonts.inter(
+            fontSize: 14.sp,
+            color: ColorManager.blackText,
+            fontWeight: FontWeight.w600,
+          ),
         ),
       ],
     );

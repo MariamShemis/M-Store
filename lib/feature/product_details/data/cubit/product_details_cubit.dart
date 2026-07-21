@@ -39,24 +39,24 @@ class ProductDetailsCubit extends Cubit<ProductDetailsState> {
     }
   }
 
-  Future<void> sellProduct({
-    required ProductModel product,
-    required int quantity,
-    required List<Map<String, dynamic>> buyers,
-  }) async {
-    emit(ProductDetailsLoading());
-
-    try {
-      await ProductsFirebaseServices.sellProduct(
-        uid: FirebaseAuthServices.currentUserId()!,
-        productId: product.id,
-        quantity: quantity,
-        buyers: buyers,
-      );
-
-      emit(ProductDetailsSuccess());
-    } catch (e) {
-      emit(ProductDetailsError(e.toString()));
-    }
-  }
+  // Future<void> sellProduct({
+  //   required ProductModel product,
+  //   required int quantity,
+  //   required List<Map<String, dynamic>> buyers,
+  // }) async {
+  //   emit(SellProductLoading());
+  //
+  //   try {
+  //     await ProductsFirebaseServices.sellProduct(
+  //       uid: FirebaseAuthServices.currentUserId()!,
+  //       productId: product.id,
+  //       quantity: quantity,
+  //       buyers: buyers,
+  //     );
+  //
+  //     emit(SellProductSuccess());
+  //   } catch (e) {
+  //     emit(SellProductError(e.toString()));
+  //   }
+  // }
 }

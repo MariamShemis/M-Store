@@ -37,15 +37,14 @@ class ProductHeaderSection extends StatelessWidget {
               child: Row(
                 children: [
                   Text(
-                    "#${product.productNumber}",
+                    "${appLocalizations.iD}: ${product.productNumber}",
                     style: GoogleFonts.inter(
-                      fontSize: 12.sp,
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.w600,
                       color: ColorManager.brownDark,
                     ),
                   ),
                   SizedBox(width: 4.w),
-                  Icon(Icons.copy, size: 12.sp, color: ColorManager.greyDark),
                 ],
               ),
             ),

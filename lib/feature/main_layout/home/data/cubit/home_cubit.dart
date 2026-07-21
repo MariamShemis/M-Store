@@ -74,9 +74,7 @@ class HomeCubit extends Cubit<HomeState> {
 
       totalSales += product.sellingPrice * product.soldQuantity;
 
-      totalProfit +=
-          (product.sellingPrice - product.purchasePrice) *
-              product.soldQuantity;
+      totalProfit += product.profit;
     }
 
     return DashboardModel(

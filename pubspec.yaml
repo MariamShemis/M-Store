@@ -64,6 +64,7 @@ dependencies:
   iconsax: ^0.0.8
   iconsax_flutter: ^1.0.1
   table_calendar: ^3.2.0
+  cached_network_image: ^3.4.1
   syncfusion_flutter_datepicker: ^32.1.25
   animated_toggle_switch: ^0.8.7
   image_picker: ^1.2.1
@@ -142,3 +143,20 @@ flutter_launcher_icons:
     generate: true
     image_path: "assets/icons/app_icon1.png"
     icon_size: 48 # min:48, max:256, default: 48
+
+flutter_native_splash:
+  color: "#FAF9F6"
+
+  android: true
+  ios: true
+  image: assets/icons/flutter_native_icon1.png
+
+  color_android: "#FAF9F6"
+  color_ios: "#FAF9F6"
+
+  image_android: assets/icons/flutter_native_icon1.png
+  image_ios: assets/icons/flutter_native_icon1.png
+
+  android_12:
+    image: assets/icons/flutter_native_icon1.png
+    icon_background_color: "#FAF9F6"

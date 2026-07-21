@@ -1,10 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:m_store_1/core/services/firebase_auth_services.dart';
 import 'package:m_store_1/core/services/google_sign_in_services.dart';
 import 'package:m_store_1/feature/auth/data/model/login_request.dart';
 import 'package:m_store_1/feature/auth/data/model/register_request.dart';
 import 'package:m_store_1/feature/auth/data/model/user_model.dart';
+import 'package:m_store_1/l10n/app_localizations.dart';
 
 import 'auth_state.dart';
 
@@ -15,7 +17,7 @@ class AuthCubit extends Cubit<AuthState> {
 
   UserModel? currentUser;
 
-  Future<void> register(RegisterRequest request) async {
+  Future<void> register(RegisterRequest request , BuildContext context) async {
     emit(RegisterLoadingState());
 
     try {
@@ -25,13 +27,13 @@ class AuthCubit extends Cubit<AuthState> {
 
       emit(RegisterSuccessState(currentUser!));
     } on FirebaseAuthException catch (e) {
-      emit(RegisterErrorState(_firebaseErrorMessage(e)));
+      emit(RegisterErrorState(_firebaseErrorMessage(e , context)));
     } catch (e) {
       emit(RegisterErrorState(e.toString()));
     }
   }
 
-  Future<void> login(LoginRequest request) async {
+  Future<void> login(LoginRequest request , BuildContext context) async {
     emit(LoginLoadingState());
 
     try {
@@ -41,7 +43,7 @@ class AuthCubit extends Cubit<AuthState> {
 
       emit(LoginSuccessState(currentUser!));
     } on FirebaseAuthException catch (e) {
-      emit(LoginErrorState(_firebaseErrorMessage(e)));
+      emit(LoginErrorState(_firebaseErrorMessage(e , context)));
     } catch (e) {
       emit(LoginErrorState(e.toString()));
     }
@@ -53,7 +55,7 @@ class AuthCubit extends Cubit<AuthState> {
     } catch (_) {}
   }
 
-  Future<void> resetPassword(String email) async {
+  Future<void> resetPassword(String email , BuildContext context) async {
     emit(ResetPasswordLoadingState());
 
     try {
@@ -61,13 +63,13 @@ class AuthCubit extends Cubit<AuthState> {
 
       emit(ResetPasswordSuccessState());
     } on FirebaseAuthException catch (e) {
-      emit(ResetPasswordErrorState(_firebaseErrorMessage(e)));
+      emit(ResetPasswordErrorState(_firebaseErrorMessage(e , context)));
     } catch (e) {
       emit(ResetPasswordErrorState(e.toString()));
     }
   }
 
-  Future<void> logout() async {
+  Future<void> logout(BuildContext context) async {
     emit(LogoutLoadingState());
 
     try {
@@ -77,42 +79,46 @@ class AuthCubit extends Cubit<AuthState> {
 
       emit(LogoutSuccessState());
     } on FirebaseAuthException catch (e) {
-      emit(LogoutErrorState(_firebaseErrorMessage(e)));
+      emit(LogoutErrorState(_firebaseErrorMessage(e , context)));
     } catch (e) {
       emit(LogoutErrorState(e.toString()));
     }
   }
 
-  String _firebaseErrorMessage(FirebaseAuthException e) {
+  String _firebaseErrorMessage(FirebaseAuthException e , BuildContext context) {
+    AppLocalizations appLocalizations = AppLocalizations.of(context)!;
     switch (e.code) {
       case 'email-already-in-use':
-        return 'This email is already in use.';
+        return appLocalizations.this_email_is_already_in_use;
 
       case 'invalid-email':
-        return 'Please enter a valid email address.';
+        return appLocalizations.please_enter_a_valid_email_address;
 
       case 'weak-password':
-        return 'Password is too weak.';
+        return appLocalizations.password_is_too_weak;
 
       case 'user-not-found':
-        return 'No account found with this email.';
+        return appLocalizations.no_account_found_with_this_email;
 
       case 'wrong-password':
       case 'invalid-credential':
-        return 'Incorrect email or password.';
+        return appLocalizations.incorrect_email_or_password;
 
       case 'network-request-failed':
-        return 'Please check your internet connection.';
+        return appLocalizations.please_check_your_internet_connection;
 
       case 'too-many-requests':
-        return 'Too many attempts. Please try again later.';
+        return appLocalizations.too_many_attempts_Please_try_again_later;
+
+      case 'google-sign-in-cancelled':
+        return appLocalizations.google_sign_in_was_cancelled;
 
       default:
-        return 'Something went wrong. Please try again.';
+        return appLocalizations.something_went_wrong_Please_try_again;
     }
   }
 
-  Future<void> loginWithGoogle() async {
+  Future<void> loginWithGoogle(BuildContext context) async {
     emit(LoginLoadingState());
 
     try {
@@ -139,7 +145,7 @@ class AuthCubit extends Cubit<AuthState> {
 
       emit(LoginSuccessState(user));
     } on FirebaseAuthException catch (e) {
-      emit(LoginErrorState(_firebaseErrorMessage(e)));
+      emit(LoginErrorState(_firebaseErrorMessage(e , context)));
     } catch (e) {
       emit(LoginErrorState(e.toString()));
     }

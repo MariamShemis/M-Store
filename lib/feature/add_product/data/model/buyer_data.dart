@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 
 class BuyerData {
-  final TextEditingController nameController;
-  final TextEditingController phoneController;
-  final TextEditingController addressController;
-  final TextEditingController quantityController;
+  String? id;
+  DateTime? purchaseDate;
+
+  TextEditingController nameController;
+  TextEditingController phoneController;
+  TextEditingController addressController;
+  TextEditingController quantityController;
 
   BuyerData({
+    this.id,
+    this.purchaseDate,
     required this.nameController,
     required this.phoneController,
     required this.addressController,

@@ -168,28 +168,28 @@ class ProductsFirebaseServices {
   /// Sell Product
   ///==========================
 
-  static Future<void> sellProduct({
-    required String uid,
-    required String productId,
-    required int quantity,
-    required List<Map<String, dynamic>> buyers,
-  }) async {
-
-    final product = await getProduct(
-      uid: uid,
-      productId: productId,
-    );
-    if (product == null) return;
-    final soldQuantity = product.soldQuantity + quantity;
-    final availableQuantity = product.availableQuantity - quantity;
-
-    await getProductsCollection(uid).doc(productId).update({
-      "soldQuantity": soldQuantity,
-      "availableQuantity": availableQuantity,
-      "isSold": availableQuantity == 0,
-      "buyers": FieldValue.arrayUnion(buyers),
-    });
-  }
+  // static Future<void> sellProduct({
+  //   required String uid,
+  //   required String productId,
+  //   required int quantity,
+  //   required List<Map<String, dynamic>> buyers,
+  // }) async {
+  //
+  //   final product = await getProduct(
+  //     uid: uid,
+  //     productId: productId,
+  //   );
+  //   if (product == null) return;
+  //   final soldQuantity = product.soldQuantity + quantity;
+  //   final availableQuantity = product.availableQuantity - quantity;
+  //
+  //   await getProductsCollection(uid).doc(productId).update({
+  //     "soldQuantity": soldQuantity,
+  //     "availableQuantity": availableQuantity,
+  //     "isSold": buyers.isNotEmpty,
+  //     "buyers": FieldValue.arrayUnion(buyers),
+  //   });
+  // }
 
   ///==========================
   /// Search By Product Number

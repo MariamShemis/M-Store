@@ -6,6 +6,7 @@ import 'package:m_store_1/feature/main_layout/home/presentation/view/home_tab.da
 import 'package:m_store_1/feature/main_layout/products/presentation/view/products_tab.dart';
 import 'package:m_store_1/feature/main_layout/profile/presentation/view/profile_tab.dart';
 import 'package:m_store_1/feature/main_layout/sales/presentation/view/sales_tab.dart';
+import 'package:m_store_1/l10n/app_localizations.dart';
 
 class MainLayout extends StatefulWidget {
   const MainLayout({super.key});
@@ -26,9 +27,9 @@ class _MainLayoutState extends State<MainLayout> {
 
   @override
   Widget build(BuildContext context) {
+    AppLocalizations appLocalizations = AppLocalizations.of(context)!;
     return Scaffold(
       body: _screens[_currentIndex],
-
       bottomNavigationBar: ClipRRect(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(30.r),
@@ -81,7 +82,7 @@ class _MainLayoutState extends State<MainLayout> {
                 icon: Icon(
                   _currentIndex == 0 ? Icons.home_filled : Icons.home_outlined,
                 ),
-                label: 'HOME',
+                label: appLocalizations.home.toUpperCase(),
               ),
               NavigationDestination(
                 icon: Icon(
@@ -89,7 +90,7 @@ class _MainLayoutState extends State<MainLayout> {
                       ? Icons.archive_rounded
                       : Icons.archive_outlined,
                 ),
-                label: 'PRODUCTS',
+                label: appLocalizations.products.toUpperCase(),
               ),
               NavigationDestination(
                 icon: Icon(
@@ -97,13 +98,13 @@ class _MainLayoutState extends State<MainLayout> {
                       ? Icons.payments_rounded
                       : Icons.payments_outlined,
                 ),
-                label: 'SALES',
+                label: appLocalizations.sales.toUpperCase(),
               ),
               NavigationDestination(
                 icon: Icon(
                   _currentIndex == 3 ? Icons.person : Icons.person_outline,
                 ),
-                label: 'PROFILE',
+                label: appLocalizations.profile.toUpperCase(),
               ),
             ],
           ),

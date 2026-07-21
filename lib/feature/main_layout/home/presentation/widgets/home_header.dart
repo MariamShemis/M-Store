@@ -8,12 +8,10 @@ class HomeHeader extends StatelessWidget {
     super.key,
     required this.name,
     required this.image,
-    required this.onPressedNotification,
   });
 
   final String name;
   final Widget image;
-  final VoidCallback onPressedNotification;
 
   @override
   Widget build(BuildContext context) {
@@ -41,23 +39,6 @@ class HomeHeader extends StatelessWidget {
               SizedBox(height: 4.h),
               Text(name, style: textTheme.titleMedium),
             ],
-          ),
-        ),
-        Container(
-          width: 46.w,
-          height: 46.h,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            //borderRadius: BorderRadius.circular(14.r),
-            shape: BoxShape.circle,
-          ),
-          child: IconButton(
-            onPressed: onPressedNotification,
-            icon: Icon(
-              Icons.notifications_none_rounded,
-              color: ColorManager.primaryColor,
-              size: 25.sp,
-            ),
           ),
         ),
       ],

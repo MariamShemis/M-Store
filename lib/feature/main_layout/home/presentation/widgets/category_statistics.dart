@@ -38,13 +38,11 @@ class _CategoryStatisticsState extends State<CategoryStatistics> {
         ],
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              appLocalizations.topCategories,
-              style: theme.textTheme.titleMedium,
-            ),
+          Text(
+            appLocalizations.topCategories,
+            style: theme.textTheme.titleMedium,
           ),
           SizedBox(height: 20.h),
           Column(

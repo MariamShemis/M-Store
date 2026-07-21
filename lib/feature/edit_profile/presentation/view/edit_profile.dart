@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -28,7 +27,6 @@ class _EditProfileState extends State<EditProfile> {
   final _emailController = TextEditingController();
   final _phoneController = TextEditingController();
   final _birthdayController = TextEditingController();
-  final _passwordController = TextEditingController();
 
   final ImagePicker _picker = ImagePicker();
 
@@ -47,7 +45,6 @@ class _EditProfileState extends State<EditProfile> {
     _emailController.dispose();
     _phoneController.dispose();
     _birthdayController.dispose();
-    _passwordController.dispose();
     super.dispose();
   }
 
@@ -118,7 +115,7 @@ class _EditProfileState extends State<EditProfile> {
           final user = context.read<EditProfileCubit>().user;
 
           return SingleChildScrollView(
-            padding: REdgeInsets.symmetric(horizontal:  20.r , vertical: 16),
+            padding: REdgeInsets.symmetric(horizontal: 20.r, vertical: 16),
             child: Column(
               children: [
                 UserImageProfile(
@@ -151,14 +148,13 @@ class _EditProfileState extends State<EditProfile> {
                 ),
 
                 SizedBox(height: 20.h),
-
                 CustomProfileField(
                   title: appLocalizations.email,
                   hintText: appLocalizations.enterYourEmail,
                   controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
+                  readOnly: true,
                 ),
-
                 SizedBox(height: 20.h),
 
                 CustomProfileField(
@@ -182,15 +178,15 @@ class _EditProfileState extends State<EditProfile> {
                     });
                   },
                 ),
-                SizedBox(height: 40.h),
+                SizedBox(height: 20.h),
                 SizedBox(
                   width: double.infinity,
-                  height: 55.h,
                   child: ElevatedButton(
                     onPressed: _saveProfile,
                     child: Text(appLocalizations.save),
                   ),
                 ),
+                SizedBox(height: 40.h),
               ],
             ),
           );
@@ -200,59 +196,6 @@ class _EditProfileState extends State<EditProfile> {
   }
 
   Future<void> _saveProfile() async {
-    final appLocalizations = AppLocalizations.of(context)!;
-    final currentUser = context.read<EditProfileCubit>().user;
-
-    if (currentUser == null) return;
-
-    String password = "";
-
-    if (_emailController.text.trim() != currentUser.email) {
-      final provider = FirebaseAuth.instance.currentUser!
-          .providerData
-          .first
-          .providerId;
-
-      if (provider == "password") {
-        final result = await showDialog<String>(
-          context: context,
-          builder: (context) {
-            _passwordController.clear();
-
-            return AlertDialog(
-              title: Text(appLocalizations.confirmPassword),
-              content: TextField(
-                controller: _passwordController,
-                obscureText: true,
-                decoration: InputDecoration(
-                  hintText: appLocalizations.enter_your_password
-                ),
-              ),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.pop(context),
-                  child: Text(appLocalizations.cancel),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.pop(
-                      context,
-                      _passwordController.text.trim(),
-                    );
-                  },
-                  child: Text(appLocalizations.confirm),
-                ),
-              ],
-            );
-          },
-        );
-
-        if (result == null || result.isEmpty) return;
-
-        password = result;
-      }
-    }
-
     context.read<EditProfileCubit>().updateProfile(
       name: _nameController.text.trim(),
       email: _emailController.text.trim(),
@@ -260,7 +203,7 @@ class _EditProfileState extends State<EditProfile> {
       birthday: _birthdayController.text.trim(),
       gender: _selectedGender ?? "",
       image: _profileImage,
-      password: password,
+      password: "",
     );
   }
 

@@ -46,7 +46,19 @@ class EditProfileCubit extends Cubit<EditProfileState> {
       if (image != null) {
         imageUrl = await CloudinaryServices.uploadImage(image);
       }
-      await FirebaseAuth.instance.currentUser!.updateDisplayName(name);
+
+      await FirebaseAuthServices.updateCurrentUserName(name);
+
+      if (email != user!.email) {
+        await FirebaseAuthServices.reauthenticate(password);
+
+        await FirebaseAuthServices.updateCurrentUserEmail(email);
+        await FirebaseAuth.instance.currentUser!.reload();
+
+        print(
+          "Firebase Auth Email = ${FirebaseAuth.instance.currentUser!.email}",
+        );
+      }
 
       final updatedUser = user!.copyWith(
         name: name,
@@ -58,19 +70,10 @@ class EditProfileCubit extends Cubit<EditProfileState> {
       );
 
       await FirebaseAuthServices.updateUser(updatedUser);
-      await FirebaseAuthServices.updateCurrentUserName(name);
-
-      if (email != user!.email) {
-        await FirebaseAuthServices.reauthenticate(password);
-
-        await FirebaseAuth.instance.currentUser!
-            .verifyBeforeUpdateEmail(email);
-      }
 
       user = updatedUser;
 
       emit(EditProfileSuccess());
-
       emit(EditProfileLoaded());
     } on FirebaseAuthException catch (e) {
       emit(EditProfileError("${e.code} : ${e.message}"));

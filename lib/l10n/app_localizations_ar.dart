@@ -384,29 +384,98 @@ class AppLocalizationsAr extends AppLocalizations {
   String get selectPrimaryColor => 'اختر اللون الرئيسي';
 
   @override
-  String get profileUpdatedSuccessfully => 'Profile Updated Successfully';
+  String get profileUpdatedSuccessfully => 'تم تحديث الملف الشخصي بنجاح';
 
   @override
-  String get take_A_Photo => 'Take A Photo';
+  String get take_A_Photo => 'التقاط صورة';
 
   @override
-  String get chooseFromGallery => 'Choose From Gallery';
+  String get chooseFromGallery => 'اختيار من المعرض';
 
   @override
-  String get birthday => 'Birthday';
+  String get birthday => 'تاريخ الميلاد';
 
   @override
-  String get gender => 'Gender';
+  String get gender => 'الجنس';
 
   @override
-  String get selectGender => 'Select Gender';
+  String get selectGender => 'اختر الجنس';
 
   @override
-  String get qTY => 'QTY';
+  String get qTY => 'الكمية';
 
   @override
   String get enter_your_password => 'أدخل كلمة المرور الخاصة بك';
 
   @override
+  String get product_not_found => 'المنتج غير موجود';
+
+  @override
   String get confirm => 'تأكيد';
+
+  @override
+  String get product_updated_successfully => 'تم تحديث المنتج بنجاح';
+
+  @override
+  String get selectLanguage => 'اختر اللغة';
+
+  @override
+  String get choose_your_preferred_language_for_the_app_interface => 'اختر لغتك المفضلة لواجهة التطبيق';
+
+  @override
+  String get soldProducts => 'المنتجات المباعة';
+
+  @override
+  String get search_by_ID_Name_Buyers_or_Category => 'البحث حسب المعرّف، الاسم، المشتري، أو الفئة';
+
+  @override
+  String get noSoldProducts => 'لا توجد منتجات مباعة';
+
+  @override
+  String get no_matching_products_found => 'لم يتم العثور على منتجات مطابقة';
+
+  @override
+  String get select_your_birthday => 'اختر تاريخ ميلادك';
+
+  @override
+  String get something_went_wrong_Please_try_again => 'حدث خطأ ما، يرجى المحاولة مرة أخرى.';
+
+  @override
+  String get this_email_is_already_in_use => 'هذا البريد الإلكتروني مستخدم بالفعل.';
+
+  @override
+  String get please_enter_a_valid_email_address => 'يرجى إدخال بريد إلكتروني صالح.';
+
+  @override
+  String get password_is_too_weak => 'كلمة المرور ضعيفة للغاية.';
+
+  @override
+  String get no_account_found_with_this_email => 'لا يوجد حساب مرتبط بهذا البريد الإلكتروني.';
+
+  @override
+  String get incorrect_email_or_password => 'البريد الإلكتروني أو كلمة المرور غير صحيحة.';
+
+  @override
+  String get please_check_your_internet_connection => 'يرجى التحقق من اتصالك بالإنترنت.';
+
+  @override
+  String get too_many_attempts_Please_try_again_later => 'محاولات كثيرة جداً، يرجى المحاولة لاحقاً.';
+
+  @override
+  String get google_sign_in_was_cancelled => 'تم إلغاء تسجيل الدخول بواسطة جوجل.';
+
+  @override
+  String get password_reset_email_sent_successfully => 'تم إرسال بريد إعادة تعيين كلمة المرور بنجاح.';
+
+  @override
+  String get login_successfully => 'تم تسجيل الدخول بنجاح';
+
+  @override
+  String get account_created_successfully => 'تم إنشاء الحساب بنجاح.';
+
+  @override
+  String get sold_QTY => 'الكمية المباعة';
+
+  @override
+  String get all => 'الكل';
 }

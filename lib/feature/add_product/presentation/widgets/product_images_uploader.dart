@@ -42,6 +42,8 @@ class ProductImagesUploader extends StatelessWidget {
         children: [
           Text(
             appLocalizations.productImagery,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
             style: GoogleFonts.playfairDisplay(
               fontSize: 22.sp,
               fontWeight: FontWeight.w500,

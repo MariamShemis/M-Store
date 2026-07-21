@@ -7,5 +7,6 @@ abstract class AppRoutes {
   static const String addProduct = "/addProduct";
   static const String productDetails = "/productDetails";
   static const String editProfile = "/editProfile";
+  static const String language = "/language";
 
 }

@@ -59,7 +59,13 @@ class ProfileHeader extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.phone, color: ColorManager.primaryColor, size: 16.sp),
+              ?phoneNumber.isNotEmpty
+                  ? Icon(
+                      Icons.phone,
+                      color: ColorManager.primaryColor,
+                      size: 16.sp,
+                    )
+                  : null,
               SizedBox(width: 5.w),
               Text(
                 phoneNumber,

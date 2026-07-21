@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,13 +16,33 @@ import 'package:m_store_1/feature/product_details/presentation/widgets/product_a
 import 'package:m_store_1/feature/product_details/presentation/widgets/product_header_section.dart';
 import 'package:m_store_1/feature/product_details/presentation/widgets/product_images_preview.dart';
 import 'package:m_store_1/feature/product_details/presentation/widgets/product_info_card.dart';
-import 'package:m_store_1/feature/product_details/presentation/widgets/sell_product_bottom_sheet.dart';
 import 'package:m_store_1/l10n/app_localizations.dart';
 
-class ProductDetails extends StatelessWidget {
+class ProductDetails extends StatefulWidget {
   final ProductModel product;
 
   const ProductDetails({super.key, required this.product});
+
+  @override
+  State<ProductDetails> createState() => _ProductDetailsState();
+}
+
+class _ProductDetailsState extends State<ProductDetails> {
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      precacheImage(
+        CachedNetworkImageProvider(widget.product.mainImage),
+        context,
+      );
+
+      for (final image in widget.product.images) {
+        precacheImage(CachedNetworkImageProvider(image), context);
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,17 +58,18 @@ class ProductDetails extends StatelessWidget {
           UiUtils.showToast("${appLocalizations.productDeletedSuccessfully}.");
           Navigator.pop(context);
         }
-
         if (state is ProductDetailsError) {
           UiUtils.hideLoading(context);
           UiUtils.showError(context, state.message);
         }
       },
       builder: (context, state) {
-
         return Scaffold(
           appBar: AppBar(
-            title: Text(appLocalizations.productDetails, style: textTheme.titleMedium),
+            title: Text(
+              appLocalizations.productDetails,
+              style: textTheme.titleMedium,
+            ),
             leading: IconButton(
               onPressed: () => Navigator.pop(context),
               icon: const Icon(Icons.arrow_back_ios_new_rounded),
@@ -56,7 +78,7 @@ class ProductDetails extends StatelessWidget {
           body: StreamBuilder<ProductModel>(
             stream: ProductsFirebaseServices.productStream(
               FirebaseAuthServices.currentUserId()!,
-              product.id,
+              widget.product.id,
             ),
             builder: (context, snapshot) {
               if (!snapshot.hasData) {
@@ -75,8 +97,7 @@ class ProductDetails extends StatelessWidget {
                     SizedBox(height: 24.h),
                     ProductInfoCard(product: currentProduct),
                     SizedBox(height: 24.h),
-                    if (currentProduct.isSold &&
-                        currentProduct.buyers.isNotEmpty) ...[
+                    if (currentProduct.buyers.isNotEmpty) ...[
                       ListView.builder(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
@@ -94,46 +115,6 @@ class ProductDetails extends StatelessWidget {
                       SizedBox(height: 8.h),
                     ],
                     ProductActionButtons(
-                      isSold: currentProduct.isSold,
-                      onSell: () {
-                        showModalBottomSheet(
-                          context: context,
-                          isScrollControlled: true,
-                          backgroundColor: Colors.transparent,
-                          builder: (_) {
-                            return SellProductBottomSheet(
-                              product: currentProduct,
-                              onSave: (name, phone, address, quantity) {
-                                if (quantity >
-                                    currentProduct.availableQuantity) {
-                                  UiUtils.showError(
-                                    context , appLocalizations.quantity_is_greater_than_available_quantity,
-                                  );
-                                  return;
-                                }
-
-                                ProductDetailsCubit.get(context).sellProduct(
-                                  product: currentProduct,
-                                  quantity: quantity,
-                                  buyers: [
-                                    {
-                                      "id": DateTime.now()
-                                          .millisecondsSinceEpoch
-                                          .toString(),
-                                      "name": name,
-                                      "phone": phone,
-                                      "address": address,
-                                      "quantity": quantity,
-                                      "purchaseDate": DateTime.now(),
-                                    },
-                                  ],
-                                );
-                                Navigator.pop(context);
-                              },
-                            );
-                          },
-                        );
-                      },
                       onEdit: () async {
                         await Navigator.push(
                           context,
@@ -151,8 +132,9 @@ class ProductDetails extends StatelessWidget {
                           builder: (_) {
                             return AlertDialog(
                               title: Text(appLocalizations.deleteProduct),
-                              content:  Text(
-                                appLocalizations.are_you_sure_you_want_to_delete_this_product_
+                              content: Text(
+                                appLocalizations
+                                    .are_you_sure_you_want_to_delete_this_product_,
                               ),
                               actions: [
                                 TextButton(
@@ -162,7 +144,9 @@ class ProductDetails extends StatelessWidget {
                                   child: Text(appLocalizations.cancel),
                                 ),
                                 state is ProductDetailsLoading
-                                    ? CircularProgressIndicator(color: ColorManager.primaryColor,)
+                                    ? CircularProgressIndicator(
+                                        color: ColorManager.primaryColor,
+                                      )
                                     : TextButton(
                                         onPressed: () {
                                           Navigator.pop(context);

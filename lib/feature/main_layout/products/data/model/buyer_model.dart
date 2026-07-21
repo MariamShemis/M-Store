@@ -4,16 +4,13 @@ class BuyerModel {
   static const String collectionName = "buyers";
 
   String id;
-
   String name;
   String phone;
   String address;
-
   int quantity;
-
   double price;
 
-  DateTime purchaseDate;
+  DateTime? purchaseDate;
 
   BuyerModel({
     required this.id,
@@ -22,7 +19,7 @@ class BuyerModel {
     required this.address,
     required this.quantity,
     required this.price,
-    required this.purchaseDate,
+    this.purchaseDate,
   });
 
   factory BuyerModel.fromJson(Map<String, dynamic> json) {
@@ -33,8 +30,9 @@ class BuyerModel {
       address: json["address"] ?? "",
       quantity: json["quantity"] ?? 0,
       price: (json["price"] ?? 0).toDouble(),
-      purchaseDate:
-      (json["purchaseDate"] as Timestamp).toDate(),
+      purchaseDate: json["purchaseDate"] != null
+          ? (json["purchaseDate"] as Timestamp).toDate()
+          : null,
     );
   }
 
@@ -46,7 +44,9 @@ class BuyerModel {
       "address": address,
       "quantity": quantity,
       "price": price,
-      "purchaseDate": Timestamp.fromDate(purchaseDate),
+      "purchaseDate": purchaseDate != null
+          ? Timestamp.fromDate(purchaseDate!)
+          : null,
     };
   }
 }

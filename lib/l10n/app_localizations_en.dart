@@ -408,5 +408,74 @@ class AppLocalizationsEn extends AppLocalizations {
   String get enter_your_password => 'Enter your password';
 
   @override
+  String get product_not_found => 'Product not found';
+
+  @override
   String get confirm => 'Confirm';
+
+  @override
+  String get product_updated_successfully => 'Product updated successfully';
+
+  @override
+  String get selectLanguage => 'Select Language';
+
+  @override
+  String get choose_your_preferred_language_for_the_app_interface => 'Choose your preferred language for the app interface';
+
+  @override
+  String get soldProducts => 'Sold Products';
+
+  @override
+  String get search_by_ID_Name_Buyers_or_Category => 'Search by ID, Name, Buyers, or Category';
+
+  @override
+  String get noSoldProducts => 'No Sold Products';
+
+  @override
+  String get no_matching_products_found => 'No matching products found';
+
+  @override
+  String get select_your_birthday => 'Select your birthday';
+
+  @override
+  String get something_went_wrong_Please_try_again => 'Something went wrong. Please try again.';
+
+  @override
+  String get this_email_is_already_in_use => 'This email is already in use.';
+
+  @override
+  String get please_enter_a_valid_email_address => 'Please enter a valid email address.';
+
+  @override
+  String get password_is_too_weak => 'Password is too weak.';
+
+  @override
+  String get no_account_found_with_this_email => 'No account found with this email.';
+
+  @override
+  String get incorrect_email_or_password => 'Incorrect email or password.';
+
+  @override
+  String get please_check_your_internet_connection => 'Please check your internet connection.';
+
+  @override
+  String get too_many_attempts_Please_try_again_later => 'Too many attempts. Please try again later.';
+
+  @override
+  String get google_sign_in_was_cancelled => 'Google sign in was cancelled.';
+
+  @override
+  String get password_reset_email_sent_successfully => 'Password reset email sent successfully.';
+
+  @override
+  String get login_successfully => 'login successfully';
+
+  @override
+  String get account_created_successfully => 'Account created successfully.';
+
+  @override
+  String get sold_QTY => 'Sold QTY';
+
+  @override
+  String get all => 'All';
 }

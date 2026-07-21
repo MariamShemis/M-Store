@@ -4,6 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:m_store_1/core/costants/color_manager.dart';
 import 'package:m_store_1/core/routes/app_routes.dart';
+import 'package:m_store_1/feature/language/data/cubit/language_cubit.dart';
+import 'package:m_store_1/feature/language/data/cubit/language_state.dart';
 import 'package:m_store_1/feature/main_layout/profile/data/cubit/profile_cubit.dart';
 import 'package:m_store_1/feature/main_layout/profile/data/cubit/profile_state.dart';
 import 'package:m_store_1/feature/main_layout/profile/presentation/widgets/profile_header.dart';
@@ -110,12 +112,21 @@ class ProfileTab extends StatelessWidget {
                           title: appLocalizations.account_Security,
                           onTap: () {},
                         ),
-                        ProfileMenuTile(
-                          icon: Icons.language_rounded,
-                          title: appLocalizations.language,
-                          trailingText: 'English',
-                          onTap: () {},
-                          showDivider: false,
+                        BlocBuilder<LanguageCubit, LanguageState>(
+                          builder: (context, state) {
+                            return ProfileMenuTile(
+                              icon: Icons.language_rounded,
+                              title: appLocalizations.language,
+                              trailingText:
+                              state.locale.languageCode == 'ar'
+                                  ? 'العربية'
+                                  : 'English',
+                              onTap: () {
+                                Navigator.pushNamed(context, AppRoutes.language);
+                              },
+                              showDivider: false,
+                            );
+                          },
                         ),
                       ],
                     ),

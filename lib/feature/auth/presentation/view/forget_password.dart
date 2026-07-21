@@ -38,7 +38,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
         }
         if (state is ResetPasswordSuccessState) {
           UiUtils.hideLoading(context);
-          UiUtils.showToast("Password reset email sent.");
+          UiUtils.showToast(appLocalizations.password_reset_email_sent_successfully);
           Navigator.pop(context);
         }
         if (state is ResetPasswordErrorState) {
@@ -136,7 +136,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                               if (_formKey.currentState!.validate()) {
                                 AuthCubit.get(
                                   context,
-                                ).resetPassword(_emailController.text.trim());
+                                ).resetPassword(_emailController.text.trim() , context);
                               }
                             },
                             child: Text(appLocalizations.resetPassword),

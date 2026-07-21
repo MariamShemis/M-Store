@@ -5,6 +5,7 @@ import 'package:m_store_1/feature/auth/presentation/view/forget_password.dart';
 import 'package:m_store_1/feature/auth/presentation/view/login_screen.dart';
 import 'package:m_store_1/feature/auth/presentation/view/register_screen.dart';
 import 'package:m_store_1/feature/edit_profile/presentation/view/edit_profile.dart';
+import 'package:m_store_1/feature/language/presentation/view/language_profile.dart';
 import 'package:m_store_1/feature/main_layout/main_layout.dart';
 import 'package:m_store_1/feature/main_layout/products/data/model/product_model.dart';
 import 'package:m_store_1/feature/product_details/presentation/view/product_details.dart';
@@ -37,20 +38,22 @@ abstract class RoutesGenerator {
         {
           return CupertinoPageRoute(builder: (context) => AddProduct());
         }
-        case AppRoutes.editProfile:
+      case AppRoutes.editProfile:
         {
           return CupertinoPageRoute(builder: (context) => EditProfile());
         }
+      case AppRoutes.language:
+        {
+          return CupertinoPageRoute(builder: (context) => LanguageProfile());
+        }
 
-        case AppRoutes.productDetails:
+      case AppRoutes.productDetails:
         {
           final product = settings.arguments as ProductModel;
           return CupertinoPageRoute(
             builder: (context) => ProductDetails(product: product),
           );
         }
-        
-        
     }
     return null;
   }

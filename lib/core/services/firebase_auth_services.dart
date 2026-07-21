@@ -113,7 +113,18 @@ class FirebaseAuthServices {
   }
 
   static Future<void> updateCurrentUserEmail(String email) async {
-    await _auth.currentUser?.verifyBeforeUpdateEmail(email);
+    final user = _auth.currentUser!;
+
+    try {
+      await user.verifyBeforeUpdateEmail(email);
+      //await FirebaseAuth.instance.currentUser!.updateEmail(newEmail);
+
+      print("Verification email sent");
+    } on FirebaseAuthException catch (e) {
+      print("Code: ${e.code}");
+      print("Message: ${e.message}");
+      rethrow;
+    }
   }
 
   static Future<void> reauthenticate(String password) async {

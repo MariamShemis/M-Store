@@ -17,8 +17,9 @@ class ProductInfoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AppLocalizations appLocalizations = AppLocalizations.of(context)!;
-    final profit =
-        (product.sellingPrice - product.purchasePrice) * product.soldQuantity;
+    final profit = product.profit;
+    final profitText =
+        "${profit > 0 ? "+" : ""}${profit.toStringAsFixed(2)} ${appLocalizations.lE}";
 
     return Container(
       width: double.infinity,
@@ -39,12 +40,16 @@ class ProductInfoCard extends StatelessWidget {
             child: Row(
              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  appLocalizations.retailPrice.toUpperCase(),
-                  style: GoogleFonts.inter(
-                    fontSize: 16.sp,
-                    color: ColorManager.secondary,
-                    fontWeight: FontWeight.w600,
+                Expanded(
+                  child: Text(
+                    appLocalizations.retailPrice.toUpperCase(),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: GoogleFonts.inter(
+                      fontSize: 16.sp,
+                      color: ColorManager.secondary,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ),
                 Text(
@@ -110,15 +115,13 @@ class ProductInfoCard extends StatelessWidget {
               Expanded(
                 child: _item(
                   appLocalizations.profit,
-                  "${profit.toStringAsFixed(2)} ${appLocalizations.lE}",
-                  valueColor: Colors.green,
+                  profitText,
+                  valueColor: profit >= 0 ? ColorManager.green : Colors.red,
                 ),
               ),
             ],
           ),
-
           SizedBox(height: 22.h),
-
           Row(
             children: [
               Expanded(

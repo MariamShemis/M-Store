@@ -5,10 +5,7 @@ import 'package:m_store_1/feature/main_layout/home/data/model/dashboard_model.da
 import 'package:m_store_1/l10n/app_localizations.dart';
 
 class HomeStatistics extends StatelessWidget {
-  const HomeStatistics({
-    super.key,
-    required this.dashboard,
-  });
+  const HomeStatistics({super.key, required this.dashboard});
 
   final DashboardModel dashboard;
 
@@ -44,13 +41,15 @@ class HomeStatistics extends StatelessWidget {
 
         _StatisticCard(
           title: appLocalizations.sales.toUpperCase(),
-          value: "${dashboard.totalSales.toStringAsFixed(2)} ${appLocalizations.lE}",
+          value:
+              "${dashboard.totalSales.toStringAsFixed(2)} ${appLocalizations.lE}",
           icon: Icons.payments_outlined,
         ),
 
         _StatisticCard(
           title: appLocalizations.profit.toUpperCase(),
-          value: "${dashboard.totalProfit.toStringAsFixed(2)} ${appLocalizations.lE}",
+          value:
+              "${dashboard.totalProfit.toStringAsFixed(2)} ${appLocalizations.lE}",
           icon: Icons.trending_up,
           isHighlighted: true,
         ),
@@ -76,7 +75,6 @@ class _StatisticCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-
     return Container(
       padding: REdgeInsets.all(18),
       decoration: BoxDecoration(
@@ -96,11 +94,16 @@ class _StatisticCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, color: ColorManager.primaryColor, size: 28.sp),
+          Icon(icon, color: ColorManager.primaryColor, size: 25.sp),
           const Spacer(),
           Text(title.toUpperCase(), style: textTheme.bodySmall),
           SizedBox(height: 5.h),
-          Text(value, style: textTheme.titleMedium),
+          Text(
+            value,
+            style: textTheme.labelMedium,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
         ],
       ),
     );
