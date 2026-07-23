@@ -51,8 +51,10 @@ class _ProductsTabState extends State<ProductsTab> {
                 children: [
                   Text(
                     appLocalizations.productInventory,
-                    style: textTheme.titleLarge?.copyWith(
+                    style: GoogleFonts.playfairDisplay(
+                      fontSize: 26.sp,
                       color: ColorManager.blackText,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                   // SizedBox(height: 6.h),

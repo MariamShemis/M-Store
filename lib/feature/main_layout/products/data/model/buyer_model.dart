@@ -1,15 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class BuyerModel {
-  static const String collectionName = "buyers";
-
   String id;
   String name;
   String phone;
   String address;
   int quantity;
-  double price;
-
+  double sellingPrice;
   DateTime? purchaseDate;
 
   BuyerModel({
@@ -18,7 +15,7 @@ class BuyerModel {
     required this.phone,
     required this.address,
     required this.quantity,
-    required this.price,
+    required this.sellingPrice,
     this.purchaseDate,
   });
 
@@ -29,7 +26,7 @@ class BuyerModel {
       phone: json["phone"] ?? "",
       address: json["address"] ?? "",
       quantity: json["quantity"] ?? 0,
-      price: (json["price"] ?? 0).toDouble(),
+      sellingPrice: (json["sellingPrice"] ?? 0).toDouble(),
       purchaseDate: json["purchaseDate"] != null
           ? (json["purchaseDate"] as Timestamp).toDate()
           : null,
@@ -43,10 +40,10 @@ class BuyerModel {
       "phone": phone,
       "address": address,
       "quantity": quantity,
-      "price": price,
-      "purchaseDate": purchaseDate != null
-          ? Timestamp.fromDate(purchaseDate!)
-          : null,
+      "sellingPrice": sellingPrice,
+      "purchaseDate": purchaseDate == null
+          ? null
+          : Timestamp.fromDate(purchaseDate!),
     };
   }
 }

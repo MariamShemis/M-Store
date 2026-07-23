@@ -16,11 +16,11 @@ class ProfileCubit extends Cubit<ProfileState> {
     emit(GetProfileLoadingState());
 
     try {
-      currentUser = await FirebaseAuthServices.getCurrentUser();
+      final user = await FirebaseAuthServices.getCurrentUser();
 
-      print("Profile User = ${currentUser?.toJson()}");
+      currentUser = user;
 
-      emit(GetProfileSuccessState(currentUser!));
+      emit(GetProfileSuccessState(user));
     } catch (e) {
       emit(GetProfileErrorState(e.toString()));
     }

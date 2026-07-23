@@ -12,9 +12,23 @@ import 'package:m_store_1/feature/main_layout/profile/presentation/widgets/profi
 import 'package:m_store_1/feature/main_layout/profile/presentation/widgets/profile_menu_item.dart';
 import 'package:m_store_1/l10n/app_localizations.dart';
 
-class ProfileTab extends StatelessWidget {
+class ProfileTab extends StatefulWidget {
   const ProfileTab({super.key});
 
+  @override
+  State<ProfileTab> createState() => _ProfileTabState();
+}
+
+class _ProfileTabState extends State<ProfileTab> {
+
+  @override
+  void initState() {
+    super.initState();
+
+    Future.microtask(() {
+      ProfileCubit.get(context).loadProfile();
+    });
+  }
   @override
   Widget build(BuildContext context) {
     AppLocalizations appLocalizations = AppLocalizations.of(context)!;
@@ -39,7 +53,11 @@ class ProfileTab extends StatelessWidget {
             child: Text(state.message),
           );
         }
-        final cubit = ProfileCubit.get(context);
+
+        if (state is! GetProfileSuccessState) {
+          return const SizedBox();
+        }
+        final user = state.user;
         return Scaffold(
           body: SafeArea(
             child: SingleChildScrollView(
@@ -48,18 +66,18 @@ class ProfileTab extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   ProfileHeader(
-                    name: cubit.currentUser?.name ?? "",
-                    job: cubit.currentUser?.email ?? "",
-                    phoneNumber: cubit.currentUser?.phone ?? "",
+                    name: user.name,
+                    job: user.email,
+                    phoneNumber: user.phone,
                     image: CircleAvatar(
                       radius: 40.r,
-                      backgroundColor: ColorManager.primaryColor.withOpacity(.15),
-                      backgroundImage: cubit.currentUser?.image != null &&
-                          cubit.currentUser!.image!.isNotEmpty
-                          ? NetworkImage(cubit.currentUser!.image!)
+                      backgroundColor:
+                      ColorManager.primaryColor.withOpacity(.15),
+                      backgroundImage:
+                      user.image != null && user.image!.isNotEmpty
+                          ? NetworkImage(user.image!)
                           : null,
-                      child: cubit.currentUser?.image == null ||
-                          cubit.currentUser!.image!.isEmpty
+                      child: user.image == null || user.image!.isEmpty
                           ? Icon(
                         Icons.person,
                         size: 35.sp,

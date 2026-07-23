@@ -25,7 +25,7 @@ void main() async {
         BlocProvider(create: (_) => AddProductCubit()),
         BlocProvider(create: (_) => ProductDetailsCubit()),
         BlocProvider(create: (_) => EditProfileCubit()..loadProfile()),
-        BlocProvider(create: (_) => ProfileCubit()..loadProfile()),
+        BlocProvider(create: (_) => ProfileCubit()),
       ],
       child: MStore(),
     ),

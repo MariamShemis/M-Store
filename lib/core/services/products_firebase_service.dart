@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:m_store_1/feature/main_layout/home/data/model/category_statistics_model.dart';
 import 'package:m_store_1/feature/main_layout/home/data/model/dashboard_model.dart';
 import 'package:m_store_1/feature/main_layout/products/data/model/product_model.dart';
 
@@ -164,32 +165,17 @@ class ProductsFirebaseServices {
     });
   }
 
-  ///==========================
-  /// Sell Product
-  ///==========================
-
-  // static Future<void> sellProduct({
-  //   required String uid,
-  //   required String productId,
-  //   required int quantity,
-  //   required List<Map<String, dynamic>> buyers,
-  // }) async {
-  //
-  //   final product = await getProduct(
-  //     uid: uid,
-  //     productId: productId,
-  //   );
-  //   if (product == null) return;
-  //   final soldQuantity = product.soldQuantity + quantity;
-  //   final availableQuantity = product.availableQuantity - quantity;
-  //
-  //   await getProductsCollection(uid).doc(productId).update({
-  //     "soldQuantity": soldQuantity,
-  //     "availableQuantity": availableQuantity,
-  //     "isSold": buyers.isNotEmpty,
-  //     "buyers": FieldValue.arrayUnion(buyers),
-  //   });
-  // }
+  static Stream<List<ProductModel>> soldProductsStream(String uid) {
+    return getProductsCollection(uid)
+        .orderBy("createdAt", descending: true)
+        .snapshots()
+        .map(
+          (snapshot) => snapshot.docs
+              .map((e) => e.data())
+              .where((product) => product.buyers.isNotEmpty)
+              .toList(),
+        );
+  }
 
   ///==========================
   /// Search By Product Number
@@ -274,43 +260,79 @@ class ProductsFirebaseServices {
   /// Dashboard
   ///==========================
 
-  static Future<DashboardModel> getDashboardData(String uid) async {
-    final products = await getProducts(uid);
+  static DashboardModel buildDashboard(List<ProductModel> products) {
+    final totalProducts = products.length;
 
-    int totalProducts = products.length;
+    int availableProducts = 0;
+    int soldProducts = 0;
 
-    int available = 0;
+    int availableItems = 0;
+    int soldItems = 0;
 
-    int sold = 0;
-
-    double sales = 0;
-
-    double profit = 0;
+    double totalProductsPrice = 0;
+    double totalInventoryValue = 0;
+    double totalSales = 0;
+    double totalProfit = 0;
 
     for (final product in products) {
-      available += product.availableQuantity;
+      if (product.availableQuantity > 0) {
+        availableProducts++;
+      }
 
-      sold += product.soldQuantity;
+      if (product.soldQuantity > 0) {
+        soldProducts++;
+      }
 
-      sales += product.sellingPrice * product.soldQuantity;
+      availableItems += product.availableQuantity;
+      soldItems += product.soldQuantity;
 
-      profit +=
-          (product.sellingPrice - product.purchasePrice) * product.soldQuantity;
+      totalProductsPrice += product.purchasePrice;
+
+      totalInventoryValue += product.purchasePrice * product.availableQuantity;
+
+      totalSales += product.totalSellingPrice;
+
+      totalProfit += product.totalProfit;
     }
 
     return DashboardModel(
       totalProducts: totalProducts,
-      availableProducts: available,
-      soldProducts: sold,
-      totalSales: sales,
-      totalProfit: profit,
+      availableProducts: availableProducts,
+      soldProducts: soldProducts,
+      availableItems: availableItems,
+      soldItems: soldItems,
+      totalProductsPrice: totalProductsPrice,
+      totalInventoryValue: totalInventoryValue,
+      totalSales: totalSales,
+      totalProfit: totalProfit,
     );
   }
 
-  static Stream<ProductModel> productStream(
-      String uid,
-      String productId,
-      ) {
+  static List<CategoryStatisticsModel> buildCategoryStatistics(
+    List<ProductModel> products,
+  ) {
+    final Map<String, int> categories = {};
+
+    for (final product in products) {
+      categories[product.category] = (categories[product.category] ?? 0) + 1;
+    }
+
+    final list = categories.entries
+        .map(
+          (e) => CategoryStatisticsModel(
+            category: e.key,
+            productsCount: e.value,
+            percentage: products.isEmpty ? 0 : e.value / products.length,
+          ),
+        )
+        .toList();
+
+    list.sort((a, b) => b.productsCount.compareTo(a.productsCount));
+
+    return list;
+  }
+
+  static Stream<ProductModel> productStream(String uid, String productId) {
     return FirebaseFirestore.instance
         .collection("users")
         .doc(uid)

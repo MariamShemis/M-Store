@@ -9,15 +9,12 @@ import 'package:m_store_1/l10n/app_localizations.dart';
 class ProductInfoCard extends StatelessWidget {
   final ProductModel product;
 
-  const ProductInfoCard({
-    super.key,
-    required this.product,
-  });
+  const ProductInfoCard({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {
     AppLocalizations appLocalizations = AppLocalizations.of(context)!;
-    final profit = product.profit;
+    final profit = product.totalProfit;
     final profitText =
         "${profit > 0 ? "+" : ""}${profit.toStringAsFixed(2)} ${appLocalizations.lE}";
 
@@ -27,22 +24,19 @@ class ProductInfoCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(24.r),
-        border: Border.all(
-          color: ColorManager.lightGreyEF,
-        ),
+        border: Border.all(color: ColorManager.lightGreyEF),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-
           Align(
             alignment: Alignment.centerRight,
             child: Row(
-             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
                   child: Text(
-                    appLocalizations.retailPrice.toUpperCase(),
+                    appLocalizations.purchasePrice.toUpperCase(),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: GoogleFonts.inter(
@@ -53,7 +47,7 @@ class ProductInfoCard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "${product.sellingPrice.toStringAsFixed(2)} ${appLocalizations.lE}",
+                  "${product.purchasePrice.toStringAsFixed(2)} ${appLocalizations.lE}",
                   style: GoogleFonts.playfairDisplay(
                     fontSize: 28.sp,
                     color: ColorManager.mediumGold,
@@ -69,17 +63,28 @@ class ProductInfoCard extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: _item(
-                  appLocalizations.category,
-                  product.category,
-                ),
+                child: _item(appLocalizations.category, product.category),
               ),
               Expanded(
                 child: _item(
-                  appLocalizations.material,
-                  product.material.toUpperCase(),
+                  appLocalizations.retailPrice,
+                  "${product.totalSellingPrice.toStringAsFixed(2)} ${appLocalizations.lE}",
                 ),
               ),
+            ],
+          ),
+          SizedBox(height: 22.h),
+          Row(
+            children: [
+              ?product.material.isNotEmpty
+                  ? Expanded(
+                      child: _item(
+                        appLocalizations.material,
+                        product.material.toUpperCase(),
+                      ),
+                    )
+                  : null,
+              Expanded(child: _item(appLocalizations.color, product.color)),
             ],
           ),
 
@@ -87,31 +92,25 @@ class ProductInfoCard extends StatelessWidget {
 
           Row(
             children: [
-              Expanded(
-                child: _item(
-                  appLocalizations.color,
-                  product.color,
-                ),
-              ),
-              Expanded(
-                child: _item(
-                  appLocalizations.size.toUpperCase(),
-                  product.dimensions,
-                ),
-              ),
-            ],
-          ),
-
-          SizedBox(height: 22.h),
-
-          Row(
-            children: [
+              ?product.dimensions.isNotEmpty
+                  ? Expanded(
+                      child: _item(
+                        appLocalizations.size.toUpperCase(),
+                        product.dimensions,
+                      ),
+                    )
+                  : null,
               Expanded(
                 child: _item(
                   appLocalizations.qTY,
                   "${product.availableQuantity} ${appLocalizations.units}",
                 ),
               ),
+            ],
+          ),
+          SizedBox(height: 22.h),
+          Row(
+            children: [
               Expanded(
                 child: _item(
                   appLocalizations.profit,
@@ -119,38 +118,37 @@ class ProductInfoCard extends StatelessWidget {
                   valueColor: profit >= 0 ? ColorManager.green : Colors.red,
                 ),
               ),
-            ],
-          ),
-          SizedBox(height: 22.h),
-          Row(
-            children: [
               Expanded(
                 child: _item(
                   appLocalizations.added.toUpperCase(),
                   _formatDate(product.createdAt),
                 ),
               ),
-              ?product.updatedAt != null ?Expanded(
-                child: _item(
-                  appLocalizations.modified.toUpperCase(),
-                  _formatDate(product.updatedAt!),
-                ),
-              ) : null,
+            ],
+          ),
+          SizedBox(height: 22.h),
+          Row(
+            children: [
+              ?product.updatedAt != null
+                  ? Expanded(
+                      child: _item(
+                        appLocalizations.modified.toUpperCase(),
+                        _formatDate(product.updatedAt!),
+                      ),
+                    )
+                  : null,
             ],
           ),
         ],
       ),
     );
   }
+
   String _formatDate(DateTime date) {
     return DateFormat("dd MMM yyyy • hh:mm a").format(date);
   }
 
-  Widget _item(
-      String title,
-      String value, {
-        Color? valueColor,
-      }) {
+  Widget _item(String title, String value, {Color? valueColor}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

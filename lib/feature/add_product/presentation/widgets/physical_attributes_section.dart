@@ -12,7 +12,6 @@ class PhysicalAttributesSection extends StatelessWidget {
   final TextEditingController sizeController;
   final TextEditingController quantityController;
   final TextEditingController purchasePriceController;
-  final TextEditingController sellingPriceController;
   final Widget? colorSuffixIcon;
   final VoidCallback? onColorTap;
   final void Function(String)? onChangedColor;
@@ -24,7 +23,6 @@ class PhysicalAttributesSection extends StatelessWidget {
     required this.sizeController,
     required this.quantityController,
     required this.purchasePriceController,
-    required this.sellingPriceController,
     this.colorSuffixIcon,
     this.onChangedColor,
     this.onColorTap,
@@ -147,26 +145,7 @@ class PhysicalAttributesSection extends StatelessWidget {
             validator: (value) =>
                 ProductValidators.validatePrice(value, context),
           ),
-          SizedBox(height: 20.h),
-          CustomProductTextFormField(
-            labelText: appLocalizations.sellingPrice,
-            controller: sellingPriceController,
-            hintText: "0.00",
-            keyboardType: const TextInputType.numberWithOptions(decimal: true),
-            prefixIcon: Padding(
-              padding: REdgeInsets.only(left: 16, right: 8, top: 14),
-              child: Text(
-                appLocalizations.lE,
-                style: GoogleFonts.inter(
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.bold,
-                  color: ColorManager.secondary,
-                ),
-              ),
-            ),
-            validator: (value) =>
-                ProductValidators.validatePrice(value, context),
-          ),
+
         ],
       ),
     );

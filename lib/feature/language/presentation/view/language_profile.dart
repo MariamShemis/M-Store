@@ -29,13 +29,25 @@ class _LanguageProfileState extends State<LanguageProfile> {
     AppLocalizations appLocalizations = AppLocalizations.of(context)!;
     return BlocBuilder<LanguageCubit, LanguageState>(
       builder: (context, state) {
+        final currentLang = state.locale.languageCode;
         return Scaffold(
-          appBar: AppBar(title: Text(appLocalizations.selectLanguage)),
+          appBar: AppBar(
+            title: Text(appLocalizations.selectLanguage),
+            leading: IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: Icon(Icons.arrow_back_ios),
+            ),
+          ),
           body: Padding(
             padding: EdgeInsets.all(16.w),
             child: Column(
               children: [
-                Text(appLocalizations.choose_your_preferred_language_for_the_app_interface),
+                Text(
+                  appLocalizations
+                      .choose_your_preferred_language_for_the_app_interface,
+                ),
                 SizedBox(height: 40.h),
                 CustomLanguageCard(
                   title: "English",
@@ -66,15 +78,17 @@ class _LanguageProfileState extends State<LanguageProfile> {
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: () async {
-                      await context.read<LanguageCubit>().changeLanguage(
-                        selectedLang,
-                      );
+                    onPressed: selectedLang == currentLang
+                        ? null
+                        : () async {
+                            await context.read<LanguageCubit>().changeLanguage(
+                              selectedLang,
+                            );
 
-                      if (context.mounted) {
-                        Navigator.pop(context);
-                      }
-                    },
+                            if (context.mounted) {
+                              Navigator.pop(context);
+                            }
+                          },
 
                     child: Text(appLocalizations.save),
                   ),

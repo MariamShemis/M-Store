@@ -15,9 +15,6 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AppLocalizations appLocalizations = AppLocalizations.of(context)!;
-    final profit = product.profit;
-    final profitText =
-        "${profit > 0 ? "+" : ""}${profit.toStringAsFixed(2)} ${appLocalizations.lE}";
     final available = product.availableQuantity > 0;
 
     return InkWell(
@@ -44,19 +41,84 @@ class ProductCard extends StatelessWidget {
                   borderRadius: BorderRadius.vertical(
                     top: Radius.circular(24.r),
                   ),
-                  child: CachedNetworkImage(
+                  child: product.mainImage.isEmpty
+                      ? Container(
+                    height: 220.h,
+                    width: double.infinity,
+                    color: Color(0xffD0C5AF).withOpacity(0.5),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: 72.w,
+                          height: 72.w,
+                          decoration: BoxDecoration(
+                            color: ColorManager.mediumGold.withOpacity(.12),
+                            shape: BoxShape.circle,
+                          ),
+                          child: Icon(
+                            Icons.inventory_2_outlined,
+                            size: 36.sp,
+                            color: ColorManager.mediumGold,
+                          ),
+                        ),
+                        SizedBox(height: 16.h),
+                        Text(
+                          appLocalizations.noImageAvailable,
+                          style: GoogleFonts.manrope(
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.w700,
+                            color: ColorManager.greyDark,
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                      : CachedNetworkImage(
                     imageUrl: product.mainImage,
                     fadeInDuration: Duration.zero,
                     fadeOutDuration: Duration.zero,
                     height: 220.h,
                     width: double.infinity,
                     fit: BoxFit.cover,
-                    placeholder: (_, __) =>
-                        Container(height: 220.h, color: Colors.grey.shade100),
-                    errorWidget: (context, url, error) => Container(
+                    placeholder: (_, __) => Container(
                       height: 220.h,
-                      color: Colors.grey.shade200,
-                      child: Icon(Icons.broken_image_outlined, size: 45.sp),
+                      color: Colors.grey.shade100,
+                      child: const Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    ),
+                    errorWidget: (_, __, ___) => Container(
+                      height: 220.h,
+                      width: double.infinity,
+                      color: const Color(0xffF8F7F4),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: 72.w,
+                            height: 72.w,
+                            decoration: BoxDecoration(
+                              color: ColorManager.mediumGold.withOpacity(.12),
+                              shape: BoxShape.circle,
+                            ),
+                            child: Icon(
+                              Icons.image_not_supported_outlined,
+                              size: 36.sp,
+                              color: ColorManager.mediumGold,
+                            ),
+                          ),
+                          SizedBox(height: 16.h),
+                          Text(
+                            appLocalizations.noImageAvailable,
+                            style: GoogleFonts.manrope(
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.w700,
+                              color: ColorManager.greyDark,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -90,7 +152,7 @@ class ProductCard extends StatelessWidget {
                               style: GoogleFonts.manrope(
                                 fontWeight: FontWeight.w700,
                                 color: ColorManager.greyDark,
-                                fontSize: 14.sp
+                                fontSize: 14.sp,
                               ),
                             ),
                           ),
@@ -100,92 +162,72 @@ class ProductCard extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                        if (product.description.isNotEmpty) ...[
-                          Expanded(
-                            child: Text(
-                              product.description,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: GoogleFonts.manrope(
-                                color: ColorManager.brownDark,
-                                fontWeight: FontWeight.w400,
-                                fontSize: 16.sp,
+                          if (product.description.isNotEmpty) ...[
+                            Expanded(
+                              child: Text(
+                                product.description,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: GoogleFonts.manrope(
+                                  color: ColorManager.brownDark,
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 16.sp,
+                                ),
                               ),
                             ),
-                          ),
-                        ],
-                        Text(
-                          "${appLocalizations.qTY}: ${product.availableQuantity.toString().padLeft(2, '0')}",
-                          style: GoogleFonts.manrope(
-                            fontSize: 13.sp,
-                            fontWeight: FontWeight.w500,
-                            color: ColorManager.greyDark,
-                          ),
-                        ),
-                      ],),
-                      Divider(height: 32.h, color: ColorManager.lightGreyEF),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  appLocalizations.pricing.toUpperCase(),
-                                  style: GoogleFonts.manrope(
-                                    fontSize: 13.sp,
-                                    fontWeight: FontWeight.w600,
-                                    color: ColorManager.greyDark,
-                                    letterSpacing: 0.5,
-                                  ),
-                                ),
-                                SizedBox(height: 8.h),
-                                Text(
-                                  "${appLocalizations.buy}: ${product.purchasePrice.toStringAsFixed(2)} ${appLocalizations.lE}",
-                                  style: GoogleFonts.manrope(
-                                    fontSize: 16.sp,
-                                    color: ColorManager.blackText,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                                SizedBox(height: 5.h),
-                                Text(
-                                  "${appLocalizations.sell}: ${product.sellingPrice.toStringAsFixed(2)}${appLocalizations.lE}",
-                                  style: GoogleFonts.manrope(
-                                    fontSize: 16.sp,
-                                    color: ColorManager.mediumGold,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                              ],
+                          ],
+                          Text(
+                            "${appLocalizations.qTY}: ${product.availableQuantity.toString().padLeft(2, '0')}",
+                            style: GoogleFonts.manrope(
+                              fontSize: 13.sp,
+                              fontWeight: FontWeight.w500,
+                              color: ColorManager.greyDark,
                             ),
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Text(
-                                appLocalizations.profit.toUpperCase(),
-                                style: GoogleFonts.manrope(
-                                  color: ColorManager.greyDark,
-                                  fontSize: 12.sp,
-                                  fontWeight: FontWeight.w600,
-                                  letterSpacing: 0.5,
-                                ),
-                              ),
-                              SizedBox(height: 8.h),
-                              Text(
-                                profitText,
-                                style: GoogleFonts.manrope(
-                                  color: profit >= 0 ? ColorManager.green : Colors.red,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 22.sp,
-                                ),
-                              ),
-                            ],
                           ),
                         ],
                       ),
+                      if (product.purchasePrice != null) ...[
+                        Divider(height: 32.h, color: ColorManager.lightGreyEF),
+                        Text(
+                          appLocalizations.pricing.toUpperCase(),
+                          style: GoogleFonts.manrope(
+                            fontSize: 13.sp,
+                            fontWeight: FontWeight.w600,
+                            color: ColorManager.greyDark,
+                            letterSpacing: 0.5,
+                          ),
+                        ),
+                        SizedBox(height: 8.h),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: RichText(
+                                text: TextSpan(
+                                  style: GoogleFonts.manrope(
+                                    fontSize: 15.sp,
+                                    color: ColorManager.blackText,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                  children: [
+                                    TextSpan(
+                                      text: "${appLocalizations.purchasePrice}:   ",
+                                    ),
+                                    TextSpan(
+                                      text:
+                                          "${product.purchasePrice.toStringAsFixed(2)} ${appLocalizations.lE}",
+                                      style: GoogleFonts.manrope(
+                                        fontSize: 18.sp,
+                                        color: ColorManager.mediumGold,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
                     ],
                   ),
                 ),
@@ -209,7 +251,7 @@ class ProductCard extends StatelessWidget {
                   style: TextStyle(
                     color: ColorManager.white,
                     fontWeight: FontWeight.bold,
-                    fontSize: 12.sp,
+                    fontSize: 13.sp,
                     letterSpacing: 0.5,
                   ),
                 ),

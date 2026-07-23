@@ -1031,6 +1031,60 @@ abstract class AppLocalizations {
   /// **'Sold QTY'**
   String get sold_QTY;
 
+  /// No description provided for @totalPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Price'**
+  String get totalPrice;
+
+  /// No description provided for @productsPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Products Price'**
+  String get productsPrice;
+
+  /// No description provided for @inventoryValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Inventory Value'**
+  String get inventoryValue;
+
+  /// No description provided for @noImageAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'No Image Available'**
+  String get noImageAvailable;
+
+  /// No description provided for @remaining.
+  ///
+  /// In en, this message translates to:
+  /// **'Remaining'**
+  String get remaining;
+
+  /// No description provided for @tap_to_upload_image.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to upload an image'**
+  String get tap_to_upload_image;
+
+  /// No description provided for @uploadImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload Image'**
+  String get uploadImage;
+
+  /// No description provided for @availableItems.
+  ///
+  /// In en, this message translates to:
+  /// **'Available Items'**
+  String get availableItems;
+
+  /// No description provided for @soldItems.
+  ///
+  /// In en, this message translates to:
+  /// **'Sold Items'**
+  String get soldItems;
+
   /// No description provided for @all.
   ///
   /// In en, this message translates to:

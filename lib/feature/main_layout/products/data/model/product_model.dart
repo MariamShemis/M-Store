@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:m_store_1/feature/main_layout/products/data/model/buyer_model.dart';
 
 class ProductModel {
   static const String collectionName = "products";
@@ -12,15 +13,15 @@ class ProductModel {
   String color;
   String dimensions;
   DateTime? updatedAt;
+
   double purchasePrice;
-  double sellingPrice;
-  double get profit => sellingPrice - purchasePrice;
+
   int quantity;
   int soldQuantity;
   int availableQuantity;
   bool isSold;
 
-  List<Map<String, dynamic>> buyers;
+  List<BuyerModel> buyers;
 
   String mainImage;
   List<String> images;
@@ -37,7 +38,6 @@ class ProductModel {
     required this.color,
     required this.dimensions,
     required this.purchasePrice,
-    required this.sellingPrice,
     required this.quantity,
     required this.soldQuantity,
     required this.availableQuantity,
@@ -48,6 +48,22 @@ class ProductModel {
     required this.mainImage,
     required this.createdAt,
   });
+
+  double buyerProfit(BuyerModel buyer) {
+    return (buyer.sellingPrice - purchasePrice) * buyer.quantity;
+  }
+
+  double buyerTotalPrice(BuyerModel buyer) {
+    return buyer.sellingPrice * buyer.quantity;
+  }
+
+  double get totalSellingPrice {
+    return buyers.fold(0, (sum, buyer) => sum + buyerTotalPrice(buyer));
+  }
+
+  double get totalProfit {
+    return buyers.fold(0, (sum, buyer) => sum + buyerProfit(buyer));
+  }
 
   factory ProductModel.fromJson(Map<String, dynamic> json) {
     return ProductModel(
@@ -61,7 +77,6 @@ class ProductModel {
       color: json["color"] ?? "",
       dimensions: json["dimensions"] ?? "",
       purchasePrice: (json["purchasePrice"] ?? 0).toDouble(),
-      sellingPrice: (json["sellingPrice"] ?? 0).toDouble(),
       quantity: json["quantity"] ?? 0,
       soldQuantity: json["soldQuantity"] ?? 0,
       availableQuantity: json["availableQuantity"] ?? 0,
@@ -71,7 +86,9 @@ class ProductModel {
       updatedAt: json["updatedAt"] != null
           ? (json["updatedAt"] as Timestamp).toDate()
           : null,
-      buyers: List<Map<String, dynamic>>.from(json["buyers"] ?? []),
+      buyers: (json["buyers"] as List? ?? [])
+          .map((e) => BuyerModel.fromJson(e))
+          .toList(),
     );
   }
 
@@ -87,23 +104,16 @@ class ProductModel {
       "color": color,
       "dimensions": dimensions,
       "purchasePrice": purchasePrice,
-      "sellingPrice": sellingPrice,
       "quantity": quantity,
       "soldQuantity": soldQuantity,
       "availableQuantity": availableQuantity,
       "images": images,
       "createdAt": Timestamp.fromDate(createdAt),
-      "profit": profit,
       "isSold": isSold,
-      "buyers": buyers,
-      "updatedAt": updatedAt != null
-          ? Timestamp.fromDate(updatedAt!)
-          : null,
+      "buyers": buyers.map((e) => e.toJson()).toList(),
+      "updatedAt": updatedAt != null ? Timestamp.fromDate(updatedAt!) : null,
     };
   }
 }
-enum ProductFilter {
-  all,
-  available,
-  sold,
-}
+
+enum ProductFilter { all, available, sold }

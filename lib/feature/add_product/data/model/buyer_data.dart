@@ -8,6 +8,7 @@ class BuyerData {
   TextEditingController phoneController;
   TextEditingController addressController;
   TextEditingController quantityController;
+  TextEditingController sellingPriceController;
 
   BuyerData({
     this.id,
@@ -16,5 +17,6 @@ class BuyerData {
     required this.phoneController,
     required this.addressController,
     required this.quantityController,
+    required this.sellingPriceController,
   });
 }

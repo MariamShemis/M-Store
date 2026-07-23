@@ -45,6 +45,7 @@ class _SalesTabState extends State<SalesTab> {
                     appLocalizations.soldProducts,
                     style: GoogleFonts.playfairDisplay(
                       fontSize: 26.sp,
+                      color: ColorManager.blackText,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -80,29 +81,26 @@ class _SalesTabState extends State<SalesTab> {
                     )
                   else
                     Expanded(
-                      child: RefreshIndicator(
-                        onRefresh: cubit.loadSales,
-                        child: ListView.separated(
-                          itemCount: cubit.filteredProducts.length,
-                          separatorBuilder: (_, __) => SizedBox(height: 18.h),
-                          itemBuilder: (context, index) {
-                            final product = cubit.filteredProducts[index];
-                            return SoldProductCard(
-                              product: product,
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) =>
-                                        ProductDetails(product: product),
-                                  ),
-                                );
-                              },
-                            );
-                          },
-                        ),
+                      child: ListView.separated(
+                        itemCount: cubit.filteredProducts.length,
+                        separatorBuilder: (_, __) => SizedBox(height: 14.h),
+                        itemBuilder: (context, index) {
+                          final product = cubit.filteredProducts[index];
+
+                          return SoldProductCard(
+                            product: product,
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => ProductDetails(product: product),
+                                ),
+                              );
+                            },
+                          );
+                        },
                       ),
-                    ),
+                    )
                 ],
               ),
             ),

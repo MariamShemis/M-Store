@@ -85,17 +85,22 @@ class FirebaseAuthServices {
   static Future<UserModel> getCurrentUser() async {
     User? firebaseUser = _auth.currentUser;
 
+    print("Firebase User: ${firebaseUser?.uid}");
+
     if (firebaseUser == null) {
       throw Exception("No user logged in");
     }
 
-    UserModel? user = await getUser(firebaseUser.uid);
+    final doc = await getUsersCollection().doc(firebaseUser.uid).get();
 
-    if (user == null) {
+    print("Document Exists: ${doc.exists}");
+    print("Data: ${doc.data()?.toJson()}");
+
+    if (!doc.exists || doc.data() == null) {
       throw Exception("User not found");
     }
 
-    return user;
+    return doc.data()!;
   }
 
   /// Update User

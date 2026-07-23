@@ -106,9 +106,10 @@ class _ProductDetailsState extends State<ProductDetails> {
                           return Padding(
                             padding: EdgeInsets.only(bottom: 16.h),
                             child: BuyerInfoCard(
-                              buyerData: currentProduct.buyers[index],
+                              buyer: currentProduct.buyers[index],
+                              purchasePrice: currentProduct.purchasePrice,
                               buyerNumber: index + 1,
-                            ),
+                            )
                           );
                         },
                       ),

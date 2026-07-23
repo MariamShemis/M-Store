@@ -15,6 +15,7 @@ import 'package:m_store_1/feature/add_product/presentation/widgets/buyer_informa
 import 'package:m_store_1/feature/add_product/presentation/widgets/core_information_section.dart';
 import 'package:m_store_1/feature/add_product/presentation/widgets/physical_attributes_section.dart';
 import 'package:m_store_1/feature/add_product/presentation/widgets/product_images_uploader.dart';
+import 'package:m_store_1/feature/main_layout/products/data/model/buyer_model.dart';
 import 'package:m_store_1/feature/main_layout/products/data/model/product_model.dart';
 import 'package:m_store_1/l10n/app_localizations.dart';
 
@@ -41,8 +42,6 @@ class _AddProductState extends State<AddProduct> {
   final _sizeController = TextEditingController();
   final _quantityController = TextEditingController(text: "1");
   final _purchasePriceController = TextEditingController(text: "0.00");
-  final _sellingPriceController = TextEditingController(text: "0.00");
-  final _formKey = GlobalKey<FormState>();
 
   final List<BuyerData> _buyers = [];
   final ImagePicker _picker = ImagePicker();
@@ -82,7 +81,7 @@ class _AddProductState extends State<AddProduct> {
             .split(' ')
             .map(
               (word) => word.substring(0, 1).toUpperCase() + word.substring(1),
-            )
+        )
             .join(' ');
         final hex =
             '#${color.value.toRadixString(16).substring(2, 8).toUpperCase()}';
@@ -141,8 +140,6 @@ class _AddProductState extends State<AddProduct> {
 
       _purchasePriceController.text = product.purchasePrice.toString();
 
-      _sellingPriceController.text = product.sellingPrice.toString();
-
       _mainImagePath = product.mainImage;
 
       _additionalImages.addAll(product.images);
@@ -151,20 +148,21 @@ class _AddProductState extends State<AddProduct> {
         for (var buyer in product.buyers) {
           _buyers.add(
             BuyerData(
-              id: buyer["id"],
-              purchaseDate: buyer["purchaseDate"]?.toDate(),
-              nameController: TextEditingController(text: buyer["name"]),
-              phoneController: TextEditingController(text: buyer["phone"]),
-              addressController: TextEditingController(text: buyer["address"]),
+              id: buyer.id,
+              purchaseDate: buyer.purchaseDate,
+              nameController: TextEditingController(text: buyer.name),
+              phoneController: TextEditingController(text: buyer.phone),
+              addressController: TextEditingController(text: buyer.address),
               quantityController: TextEditingController(
-                text: buyer["quantity"].toString(),
+                text: buyer.quantity.toString(),
+              ),
+              sellingPriceController: TextEditingController(
+                text: buyer.sellingPrice.toString(),
               ),
             ),
           );
         }
       }
-    } else {
-      _addNewBuyer();
     }
   }
 
@@ -177,7 +175,8 @@ class _AddProductState extends State<AddProduct> {
           nameController: TextEditingController(),
           phoneController: TextEditingController(),
           addressController: TextEditingController(),
-          quantityController: TextEditingController(text: "1"),
+          quantityController: TextEditingController(text: '1'),
+          sellingPriceController: TextEditingController(text: '0.00'),
         ),
       );
     });
@@ -208,15 +207,14 @@ class _AddProductState extends State<AddProduct> {
   }
 
   void _removeBuyer(int index) {
-    if (_buyers.length > 1) {
-      setState(() {
-        _buyers[index].nameController.dispose();
-        _buyers[index].addressController.dispose();
-        _buyers[index].phoneController.dispose();
-        _buyers[index].quantityController.dispose();
-        _buyers.removeAt(index);
-      });
-    }
+    setState(() {
+      _buyers[index].nameController.dispose();
+      _buyers[index].addressController.dispose();
+      _buyers[index].phoneController.dispose();
+      _buyers[index].quantityController.dispose();
+      _buyers[index].sellingPriceController.dispose();
+      _buyers.removeAt(index);
+    });
   }
 
   void _onColorTextChanged(String value) {
@@ -244,78 +242,51 @@ class _AddProductState extends State<AddProduct> {
     final appLocalizations = AppLocalizations.of(context)!;
 
     FocusScope.of(context).unfocus();
-
-    if (!_formKey.currentState!.validate()) return;
-
-    if (_mainImagePath == null) {
-      UiUtils.showError(context, appLocalizations.please_select_a_main_image);
-      return;
-    }
-
-    if (!_mainImagePath!.startsWith("http")) {
-      final file = File(_mainImagePath!);
-
-      if (!await file.exists()) {
-        UiUtils.showError(
-          context,
-          appLocalizations.main_image_is_missing_from_cache_please_re_pick_it,
-        );
-        return;
-      }
-    }
-
     final oldImages = _additionalImages
-        .where((e) => e.startsWith("http"))
+        .where((e) => e.startsWith('http'))
         .toList();
 
     final newImages = _additionalImages
-        .where((e) => !e.startsWith("http"))
+        .where((e) => !e.startsWith('http') && e.isNotEmpty)
         .map((e) => File(e))
         .toList();
 
-    final quantity = int.parse(_quantityController.text);
-
-    final purchasePrice = double.parse(_purchasePriceController.text);
-
-    final sellingPrice = double.parse(_sellingPriceController.text);
+    final quantity = int.tryParse(_quantityController.text.trim()) ?? 1;
+    final purchasePrice = double.tryParse(_purchasePriceController.text.trim()) ?? 0.0;
 
     final buyers = _buyers
         .where((buyer) => buyer.nameController.text.trim().isNotEmpty)
-        .map((buyer) {
-          return {
-            "id": buyer.id ?? DateTime.now().microsecondsSinceEpoch.toString(),
-            "name": buyer.nameController.text.trim(),
-            "phone": buyer.phoneController.text.trim(),
-            "address": buyer.addressController.text.trim(),
-            "quantity": int.tryParse(buyer.quantityController.text) ?? 1,
-            "purchaseDate": buyer.purchaseDate ?? DateTime.now(),
-          };
-        })
+        .map(
+          (buyer) => BuyerModel(
+        id: buyer.id ?? DateTime.now().microsecondsSinceEpoch.toString(),
+        name: buyer.nameController.text.trim(),
+        phone: buyer.phoneController.text.trim(),
+        address: buyer.addressController.text.trim(),
+        quantity: int.tryParse(buyer.quantityController.text.trim()) ?? 1,
+        sellingPrice: double.tryParse(buyer.sellingPriceController.text.trim()) ?? 0,
+        purchaseDate: buyer.purchaseDate ?? DateTime.now(),
+      ),
+    )
         .toList();
 
     final soldQuantity = buyers.fold<int>(
       0,
-          (sum, buyer) => sum + (buyer["quantity"] as int),
+          (sum, buyer) => sum + buyer.quantity,
     );
 
-    final availableQuantity = quantity - soldQuantity;
+    final availableQuantity = (quantity - soldQuantity) < 0 ? 0 : (quantity - soldQuantity);
+    final isSold = soldQuantity > 0;
 
-    final isSold = buyers.isNotEmpty;
-
-    if (soldQuantity > quantity) {
+    if (soldQuantity > quantity && quantity > 0) {
       UiUtils.showError(
         context,
         appLocalizations.quantity_is_greater_than_available_quantity,
       );
       return;
     }
-    print("buyers count = ${buyers.length}");
-    print("soldQuantity = $soldQuantity");
-    print("quantity = $quantity");
-    print("availableQuantity = $availableQuantity");
 
     final product = ProductModel(
-      id: widget.product?.id ?? "",
+      id: widget.product?.id ?? '',
       productNumber: _productNumberController.text.trim(),
       productName: _productNameController.text.trim(),
       description: _descriptionController.text.trim(),
@@ -323,38 +294,34 @@ class _AddProductState extends State<AddProduct> {
       material: _materialController.text.trim(),
       color: _primaryColorController.text.trim(),
       dimensions: _sizeController.text.trim(),
-
       purchasePrice: purchasePrice,
-      sellingPrice: sellingPrice,
-
       quantity: quantity,
       soldQuantity: soldQuantity,
       availableQuantity: availableQuantity,
-
       isSold: isSold,
-
       buyers: buyers,
-
-      mainImage: widget.isEdit ? widget.product!.mainImage : "",
+      mainImage: widget.isEdit ? widget.product!.mainImage : '',
       images: [],
-
       createdAt: widget.product?.createdAt ?? DateTime.now(),
       updatedAt: DateTime.now(),
     );
 
+    File? mainImageFile;
+    if (_mainImagePath != null && !_mainImagePath!.startsWith('http') && _mainImagePath!.isNotEmpty) {
+      mainImageFile = File(_mainImagePath!);
+    }
+
     if (widget.isEdit) {
       await AddProductCubit.get(context).updateProduct(
         product: product,
-        mainImage: _mainImagePath!.startsWith("http")
-            ? null
-            : File(_mainImagePath!),
+        mainImage: mainImageFile,
         images: newImages,
         oldImages: oldImages,
       );
     } else {
       await AddProductCubit.get(context).addProduct(
         product: product,
-        mainImage: File(_mainImagePath!),
+        mainImage: mainImageFile ,
         images: newImages,
       );
     }
@@ -372,13 +339,13 @@ class _AddProductState extends State<AddProduct> {
     _sizeController.dispose();
     _quantityController.dispose();
     _purchasePriceController.dispose();
-    _sellingPriceController.dispose();
 
     for (var buyer in _buyers) {
       buyer.nameController.dispose();
       buyer.addressController.dispose();
       buyer.phoneController.dispose();
       buyer.quantityController.dispose();
+      buyer.sellingPriceController.dispose();
     }
     super.dispose();
   }
@@ -387,6 +354,7 @@ class _AddProductState extends State<AddProduct> {
   Widget build(BuildContext context) {
     AppLocalizations appLocalizations = AppLocalizations.of(context)!;
     final textTheme = Theme.of(context).textTheme;
+
     return BlocConsumer<AddProductCubit, AddProductState>(
       listener: (context, state) {
         if (state is AddProductLoadingState) {
@@ -422,76 +390,72 @@ class _AddProductState extends State<AddProduct> {
           ),
           body: SingleChildScrollView(
             padding: REdgeInsets.all(20),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ProductImagesUploader(
-                    mainImagePath: _mainImagePath,
-                    additionalImages: _additionalImages,
-                    onPickMainImage: _pickMainImage,
-                    onPickAdditionalImage: _pickAdditionalImage,
-                  ),
-                  SizedBox(height: 24.h),
-                  CoreInformationSection(
-                    productNumberController: _productNumberController,
-                    categoryController: _categoryController,
-                    productNameController: _productNameController,
-                    descriptionController: _descriptionController,
-                  ),
-                  SizedBox(height: 24.h),
-                  PhysicalAttributesSection(
-                    materialController: _materialController,
-                    primaryColorController: _primaryColorController,
-                    sizeController: _sizeController,
-                    quantityController: _quantityController,
-                    purchasePriceController: _purchasePriceController,
-                    sellingPriceController: _sellingPriceController,
-                    colorSuffixIcon: Padding(
-                      padding: REdgeInsets.only(right: 16),
-                      child: UnconstrainedBox(
-                        child: GestureDetector(
-                          onTap: _openColorPickerDialog,
-                          child: Container(
-                            width: 24.w,
-                            height: 24.w,
-                            decoration: BoxDecoration(
-                              color: _selectedColor,
-                              shape: BoxShape.circle,
-                              border: Border.all(
-                                color: ColorManager.lightGreyEF,
-                                width: 1.5,
-                              ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ProductImagesUploader(
+                  mainImagePath: _mainImagePath,
+                  additionalImages: _additionalImages,
+                  onPickMainImage: _pickMainImage,
+                  onPickAdditionalImage: _pickAdditionalImage,
+                ),
+                SizedBox(height: 24.h),
+                CoreInformationSection(
+                  productNumberController: _productNumberController,
+                  categoryController: _categoryController,
+                  productNameController: _productNameController,
+                  descriptionController: _descriptionController,
+                ),
+                SizedBox(height: 24.h),
+                PhysicalAttributesSection(
+                  materialController: _materialController,
+                  primaryColorController: _primaryColorController,
+                  sizeController: _sizeController,
+                  quantityController: _quantityController,
+                  purchasePriceController: _purchasePriceController,
+                  colorSuffixIcon: Padding(
+                    padding: REdgeInsets.only(right: 16),
+                    child: UnconstrainedBox(
+                      child: GestureDetector(
+                        onTap: _openColorPickerDialog,
+                        child: Container(
+                          width: 24.w,
+                          height: 24.w,
+                          decoration: BoxDecoration(
+                            color: _selectedColor,
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: ColorManager.lightGreyEF,
+                              width: 1.5,
                             ),
                           ),
                         ),
                       ),
                     ),
-                    onChangedColor: _onColorTextChanged,
-                    onColorTap: _openColorPickerDialog,
                   ),
-                  SizedBox(height: 24.h),
-                  BuyerInformationSection(
-                    buyers: _buyers,
-                    onAddBuyer: _addNewBuyer,
-                    onRemoveBuyer: _removeBuyer,
-                  ),
-                  SizedBox(height: 20.h),
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: _saveProduct,
-                      child: Text(
-                        widget.isEdit
-                            ? appLocalizations.updateProduct
-                            : appLocalizations.save,
-                      ),
+                  onChangedColor: _onColorTextChanged,
+                  onColorTap: _openColorPickerDialog,
+                ),
+                SizedBox(height: 24.h),
+                BuyerInformationSection(
+                  buyers: _buyers,
+                  onAddBuyer: _addNewBuyer,
+                  onRemoveBuyer: _removeBuyer,
+                ),
+                SizedBox(height: 20.h),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: _saveProduct,
+                    child: Text(
+                      widget.isEdit
+                          ? appLocalizations.updateProduct
+                          : appLocalizations.save,
                     ),
                   ),
-                  SizedBox(height: 50.h),
-                ],
-              ),
+                ),
+                SizedBox(height: 50.h),
+              ],
             ),
           ),
         );

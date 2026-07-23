@@ -157,5 +157,15 @@
   "login_successfully": "تم تسجيل الدخول بنجاح",
   "account_created_successfully": "تم إنشاء الحساب بنجاح.",
   "sold_QTY": "الكمية المباعة",
+  "totalPrice": "السعر الإجمالي",
+  "productsPrice": "سعر المنتجات",
+  "inventoryValue": "قيمة المخزون",
+  "purchasePrice": "سعر الشراء",
+  "noImageAvailable": "لا توجد صورة متاحة",
+  "remaining": "المتبقي",
+  "tap_to_upload_image": "اضغط لإضافة صورة",
+  "uploadImage": "إضافة صورة",
+  "availableItems": "العناصر المتاحة",
+  "soldItems": "العناصر المباعة",
   "all": "الكل"
 }

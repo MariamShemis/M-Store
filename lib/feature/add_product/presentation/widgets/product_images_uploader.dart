@@ -81,7 +81,7 @@ class ProductImagesUploader extends StatelessWidget {
           color: ColorManager.background,
           borderRadius: BorderRadius.circular(20.r),
         ),
-        child: mainImagePath != null
+        child: (mainImagePath != null && mainImagePath!.isNotEmpty)
             ? ClipRRect(
           borderRadius: BorderRadius.circular(20.r),
           child: _buildImage(mainImagePath!),
@@ -91,23 +91,68 @@ class ProductImagesUploader extends StatelessWidget {
           children: [
             Container(
               width: double.infinity,
-              padding: REdgeInsets.all(18),
-              decoration: const BoxDecoration(
-                color: ColorManager.white,
+              height: 82.w,
+              decoration: BoxDecoration(
+                color: ColorManager.mediumGold.withOpacity(.12),
                 shape: BoxShape.circle,
               ),
               child: Icon(
-                Icons.add_photo_alternate_outlined,
-                size: 32.sp,
-                color: ColorManager.darkBronze,
+                Icons.image_outlined,
+                size: 42.sp,
+                color: ColorManager.mediumGold,
               ),
             ),
             SizedBox(height: 18.h),
             Text(
-              appLocalizations.upload_Main_Image,
+              appLocalizations.noImageAvailable,
+              style: GoogleFonts.manrope(
+                fontSize: 18.sp,
+                fontWeight: FontWeight.w700,
+                color: ColorManager.blackText,
+              ),
             ),
+
             SizedBox(height: 6.h),
-            const Text("PNG, JPG or WEBP"),
+
+            Text(
+              appLocalizations.tap_to_upload_image,
+              style: GoogleFonts.manrope(
+                fontSize: 14.sp,
+                color: ColorManager.greyDark,
+              ),
+            ),
+
+            SizedBox(height: 20.h),
+
+            Container(
+              padding: EdgeInsets.symmetric(
+                horizontal: 18.w,
+                vertical: 10.h,
+              ),
+              decoration: BoxDecoration(
+                color: ColorManager.mediumGold,
+                borderRadius: BorderRadius.circular(30.r),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    Icons.add_photo_alternate_outlined,
+                    color: Colors.white,
+                    size: 18.sp,
+                  ),
+                  SizedBox(width: 8.w),
+                  Text(
+                    appLocalizations.uploadImage,
+                    style: GoogleFonts.manrope(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 14.sp,
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),

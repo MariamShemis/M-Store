@@ -477,5 +477,32 @@ class AppLocalizationsAr extends AppLocalizations {
   String get sold_QTY => 'الكمية المباعة';
 
   @override
+  String get totalPrice => 'السعر الإجمالي';
+
+  @override
+  String get productsPrice => 'سعر المنتجات';
+
+  @override
+  String get inventoryValue => 'قيمة المخزون';
+
+  @override
+  String get noImageAvailable => 'لا توجد صورة متاحة';
+
+  @override
+  String get remaining => 'المتبقي';
+
+  @override
+  String get tap_to_upload_image => 'اضغط لإضافة صورة';
+
+  @override
+  String get uploadImage => 'إضافة صورة';
+
+  @override
+  String get availableItems => 'العناصر المتاحة';
+
+  @override
+  String get soldItems => 'العناصر المباعة';
+
+  @override
   String get all => 'الكل';
 }

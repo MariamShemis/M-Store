@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:m_store_1/core/services/firebase_auth_services.dart';
 import 'package:m_store_1/core/services/products_firebase_service.dart';
@@ -14,6 +16,7 @@ class SalesCubit extends Cubit<SalesState> {
 
   List<ProductModel> filteredProducts = [];
   String searchText = "";
+  StreamSubscription<List<ProductModel>>? _subscription;
 
   Future<void> loadSales() async {
     emit(SalesLoading());
@@ -21,14 +24,16 @@ class SalesCubit extends Cubit<SalesState> {
     try {
       final uid = FirebaseAuthServices.currentUserId()!;
 
-      allProducts = await ProductsFirebaseServices.getProducts(uid);
+      await _subscription?.cancel();
 
-      allProducts =
-          allProducts.where((e) => e.buyers.isNotEmpty).toList();
+      _subscription =
+          ProductsFirebaseServices.soldProductsStream(uid).listen((products) {
+            allProducts = products;
 
-      applyFilter();
+            applyFilter();
 
-      emit(SalesSuccess());
+            emit(SalesSuccess());
+          });
     } catch (e) {
       emit(SalesError(e.toString()));
     }
@@ -51,13 +56,9 @@ class SalesCubit extends Cubit<SalesState> {
         final productNumber = product.productNumber.toLowerCase();
         final category = product.category.toLowerCase();
 
-        final hasBuyer = product.buyers.any((buyer) {
-          final buyerName =
-          (buyer["name"] ?? "").toString().toLowerCase();
-
-          return buyerName.contains(searchText);
-        });
-
+        final hasBuyer = product.buyers.any(
+              (buyer) => buyer.name.toLowerCase().contains(searchText),
+        );
         return productName.contains(searchText) ||
             productNumber.contains(searchText) ||
             category.contains(searchText) ||
@@ -66,5 +67,10 @@ class SalesCubit extends Cubit<SalesState> {
     }
 
     filteredProducts = result;
+  }
+  @override
+  Future<void> close() {
+    _subscription?.cancel();
+    return super.close();
   }
 }

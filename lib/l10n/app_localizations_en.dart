@@ -477,5 +477,32 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sold_QTY => 'Sold QTY';
 
   @override
+  String get totalPrice => 'Total Price';
+
+  @override
+  String get productsPrice => 'Products Price';
+
+  @override
+  String get inventoryValue => 'Inventory Value';
+
+  @override
+  String get noImageAvailable => 'No Image Available';
+
+  @override
+  String get remaining => 'Remaining';
+
+  @override
+  String get tap_to_upload_image => 'Tap to upload an image';
+
+  @override
+  String get uploadImage => 'Upload Image';
+
+  @override
+  String get availableItems => 'Available Items';
+
+  @override
+  String get soldItems => 'Sold Items';
+
+  @override
   String get all => 'All';
 }

@@ -157,5 +157,15 @@
   "login_successfully": "login successfully",
   "account_created_successfully": "Account created successfully.",
   "sold_QTY": "Sold QTY",
+  "totalPrice": "Total Price",
+  "productsPrice": "Products Price",
+  "inventoryValue": "Inventory Value",
+  "purchasePrice": "Purchase Price",
+  "noImageAvailable": "No Image Available",
+  "remaining": "Remaining",
+  "tap_to_upload_image": "Tap to upload an image",
+  "uploadImage": "Upload Image",
+  "availableItems": "Available Items",
+  "soldItems": "Sold Items",
   "all": "All"
 }

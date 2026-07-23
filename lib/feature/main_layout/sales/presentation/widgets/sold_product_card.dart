@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:m_store_1/core/costants/color_manager.dart';
-import 'package:m_store_1/feature/main_layout/products/data/model/buyer_model.dart';
 import 'package:m_store_1/feature/main_layout/products/data/model/product_model.dart';
 import 'package:m_store_1/l10n/app_localizations.dart';
 
@@ -17,10 +16,9 @@ class SoldProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final appLocalizations = AppLocalizations.of(context)!;
 
-    final buyer = BuyerModel.fromJson(product.buyers.first);
-
-    final profit = product.profit;
-
+    final buyer = product.buyers.first;
+    final buyerProfit = product.buyerProfit(buyer);
+    final profit = product.totalProfit;
     final profitColor = profit >= 0 ? ColorManager.green : ColorManager.red;
 
     return InkWell(
@@ -46,16 +44,93 @@ class SoldProductCard extends StatelessWidget {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.vertical(
-                    top: Radius.circular(26.r),
+                    top: Radius.circular(24.r),
                   ),
-                  child: CachedNetworkImage(
-                    imageUrl: product.mainImage,
-                    width: double.infinity,
-                    height: 190.h,
-                    fit: BoxFit.cover,
-                  ),
+                  child: product.mainImage.isEmpty
+                      ? Container(
+                          height: 220.h,
+                          width: double.infinity,
+                          color: Color(0xffD0C5AF).withOpacity(0.5),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                width: 72.w,
+                                height: 72.w,
+                                decoration: BoxDecoration(
+                                  color: ColorManager.mediumGold.withOpacity(
+                                    .12,
+                                  ),
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Icon(
+                                  Icons.inventory_2_outlined,
+                                  size: 36.sp,
+                                  color: ColorManager.mediumGold,
+                                ),
+                              ),
+                              SizedBox(height: 16.h),
+                              Text(
+                                appLocalizations.noImageAvailable,
+                                style: GoogleFonts.manrope(
+                                  fontSize: 16.sp,
+                                  fontWeight: FontWeight.w700,
+                                  color: ColorManager.greyDark,
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      : CachedNetworkImage(
+                          imageUrl: product.mainImage,
+                          fadeInDuration: Duration.zero,
+                          fadeOutDuration: Duration.zero,
+                          height: 220.h,
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                          placeholder: (_, __) => Container(
+                            height: 220.h,
+                            color: Colors.grey.shade100,
+                            child: const Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                          ),
+                          errorWidget: (_, __, ___) => Container(
+                            height: 220.h,
+                            width: double.infinity,
+                            color: const Color(0xffF8F7F4),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                  width: 72.w,
+                                  height: 72.w,
+                                  decoration: BoxDecoration(
+                                    color: ColorManager.mediumGold.withOpacity(
+                                      .12,
+                                    ),
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: Icon(
+                                    Icons.image_not_supported_outlined,
+                                    size: 36.sp,
+                                    color: ColorManager.mediumGold,
+                                  ),
+                                ),
+                                SizedBox(height: 16.h),
+                                Text(
+                                  appLocalizations.noImageAvailable,
+                                  style: GoogleFonts.manrope(
+                                    fontSize: 16.sp,
+                                    fontWeight: FontWeight.w700,
+                                    color: ColorManager.greyDark,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
                 ),
-
                 Positioned(
                   top: 14,
                   left: 14,
@@ -71,6 +146,7 @@ class SoldProductCard extends StatelessWidget {
                     child: Text(
                       appLocalizations.sold.toUpperCase(),
                       style: GoogleFonts.manrope(
+                        fontSize: 13.sp,
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                       ),
@@ -134,26 +210,70 @@ class SoldProductCard extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: 10.h),
+                  if (buyer.phone.isNotEmpty || buyer.address.isNotEmpty) ...[
+                    SizedBox(height: 10.h),
+                    Row(
+                      children: [
+                        ?buyer.phone.isNotEmpty
+                            ? Expanded(
+                                child: _infoItem(
+                                  icon: Icons.phone_outlined,
+                                  text: buyer.phone,
+                                ),
+                              )
+                            : null,
+                        SizedBox(width: buyer.phone.isNotEmpty ? 12.w : 0.w),
+                        ?buyer.address.isNotEmpty
+                            ? Expanded(
+                                child: _infoItem(
+                                  icon: Icons.location_on_outlined,
+                                  text: buyer.address,
+                                ),
+                              )
+                            : null,
+                      ],
+                    ),
+                  ],
+                  SizedBox(height: 14.h),
                   Row(
                     children: [
                       Expanded(
                         child: _infoItem(
-                          icon: Icons.phone_outlined,
-                          text: buyer.phone,
+                          icon: Icons.shopping_cart_checkout_outlined,
+                          text: "${buyer.quantity} ${appLocalizations.units}",
                         ),
                       ),
                       SizedBox(width: 12.w),
                       Expanded(
                         child: _infoItem(
-                          icon: Icons.location_on_outlined,
-                          text: buyer.address,
+                          icon: Icons.payments_outlined,
+                          text:
+                              "${buyer.sellingPrice.toStringAsFixed(2)} ${appLocalizations.lE}",
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 10.h),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: _infoItem(
+                          icon: Icons.trending_up,
+                          text:
+                              "${buyerProfit >= 0 ? '+' : ''}${buyerProfit.toStringAsFixed(2)} ${appLocalizations.lE}",
+                        ),
+                      ),
+                      SizedBox(width: 12.w),
+                      Expanded(
+                        child: _infoItem(
+                          icon: Icons.inventory_2_outlined,
+                          text:
+                              "${appLocalizations.remaining}: ${product.availableQuantity}",
                         ),
                       ),
                     ],
                   ),
                   Divider(height: 30.h, color: ColorManager.lightGreyEF),
-                  SizedBox(height: 18.h),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -171,7 +291,7 @@ class SoldProductCard extends StatelessWidget {
                             ),
                             SizedBox(height: 8.h),
                             Text(
-                              "${product.sellingPrice.toStringAsFixed(2)} ${appLocalizations.lE}",
+                              "${product.totalSellingPrice.toStringAsFixed(2)} ${appLocalizations.lE}",
                               style: GoogleFonts.manrope(
                                 fontSize: 20.sp,
                                 color: ColorManager.mediumGold,

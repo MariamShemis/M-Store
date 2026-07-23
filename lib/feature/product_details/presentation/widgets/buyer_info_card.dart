@@ -2,21 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:m_store_1/core/costants/color_manager.dart';
+import 'package:m_store_1/feature/main_layout/products/data/model/buyer_model.dart';
 import 'package:m_store_1/l10n/app_localizations.dart';
 
 class BuyerInfoCard extends StatelessWidget {
-  final Map<String, dynamic> buyerData;
+  final BuyerModel buyer;
+  final double purchasePrice;
   final int buyerNumber;
 
   const BuyerInfoCard({
     super.key,
-    required this.buyerData,
     required this.buyerNumber,
+    required this.buyer,
+    required this.purchasePrice,
   });
 
   @override
   Widget build(BuildContext context) {
     AppLocalizations appLocalizations = AppLocalizations.of(context)!;
+    final totalPrice = buyer.sellingPrice * buyer.quantity;
+
+    final profit = (buyer.sellingPrice - purchasePrice) * buyer.quantity;
     return Container(
       width: double.infinity,
       padding: REdgeInsets.all(24),
@@ -50,15 +56,33 @@ class BuyerInfoCard extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: _buildInfoItem(
-                  appLocalizations.name,
-                  buyerData['name'] ?? 'N/A',
-                ),
+                child: _buildInfoItem(appLocalizations.name, buyer.name),
               ),
+              ?buyer.address.isNotEmpty
+                  ? Expanded(
+                      child: _buildInfoItem(
+                        appLocalizations.address,
+                        buyer.address,
+                      ),
+                    )
+                  : null,
+            ],
+          ),
+          SizedBox(height: 12.h),
+          Row(
+            children: [
+              ?buyer.phone.isNotEmpty
+                  ? Expanded(
+                      child: _buildInfoItem(
+                        appLocalizations.phoneNumber,
+                        buyer.phone,
+                      ),
+                    )
+                  : null,
               Expanded(
                 child: _buildInfoItem(
-                  appLocalizations.address,
-                  buyerData['address'] ?? 'N/A',
+                  appLocalizations.quantity,
+                  (buyer.quantity).toString(),
                 ),
               ),
             ],
@@ -68,19 +92,32 @@ class BuyerInfoCard extends StatelessWidget {
             children: [
               Expanded(
                 child: _buildInfoItem(
-                  appLocalizations.phoneNumber,
-                  buyerData['phone'] ?? 'N/A',
+                  appLocalizations.sellingPrice,
+                  "${buyer.sellingPrice.toStringAsFixed(2)} ${appLocalizations.lE}",
                 ),
               ),
               Expanded(
                 child: _buildInfoItem(
-                  appLocalizations.quantity,
-                  (buyerData['quantity'] ?? 0).toString(),
+                  appLocalizations.totalPrice,
+                  "${totalPrice.toStringAsFixed(2)} ${appLocalizations.lE}",
                 ),
               ),
             ],
           ),
+
           SizedBox(height: 12.h),
+
+          Row(
+            children: [
+              Expanded(
+                child: _buildInfoItem(
+                  appLocalizations.profit,
+                  "${profit.toStringAsFixed(2)} ${appLocalizations.lE}",
+                ),
+              ),
+              const Expanded(child: SizedBox()),
+            ],
+          ),
         ],
       ),
     );

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:m_store_1/core/costants/color_manager.dart';
+import 'package:m_store_1/core/utils/validators/product_validators.dart';
 import 'package:m_store_1/feature/add_product/data/model/buyer_data.dart';
 import 'package:m_store_1/feature/add_product/presentation/widgets/custom_product_text_form_field.dart';
 import 'package:m_store_1/l10n/app_localizations.dart';
@@ -147,6 +148,26 @@ class BuyerInformationSection extends StatelessWidget {
                     hintText: appLocalizations.enter_buyer_phone_number,
                     controller: buyer.phoneController,
                     keyboardType: TextInputType.phone,
+                  ),
+                  SizedBox(height: 20.h),
+                  CustomProductTextFormField(
+                    labelText: appLocalizations.sellingPrice,
+                    controller: buyer.sellingPriceController,
+                    hintText: "0.00",
+                    keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                    prefixIcon: Padding(
+                      padding: REdgeInsets.only(left: 16, right: 8, top: 14),
+                      child: Text(
+                        appLocalizations.lE,
+                        style: GoogleFonts.inter(
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.bold,
+                          color: ColorManager.secondary,
+                        ),
+                      ),
+                    ),
+                    validator: (value) =>
+                        ProductValidators.validatePrice(value, context),
                   ),
                   SizedBox(height: 20.h),
                   CustomProductTextFormField(

@@ -15,7 +15,7 @@ class AddProductCubit extends Cubit<AddProductState> {
 
   Future<void> addProduct({
     required ProductModel product,
-    required File mainImage,
+    File? mainImage,
     required List<File> images,
   }) async {
     emit(AddProductLoadingState());
@@ -26,14 +26,18 @@ class AddProductCubit extends Cubit<AddProductState> {
       if (uid == null) {
         throw Exception("User not found");
       }
-      final mainImageUrl =
-      await CloudinaryServices.uploadImage(mainImage);
 
-      final imagesUrl =
-      await CloudinaryServices.uploadImages(images);
+      if (mainImage != null) {
+        product.mainImage =
+        await CloudinaryServices.uploadImage(mainImage);
+      }
 
-      product.mainImage = mainImageUrl;
-      product.images = imagesUrl;
+      if (images.isNotEmpty) {
+        product.images =
+        await CloudinaryServices.uploadImages(images);
+      } else {
+        product.images = [];
+      }
 
       await ProductsFirebaseServices.addProduct(
         uid: uid,
